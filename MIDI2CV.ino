@@ -1,29 +1,33 @@
 #include <MIDI.h>
-#include <Wire.h>
-#include <mcp4728.h>
+#include <SPI.h>
+#include <DAC57X4.h>
 #include <EEPROM.h>
 
 #define MIDI_CHANNEL 1
 
-#define OCTAVE_RANGE 5
+#define OCTAVE_RANGE 10
 #define NOTE_RANGE (OCTAVE_RANGE * 12)
-#define MAX_CV (OCTAVE_RANGE * 1000)
-#define BASE_NOTE 34
+#define MAX_CV 10.0
+#define CV_PER_OCTAVE (MAX_CV / OCTAVE_RANGE)
+#define BASE_NOTE 0
 
 // Define Pitch Bend range to be a major second
-#define BEND_RANGE ((1000.0 / 12.0) * 1.5)
+#define BEND_RANGE ((CV_PER_OCTAVE / 12.0) * 1.5)
 
 
-#define PIN_GATE_0 9
-#define PIN_GATE_1 10
-#define PIN_GATE_2 11
-#define PIN_GATE_3 12
+#define PIN_GATE_0 A5
+#define PIN_GATE_1 A1
+#define PIN_GATE_2 A2
+#define PIN_GATE_3 A3
 
-#define MODE_MONO 0
-#define MODE_ARP 1
-#define MODE_SEQ 2
+#define ROTARY_SWITCH_PIN0 2
+#define ROTARY_SWITCH_PIN1 3
+#define ROTARY_SWITCH_PIN2 4
+#define ROTARY_SWITCH_PIN3 5
+#define ROTARY_SWITCH_PIN4 6
+#define ROTARY_SWITCH_PIN5 7
 
-#define PIN_SPEED A3
+#define PIN_SPEED A4
 
 #define PIN_FLIP_SWITCH_0 A6
 #define PIN_FLIP_SWITCH_1 A7
@@ -32,12 +36,11 @@
 #define FLIP_SWITCH_MIDDLE 1
 #define FLIP_SWITCH_DOWN 2
 
-#define ROTARY_SWITCH_PIN0 2
-#define ROTARY_SWITCH_PIN1 3
-#define ROTARY_SWITCH_PIN2 4
-#define ROTARY_SWITCH_PIN3 5
-#define ROTARY_SWITCH_PIN4 6
-#define ROTARY_SWITCH_PIN5 7
+
+#define MODE_MONO 0
+#define MODE_ARP 1
+#define MODE_SEQ 2
+
 
 #define MIDI_CLOCK_THRESHOLD_MILLIS 500
 
@@ -77,7 +80,7 @@ const int clockDivisions[] = { MIDI_CLOCK_DIVIDE_WHOLE,         MIDI_CLOCK_DIVID
 #define ARP_MODE_ADD FLIP_SWITCH_DOWN
 
 
-mcp4728 dac = mcp4728(0);
+DAC57X4 dac(4, 2, SS);
 
 MIDI_CREATE_DEFAULT_INSTANCE(); 
 
@@ -89,7 +92,7 @@ byte rotarySwitch = 0;
 int speedValue = 0;
 
 
-int cv[] =    {0,   0,   0,   0};   // 0 to MAX_CV
+float cv[] =    {0,   0,   0,   0};   // 0 to MAX_CV
 bool gate[] = {LOW, LOW, LOW, LOW}; // LOW or HIGH
 bool midiStartSignal = LOW;
 bool midiClockSignal = LOW;
@@ -119,11 +122,6 @@ byte activeArpNoteCount = 0;
 bool arpLatchReadyForNew = true;
 
 void setup() {
-  dac.begin();
-  dac.vdd(5000);
-  dac.setVref(1,1,1,1); // set to use internal voltage reference (2.048V)
-  dac.setGain(1, 1); // set the gain of internal voltage reference ( 2.048V x 2 = 4.096V )
-  
   pinMode(PIN_GATE_0, OUTPUT);
   pinMode(PIN_GATE_1, OUTPUT);
   pinMode(PIN_GATE_2, OUTPUT);
@@ -187,10 +185,10 @@ void onMidiStart() {
   currentClockDivide = nextClockDivide;
 }
 
-int midiToCV(byte note) {
+float midiToCV(byte note) {
   if(note < BASE_NOTE) return 0;
   if(note - BASE_NOTE > NOTE_RANGE) return MAX_CV;
-  return map(note - BASE_NOTE, 0, NOTE_RANGE, 0, MAX_CV);
+  return mapfloat(note - BASE_NOTE, 0, NOTE_RANGE, 0, MAX_CV);
 }
 
 byte getMostRecentNote() {
@@ -237,10 +235,10 @@ void loop() {
         // Find most recent hit key
         byte note = getMostRecentNote();
         
-        int value = midiToCV(note + BASE_NOTE);
+        float value = midiToCV(note + BASE_NOTE);
         cv[0] = value + mapfloat(currentPitchBend, 0, MIDI_PITCHBEND_MAX, -BEND_RANGE, BEND_RANGE);
-        cv[1] = map(currentVelocity, 0, 127, 0, MAX_CV);
-        cv[2] = map(currentModulation, 0, 127, 0, MAX_CV);
+        cv[1] = mapfloat(currentVelocity, 0, 127, 0, MAX_CV);
+        cv[2] = mapfloat(currentModulation, 0, 127, 0, MAX_CV);
         triggerOut = trigger;
         if(lastChannel == MIDI_CHANNEL + 1 && trigger) { // IF on second channel, we retrigger the gate.
           gate[0] = LOW;
@@ -257,7 +255,7 @@ void loop() {
         if(activeNoteCount > 0) {
           // Find most recent hit key
           byte note = getMostRecentNote();
-          int value = midiToCV(note + BASE_NOTE);
+          float value = midiToCV(note + BASE_NOTE);
           cv[0] = value + mapfloat(currentPitchBend, 0, MIDI_PITCHBEND_MAX, -BEND_RANGE, BEND_RANGE);
           gate[0] = HIGH;
           if(trigger) {
@@ -286,7 +284,7 @@ void loop() {
           
           if(midiClockSignal) { // trigger a new note!
             triggerOut = true;
-            int value = midiToCV(note + BASE_NOTE);
+            float value = midiToCV(note + BASE_NOTE);
             cv[0] = value + mapfloat(currentPitchBend, 0, MIDI_PITCHBEND_MAX, -BEND_RANGE, BEND_RANGE);
             currentSequencePosition = (currentSequencePosition + 1) % EEPROM[rotarySwitch];
           }
@@ -402,7 +400,7 @@ void loop() {
         
         if(midiClockSignal) { // trigger a new note!
           triggerOut = true;
-          int value = midiToCV(note + BASE_NOTE);
+          float value = midiToCV(note + BASE_NOTE);
           cv[0] = value + mapfloat(currentPitchBend, 0, MIDI_PITCHBEND_MAX, -BEND_RANGE, BEND_RANGE);
           // now we have to find the next arp position. this depends on the current mode.
           bool foundNote = false;
@@ -578,7 +576,10 @@ void readSpeed() {
 }
 
 void writeDACs() {
-  dac.analogWrite(map(cv[0], 0, MAX_CV, 0, 4095), map(cv[1], 0, MAX_CV, 0, 4095), map(cv[2], 0, MAX_CV, 0, 4095), map(cv[3], 0, MAX_CV, 0, 4095));
+  dac.SetDAC(cv[0], 1);
+  dac.SetDAC(cv[1], 2);
+  dac.SetDAC(cv[2], 3);
+  dac.SetDAC(cv[3], 4);
 }
 
 void writeGates() {
