@@ -6,10 +6,12 @@
 #define MIDI_CHANNEL 1
 
 #define OCTAVE_RANGE 10
-#define NOTE_RANGE (OCTAVE_RANGE * 12)
 #define MAX_CV 10.0
 #define CV_PER_OCTAVE (MAX_CV / OCTAVE_RANGE)
-#define BASE_NOTE 0
+
+#define BASE_NOTE 21
+#define MAX_NOTE 108
+#define NOTE_RANGE MAX_NOTE - BASE_NOTE
 
 // Define Pitch Bend range to be a major second
 #define BEND_RANGE ((CV_PER_OCTAVE / 12.0) * 1.5)
@@ -150,6 +152,7 @@ void onMidiClock() {
 
 void onMidiNoteOn(byte channel, byte note, byte velocity) {
   if(channel > MIDI_CHANNEL + 1) return;
+  if(note < BASE_NOTE || note > MAX_NOTE) return;
 
   lastChannel = channel;
   
@@ -188,7 +191,7 @@ void onMidiStart() {
 float midiToCV(byte note) {
   if(note < BASE_NOTE) return 0;
   if(note - BASE_NOTE > NOTE_RANGE) return MAX_CV;
-  return mapfloat(note - BASE_NOTE, 0, NOTE_RANGE, 0, MAX_CV);
+  return mapfloat(note - BASE_NOTE, 0, 120.0, 0, MAX_CV);
 }
 
 byte getMostRecentNote() {
