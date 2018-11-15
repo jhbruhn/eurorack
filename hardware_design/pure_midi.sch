@@ -25898,7 +25898,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <part name="GND17" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="C6" library="GMSN" deviceset="CAPACITOR_POL-US" device="153CLV-0505" value="47u"/>
 <part name="+3V1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
-<part name="Q2" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="CRYSTAL" device="HC49UP" package3d_urn="urn:adsk.eagle:package:6240908/1"/>
+<part name="Q2" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="CRYSTAL" device="HC49UP" package3d_urn="urn:adsk.eagle:package:6240908/1" value="12MHz"/>
 <part name="C7" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="22p"/>
 <part name="C8" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="22p"/>
 <part name="GND18" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>

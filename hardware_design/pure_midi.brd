@@ -3928,7 +3928,7 @@ design rules under a new name.</description>
 <element name="C6" library="GMSN" package="153CLV-0505" value="47u" x="48.26" y="39.37" smashed="yes">
 <attribute name="NAME" x="45.52" y="42.35" size="1.27" layer="25"/>
 </element>
-<element name="Q2" library="adafruit" library_urn="urn:adsk.eagle:library:420" package="HC49UP" package3d_urn="urn:adsk.eagle:package:6240908/1" value="" x="8.509" y="63.881" smashed="yes" rot="R180">
+<element name="Q2" library="adafruit" library_urn="urn:adsk.eagle:library:420" package="HC49UP" package3d_urn="urn:adsk.eagle:package:6240908/1" value="12MHz" x="8.509" y="63.881" smashed="yes" rot="R180">
 <attribute name="MF" value="" x="8.509" y="63.881" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="" x="8.509" y="63.881" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="14.224" y="61.087" size="1.27" layer="25" ratio="10" rot="R180"/>
