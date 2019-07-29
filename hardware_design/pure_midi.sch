@@ -25775,6 +25775,8 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <classes>
 <class number="0" name="default" width="0" drill="0">
 </class>
+<class number="1" name="POWER" width="0.3556" drill="0">
+</class>
 </classes>
 <parts>
 <part name="U1" library="Analog Devices Inc - AD5754AREZ" deviceset="ANALOG_DEVICES_INC_AD5754AREZ" device="ANALOG_DEVICES_INC_AD5754AREZ_0_0"/>
@@ -25932,6 +25934,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <part name="GND29" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="+3V4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="GND30" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="P+23" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -26110,7 +26113,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <junction x="33.02" y="50.8"/>
 </segment>
 </net>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="ISP1" gate="G$1" pin="GND"/>
 <wire x1="78.74" y1="-5.08" x2="86.36" y2="-5.08" width="0.1524" layer="91"/>
@@ -26165,8 +26168,13 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <pinref part="C9" gate="G$1" pin="2"/>
 <pinref part="GND26" gate="1" pin="GND"/>
 </segment>
+<segment>
+<pinref part="U3" gate="U$1" pin="AGND"/>
+<pinref part="AGND15" gate="VR1" pin="AGND"/>
+<wire x1="40.64" y1="30.48" x2="33.02" y2="30.48" width="0.1524" layer="91"/>
+</segment>
 </net>
-<net name="+5V" class="0">
+<net name="+5V" class="1">
 <segment>
 <pinref part="ISP1" gate="G$1" pin="VCC"/>
 <wire x1="78.74" y1="0" x2="86.36" y2="0" width="0.1524" layer="91"/>
@@ -26220,13 +26228,6 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <pinref part="JP1" gate="A" pin="2"/>
 <wire x1="106.68" y1="55.88" x2="119.38" y2="55.88" width="0.1524" layer="91"/>
 <label x="109.22" y="55.88" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="AGND" class="0">
-<segment>
-<pinref part="U3" gate="U$1" pin="AGND"/>
-<pinref part="AGND15" gate="VR1" pin="AGND"/>
-<wire x1="40.64" y1="30.48" x2="33.02" y2="30.48" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SWITCH0_VAL" class="0">
@@ -26585,7 +26586,36 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <busses>
 </busses>
 <nets>
-<net name="AGND" class="0">
+<net name="GND" class="1">
+<segment>
+<pinref part="U1" gate="G$0" pin="GND"/>
+<pinref part="GND1" gate="1" pin="GND"/>
+<wire x1="114.3" y1="20.32" x2="121.92" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="121.92" y1="20.32" x2="121.92" y2="17.78" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="GND2" gate="1" pin="GND"/>
+<pinref part="U1" gate="G$0" pin="BIN/!2SCOMP!"/>
+<wire x1="58.42" y1="45.72" x2="73.66" y2="45.72" width="0.1524" layer="91"/>
+<pinref part="U1" gate="G$0" pin="!LDAC!"/>
+<wire x1="73.66" y1="50.8" x2="58.42" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="58.42" y1="50.8" x2="58.42" y2="45.72" width="0.1524" layer="91"/>
+<junction x="58.42" y="45.72"/>
+</segment>
+<segment>
+<pinref part="C11" gate="G$1" pin="2"/>
+<pinref part="GND27" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C12" gate="G$1" pin="2"/>
+<pinref part="GND28" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C10" gate="G$1" pin="1"/>
+<wire x1="106.68" y1="93.98" x2="106.68" y2="96.52" width="0.1524" layer="91"/>
+<pinref part="GND29" gate="1" pin="GND"/>
+<wire x1="106.68" y1="96.52" x2="116.84" y2="96.52" width="0.1524" layer="91"/>
+</segment>
 <segment>
 <pinref part="AGND1" gate="VR1" pin="AGND"/>
 <pinref part="U1" gate="G$0" pin="2_SIG_GND"/>
@@ -26670,38 +26700,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <wire x1="172.72" y1="-48.26" x2="177.8" y2="-48.26" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="GND" class="0">
-<segment>
-<pinref part="U1" gate="G$0" pin="GND"/>
-<pinref part="GND1" gate="1" pin="GND"/>
-<wire x1="114.3" y1="20.32" x2="121.92" y2="20.32" width="0.1524" layer="91"/>
-<wire x1="121.92" y1="20.32" x2="121.92" y2="17.78" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="GND2" gate="1" pin="GND"/>
-<pinref part="U1" gate="G$0" pin="BIN/!2SCOMP!"/>
-<wire x1="58.42" y1="45.72" x2="73.66" y2="45.72" width="0.1524" layer="91"/>
-<pinref part="U1" gate="G$0" pin="!LDAC!"/>
-<wire x1="73.66" y1="50.8" x2="58.42" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="58.42" y1="50.8" x2="58.42" y2="45.72" width="0.1524" layer="91"/>
-<junction x="58.42" y="45.72"/>
-</segment>
-<segment>
-<pinref part="C11" gate="G$1" pin="2"/>
-<pinref part="GND27" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="C12" gate="G$1" pin="2"/>
-<pinref part="GND28" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="C10" gate="G$1" pin="1"/>
-<wire x1="106.68" y1="93.98" x2="106.68" y2="96.52" width="0.1524" layer="91"/>
-<pinref part="GND29" gate="1" pin="GND"/>
-<wire x1="106.68" y1="96.52" x2="116.84" y2="96.52" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="-12V" class="0">
+<net name="-12V" class="1">
 <segment>
 <pinref part="P-1" gate="1" pin="-12V"/>
 <wire x1="116.84" y1="12.7" x2="116.84" y2="17.78" width="0.1524" layer="91"/>
@@ -26719,7 +26718,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <pinref part="P-4" gate="1" pin="-12V"/>
 </segment>
 </net>
-<net name="+12V" class="0">
+<net name="+12V" class="1">
 <segment>
 <pinref part="U1" gate="G$0" pin="AVDD"/>
 <wire x1="73.66" y1="76.2" x2="71.12" y2="76.2" width="0.1524" layer="91"/>
@@ -26756,7 +26755,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <pinref part="P+22" gate="1" pin="+12V"/>
 </segment>
 </net>
-<net name="+5V" class="0">
+<net name="+5V" class="1">
 <segment>
 <pinref part="U1" gate="G$0" pin="DVCC"/>
 <pinref part="P+2" gate="1" pin="+5V"/>
@@ -27077,7 +27076,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <junction x="78.74" y="45.72"/>
 </segment>
 </net>
-<net name="+5V" class="0">
+<net name="+5V" class="1">
 <segment>
 <wire x1="68.58" y1="50.8" x2="71.12" y2="50.8" width="0.1524" layer="91"/>
 <wire x1="71.12" y1="50.8" x2="71.12" y2="55.88" width="0.1524" layer="91"/>
@@ -27089,7 +27088,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <pinref part="OK1" gate="G$1" pin="VCC"/>
 </segment>
 </net>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="GND6" gate="1" pin="GND"/>
 <pinref part="R17" gate="G$1" pin="1"/>
@@ -27182,7 +27181,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <busses>
 </busses>
 <nets>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="U$12" gate="G$1" pin="A"/>
 <wire x1="-30.48" y1="60.96" x2="-33.02" y2="60.96" width="0.1524" layer="91"/>
@@ -27291,7 +27290,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <junction x="38.1" y="60.96"/>
 </segment>
 </net>
-<net name="+5V" class="0">
+<net name="+5V" class="1">
 <segment>
 <pinref part="R18" gate="G$1" pin="2"/>
 <pinref part="R25" gate="G$1" pin="2"/>
@@ -27472,11 +27471,14 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <instance part="GND30" gate="1" x="91.44" y="58.42" smashed="yes">
 <attribute name="VALUE" x="88.9" y="55.88" size="1.778" layer="96"/>
 </instance>
+<instance part="P+23" gate="1" x="45.72" y="45.72" smashed="yes">
+<attribute name="VALUE" x="43.18" y="40.64" size="1.778" layer="96" rot="R90"/>
+</instance>
 </instances>
 <busses>
 </busses>
 <nets>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="X2" gate="G$1" pin="4"/>
 <wire x1="33.02" y1="30.48" x2="43.18" y2="30.48" width="0.1524" layer="91"/>
@@ -27583,13 +27585,6 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <pinref part="R26" gate="G$1" pin="1"/>
 <wire x1="66.04" y1="43.18" x2="55.88" y2="43.18" width="0.1524" layer="91"/>
 <label x="55.88" y="43.18" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="USB_VBUS" class="0">
-<segment>
-<pinref part="X2" gate="G$1" pin="1"/>
-<wire x1="33.02" y1="38.1" x2="45.72" y2="38.1" width="0.1524" layer="91"/>
-<label x="33.02" y="38.1" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="USB_P" class="0">
@@ -27729,6 +27724,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <segment>
 <pinref part="IC1" gate="B" pin="O"/>
 <wire x1="88.9" y1="81.28" x2="96.52" y2="81.28" width="0.1524" layer="91"/>
+<label x="88.9" y="81.28" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SCK" class="0">
@@ -27752,6 +27748,11 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <wire x1="127" y1="81.28" x2="134.62" y2="81.28" width="0.1524" layer="91"/>
 <label x="127" y="78.74" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="U4" gate="G$1" pin="RES"/>
+<wire x1="86.36" y1="30.48" x2="73.66" y2="30.48" width="0.1524" layer="91"/>
+<label x="71.12" y="30.48" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="MISO" class="0">
 <segment>
@@ -27773,14 +27774,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <label x="71.12" y="33.02" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="RES_USB_3V3" class="0">
-<segment>
-<pinref part="U4" gate="G$1" pin="RES"/>
-<wire x1="86.36" y1="30.48" x2="73.66" y2="30.48" width="0.1524" layer="91"/>
-<label x="71.12" y="30.48" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="+5V" class="0">
+<net name="+5V" class="1">
 <segment>
 <pinref part="IC4" gate="P" pin="VCC"/>
 <pinref part="P+19" gate="1" pin="+5V"/>
@@ -27789,6 +27783,13 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <wire x1="218.44" y1="109.22" x2="218.44" y2="114.3" width="0.1524" layer="91"/>
 <wire x1="218.44" y1="114.3" x2="210.82" y2="114.3" width="0.1524" layer="91"/>
 <junction x="210.82" y="114.3"/>
+</segment>
+<segment>
+<pinref part="X2" gate="G$1" pin="1"/>
+<wire x1="33.02" y1="38.1" x2="45.72" y2="38.1" width="0.1524" layer="91"/>
+<label x="33.02" y="38.1" size="1.778" layer="95"/>
+<pinref part="P+23" gate="1" pin="+5V"/>
+<wire x1="45.72" y1="43.18" x2="45.72" y2="38.1" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
@@ -27884,7 +27885,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <junction x="27.94" y="40.64"/>
 </segment>
 </net>
-<net name="+5V" class="0">
+<net name="+5V" class="1">
 <segment>
 <pinref part="IC2" gate="A1" pin="VO"/>
 <pinref part="C5" gate="G$1" pin="+"/>
@@ -27896,7 +27897,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <wire x1="111.76" y1="58.42" x2="111.76" y2="60.96" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="-12V" class="0">
+<net name="-12V" class="1">
 <segment>
 <pinref part="C4" gate="G$1" pin="-"/>
 <wire x1="58.42" y1="33.02" x2="53.34" y2="33.02" width="0.1524" layer="91"/>
@@ -27909,7 +27910,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <wire x1="66.04" y1="33.02" x2="66.04" y2="27.94" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="+12V" class="0">
+<net name="+12V" class="1">
 <segment>
 <pinref part="D2" gate="G$1" pin="C"/>
 <wire x1="48.26" y1="53.34" x2="53.34" y2="53.34" width="0.1524" layer="91"/>
@@ -27930,7 +27931,7 @@ Source: KYCON Sibalco USB vertical socket KUSBV.pdf</description>
 <junction x="68.58" y="58.42"/>
 </segment>
 </net>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="PWR1" gate="G$1" pin="7"/>
 <wire x1="27.94" y1="48.26" x2="33.02" y2="48.26" width="0.1524" layer="91"/>

@@ -2,20 +2,26 @@
 #include <SPI.h>
 #include <DAC57X4.h>
 #include <EEPROM.h>
+#include <usbh_midi.h>
+#include <usbhub.h>
+#include <midi_RingBuffer.h>
 
 #define MIDI_CHANNEL 1
 
 #define OCTAVE_RANGE 10
 #define MAX_CV 10.0
-#define CV_PER_OCTAVE (MAX_CV / OCTAVE_RANGE)
+#define NOTES_PER_OCTAVE 12
+#define CV_PER_OCTAVE 1.0
+#define CV_PER_NOTE CV_PER_OCTAVE / NOTES_PER_OCTAVE
 
 #define BASE_NOTE 21
 #define MAX_NOTE 108
-#define NOTE_RANGE MAX_NOTE - BASE_NOTE
+#define NOTE_RANGE OCTAVE_RANGE * NOTES_PER_OCTAVE
 
 // Define Pitch Bend range to be a major second
-#define BEND_RANGE ((CV_PER_OCTAVE / 12.0) * 1.5)
+#define BEND_RANGE ((CV_PER_NOTE) * 1)
 
+#define PIN_USB_RESET 7
 
 #define PIN_GATE_0 A5
 #define PIN_GATE_1 A1
@@ -25,9 +31,6 @@
 #define ROTARY_SWITCH_PIN0 2
 #define ROTARY_SWITCH_PIN1 3
 #define ROTARY_SWITCH_PIN2 4
-#define ROTARY_SWITCH_PIN3 5
-#define ROTARY_SWITCH_PIN4 6
-#define ROTARY_SWITCH_PIN5 7
 
 #define PIN_SPEED A4
 
@@ -84,7 +87,51 @@ const int clockDivisions[] = { MIDI_CLOCK_DIVIDE_WHOLE,         MIDI_CLOCK_DIVID
 
 DAC57X4 dac(4, 2, SS);
 
+
+class USBMidiParser
+{
+  public:
+    USBMidiParser(USBH_MIDI *usbThing);
+    int available();
+    void begin(unsigned baud);
+    byte read();
+    void write(unsigned char data);
+  private:
+    midi::RingBuffer<byte, 64> rxBuffer;
+    USBH_MIDI *usb;
+};
+
+USBMidiParser::USBMidiParser(USBH_MIDI *usbThing) {
+  usb = usbThing;
+}
+
+int USBMidiParser::available() {
+  uint8_t  buf[20];
+  byte length = 0;
+  if((length = usb->RecvData(buf)) > 0) {
+    for(byte i = 0; i < length; i++)
+      rxBuffer.write(buf[i]);
+  }
+  return rxBuffer.getLength();
+}
+
+void USBMidiParser::begin(unsigned baud) {
+  rxBuffer.clear();
+}
+
+byte USBMidiParser::read() {
+  return rxBuffer.read();  
+}
+
+void USBMidiParser::write(unsigned char asd) {}
+
+USB Usb;
+USBH_MIDI  usbMidi(&Usb);
+USBMidiParser parser(&usbMidi);
+boolean usbMidiEnabled = false;
+
 MIDI_CREATE_DEFAULT_INSTANCE(); 
+MIDI_CREATE_INSTANCE(USBMidiParser, parser, MIDIUSB);
 
 byte currentMode = MODE_MONO;
 
@@ -98,8 +145,8 @@ float cv[] =    {0,   0,   0,   0};   // 0 to MAX_CV
 bool gate[] = {LOW, LOW, LOW, LOW}; // LOW or HIGH
 bool midiStartSignal = LOW;
 bool midiClockSignal = LOW;
-unsigned long activeNotes[NOTE_RANGE];
-unsigned long noteCount = 1;
+byte activeNotes[NOTE_RANGE];
+byte noteCount = 1;
 byte activeNoteCount = 0;
 int currentPitchBend = 0;
 byte currentModulation = 0;
@@ -119,7 +166,7 @@ unsigned long lastManualClockMillis = 0;
 byte currentSequencePosition = 0;
 
 byte currentArpPosition = 0;
-unsigned long activeArpNotes[NOTE_RANGE];
+byte activeArpNotes[NOTE_RANGE];
 byte activeArpNoteCount = 0;
 bool arpLatchReadyForNew = true;
 
@@ -136,6 +183,20 @@ void setup() {
   MIDI.setHandleStart(onMidiStart);
   MIDI.setHandleControlChange(onMidiControlChange);
   MIDI.setHandlePitchBend(onMidiPitchBend);
+
+  if(Usb.Init() == -1) {
+    usbMidiEnabled = false;  
+  } else {
+    usbMidiEnabled = true;
+
+    MIDIUSB.begin(MIDI_CHANNEL_OMNI);
+    MIDIUSB.setHandleClock(onMidiClock);
+    MIDIUSB.setHandleNoteOn(onMidiNoteOn);
+    MIDIUSB.setHandleNoteOff(onMidiNoteOff);
+    MIDIUSB.setHandleStart(onMidiStart);
+    MIDIUSB.setHandleControlChange(onMidiControlChange);
+    MIDIUSB.setHandlePitchBend(onMidiPitchBend);
+  }
 }
 
 void onMidiClock() {
@@ -168,7 +229,10 @@ void onMidiNoteOff(byte channel, byte note, byte velocity) {
   if(channel > MIDI_CHANNEL + 1) return;
   activeNotes[note - BASE_NOTE] = 0;
   activeNoteCount--;
-  if(activeNoteCount == 0) currentVelocity = 0;
+  if(activeNoteCount == 0) {
+    currentVelocity = 0; 
+    noteCount = 1;
+  }
   released = 0;
 }
 
@@ -191,7 +255,7 @@ void onMidiStart() {
 float midiToCV(byte note) {
   if(note < BASE_NOTE) return 0;
   if(note - BASE_NOTE > NOTE_RANGE) return MAX_CV;
-  return mapfloat(note - BASE_NOTE, 0, 120.0, 0, MAX_CV);
+  return (note - BASE_NOTE) * CV_PER_NOTE;
 }
 
 byte getMostRecentNote() {
@@ -216,6 +280,11 @@ void loop() {
   
   readSpeed();
   MIDI.read();
+  if(usbMidiEnabled) {
+    Usb.Task();
+    if(usbMidi)
+      MIDIUSB.read();
+  }
 
   if(millis() - lastClockMillis > MIDI_CLOCK_THRESHOLD_MILLIS) {
     // Apparently we are not getting any midi clocks, so we will just generate our own signal.
@@ -565,13 +634,8 @@ void readSwitches() {
   if(analogValue < 100) flipSwitch1 = FLIP_SWITCH_UP;
   else if(analogValue < 900) flipSwitch1 = FLIP_SWITCH_DOWN;
   else flipSwitch1 = FLIP_SWITCH_MIDDLE;
-
-  if(digitalRead(ROTARY_SWITCH_PIN0) == LOW) rotarySwitch = 0;
-  else if(digitalRead(ROTARY_SWITCH_PIN1) == LOW) rotarySwitch = 1;
-  else if(digitalRead(ROTARY_SWITCH_PIN2) == LOW) rotarySwitch = 2;
-  else if(digitalRead(ROTARY_SWITCH_PIN3) == LOW) rotarySwitch = 3;
-  else if(digitalRead(ROTARY_SWITCH_PIN4) == LOW) rotarySwitch = 4;
-  else if(digitalRead(ROTARY_SWITCH_PIN5) == LOW) rotarySwitch = 5;
+  
+  rotarySwitch = (!digitalRead(ROTARY_SWITCH_PIN0) << 2) & (!digitalRead(ROTARY_SWITCH_PIN1) << 1) & !digitalRead(ROTARY_SWITCH_PIN2);
 }
 
 void readSpeed() {
