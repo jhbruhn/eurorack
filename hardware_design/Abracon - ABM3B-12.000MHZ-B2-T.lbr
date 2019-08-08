@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE eagle SYSTEM "eagle.dtd">
+<eagle>
+    <drawing>
+        <grid unitdist="mm" unit="mm"/>
+        <layers>
+            <layer name="Top" color="4" number="1" visible="yes" active="yes" fill="1"/>
+            <layer name="Bottom" color="4" number="16" visible="yes" active="yes" fill="1"/>
+            <layer name="tPlace" color="7" number="21" visible="yes" active="yes" fill="1"/>
+            <layer name="bPlace" color="7" number="22" visible="yes" active="yes" fill="1"/>
+            <layer name="tNames" color="7" number="25" visible="yes" active="yes" fill="1"/>
+            <layer name="bNames" color="7" number="26" visible="yes" active="yes" fill="1"/>
+            <layer name="tValues" color="7" number="27" visible="yes" active="yes" fill="1"/>
+            <layer name="bValues" color="7" number="28" visible="yes" active="yes" fill="1"/>
+            <layer name="tStop" color="7" number="29" visible="yes" active="yes" fill="1"/>
+            <layer name="bStop" color="7" number="30" visible="yes" active="yes" fill="1"/>
+            <layer name="tCream" color="7" number="31" visible="yes" active="yes" fill="1"/>
+            <layer name="bCream" color="7" number="32" visible="yes" active="yes" fill="1"/>
+            <layer name="tKeepout" color="4" number="39" visible="yes" active="yes" fill="1"/>
+            <layer name="bKeepout" color="4" number="40" visible="yes" active="yes" fill="1"/>
+            <layer name="tRestrict" color="0" number="41" visible="yes" active="yes" fill="1"/>
+            <layer name="bRestrict" color="0" number="42" visible="yes" active="yes" fill="1"/>
+            <layer name="tDocu" color="7" number="51" visible="yes" active="yes" fill="1"/>
+            <layer name="bDocu" color="7" number="52" visible="yes" active="yes" fill="1"/>
+            <layer name="Nets" color="2" number="91" visible="yes" active="yes" fill="1"/>
+            <layer name="Busses" color="1" number="92" visible="yes" active="yes" fill="1"/>
+            <layer name="Pins" color="2" number="93" visible="yes" active="yes" fill="1"/>
+            <layer name="Symbols" color="4" number="94" visible="yes" active="yes" fill="1"/>
+            <layer name="Names" color="7" number="95" visible="yes" active="yes" fill="1"/>
+            <layer name="Values" color="7" number="96" visible="yes" active="yes" fill="1"/>
+            <layer name="Info" color="7" number="97" visible="yes" active="yes" fill="1"/>
+            <layer name="Guide" color="6" number="98" visible="yes" active="yes" fill="1"/>
+        </layers>
+        <library name="Upverter Library">
+            <description>Upverter Parts Library
+
+Created by Upverter.com</description>
+            <packages>
+                <package name="ABRACON_ABM3B-12.000MHZ-B2-T_0">
+                    <description>XTAL-1-3-4</description>
+                    <wire layer="21" y2="0.2" width="0.15" x2="2.5" y1="-0.2" x1="2.5"/>
+                    <wire layer="21" y2="0.2" width="0.15" x2="-2.5" y1="-0.2" x1="-2.5"/>
+                    <wire layer="21" y2="1.6" width="0.15" x2="0.673" y1="1.6" x1="-0.673"/>
+                    <wire layer="21" y2="-1.6" width="0.15" x2="0.673" y1="-1.6" x1="-0.673"/>
+                    <wire layer="51" y2="1.6" width="0.1" x2="-2.5" y1="-1.6" x1="-2.5"/>
+                    <wire layer="51" y2="1.6" width="0.1" x2="2.5" y1="-1.6" x1="2.5"/>
+                    <wire layer="51" y2="1.6" width="0.1" x2="2.5" y1="1.6" x1="-2.5"/>
+                    <wire layer="51" y2="-1.6" width="0.1" x2="2.5" y1="-1.6" x1="-2.5"/>
+                    <wire layer="39" y2="1.9" width="0.1" x2="-3.0" y1="-1.9" x1="-3.0"/>
+                    <wire layer="39" y2="1.9" width="0.1" x2="3.0" y1="1.9" x1="-3.0"/>
+                    <wire layer="39" y2="-1.9" width="0.1" x2="3.0" y1="1.9" x1="3.0"/>
+                    <wire layer="39" y2="-1.9" width="0.1" x2="-3.0" y1="-1.9" x1="3.0"/>
+                    <text layer="25" align="bottom-left" y="1.9" x="-4.575" rot="R0" size="1.0">&gt;NAME</text>
+                    <circle y="-1.2" x="-3.45" layer="21" radius="0.125" width="0.25"/>
+                    <smd layer="1" thermals="yes" name="4" stop="yes" roundness="0" dx="1.8" dy="1.2" y="1.2" x="-2.0" rot="R180" cream="yes"/>
+                    <smd layer="1" thermals="yes" name="3" stop="yes" roundness="0" dx="1.8" dy="1.2" y="1.2" x="2.0" rot="R180" cream="yes"/>
+                    <smd layer="1" thermals="yes" name="2" stop="yes" roundness="0" dx="1.8" dy="1.2" y="-1.2" x="2.0" rot="R180" cream="yes"/>
+                    <smd layer="1" thermals="yes" name="1" stop="yes" roundness="0" dx="1.8" dy="1.2" y="-1.2" x="-2.0" rot="R180" cream="yes"/>
+                </package>
+            </packages>
+            <symbols>
+                <symbol name="ABRACON_ABM3B-12.000MHZ-B2-T_0_0">
+                    <description>XTAL-1-3-4</description>
+                    <wire layer="94" y2="-5.08" width="0.508" x2="0.0" y1="-15.24" x1="0.0"/>
+                    <wire layer="94" y2="-5.08" width="0.508" x2="15.24" y1="-5.08" x1="0.0"/>
+                    <wire layer="94" y2="-15.24" width="0.508" x2="15.24" y1="-5.08" x1="15.24"/>
+                    <wire layer="94" y2="-15.24" width="0.508" x2="0.0" y1="-15.24" x1="15.24"/>
+                    <wire layer="94" y2="-8.636" width="0.254" x2="8.89" y1="-6.604" x1="8.89"/>
+                    <wire layer="94" y2="-5.842" width="0.254" x2="8.382" y1="-5.842" x1="6.858"/>
+                    <wire layer="94" y2="-8.636" width="0.254" x2="6.35" y1="-6.604" x1="6.35"/>
+                    <wire layer="94" y2="-9.398" width="0.254" x2="8.382" y1="-5.842" x1="8.382"/>
+                    <wire layer="94" y2="-9.398" width="0.254" x2="6.858" y1="-9.398" x1="8.382"/>
+                    <wire layer="94" y2="-5.842" width="0.254" x2="6.858" y1="-9.398" x1="6.858"/>
+                    <wire layer="94" y2="-7.62" width="0.254" x2="6.35" y1="-7.62" x1="0.0"/>
+                    <wire layer="94" y2="-7.62" width="0.254" x2="15.24" y1="-7.62" x1="8.89"/>
+                    <wire layer="94" y2="-7.62" width="0.15" x2="0.0" y1="-7.62" x1="0.0"/>
+                    <wire layer="94" y2="-7.62" width="0.15" x2="15.24" y1="-7.62" x1="15.24"/>
+                    <wire layer="94" y2="-12.7" width="0.15" x2="0.0" y1="-12.7" x1="0.0"/>
+                    <wire layer="94" y2="-12.7" width="0.15" x2="15.24" y1="-12.7" x1="15.24"/>
+                    <text layer="95" align="top-left" y="-2.54" x="0.0" rot="R0" size="2.54">&gt;NAME</text>
+                    <text layer="95" align="top-left" y="-20.32" x="0.0" rot="R0" size="2.54">ABM3B-12.000MHZ-B2-T</text>
+                    <pin direction="pas" name="X1" visible="pad" length="middle" y="-7.62" x="-5.08"/>
+                    <pin direction="pas" name="X2" visible="pad" length="middle" y="-7.62" x="20.32" rot="R180"/>
+                    <pin direction="pwr" name="1_GND" visible="both" length="middle" y="-12.7" x="-5.08"/>
+                    <pin direction="pwr" name="2_GND" visible="both" length="middle" y="-12.7" x="20.32" rot="R180"/>
+                </symbol>
+            </symbols>
+            <devicesets>
+                <deviceset prefix="X" name="ABRACON_ABM3B-12.000MHZ-B2-T">
+                    <description>XTAL-1-3-4</description>
+                    <gates>
+                        <gate name="G$0" symbol="ABRACON_ABM3B-12.000MHZ-B2-T_0_0" x="0"/>
+                    </gates>
+                    <devices>
+                        <device name="ABRACON_ABM3B-12.000MHZ-B2-T_0_0" package="ABRACON_ABM3B-12.000MHZ-B2-T_0">
+                            <connects>
+                                <connect gate="G$0" pad="1" pin="X1"/>
+                                <connect gate="G$0" pad="2" pin="1_GND"/>
+                                <connect gate="G$0" pad="3" pin="X2"/>
+                                <connect gate="G$0" pad="4" pin="2_GND"/>
+                            </connects>
+                            <technologies>
+                                <technology>
+                                    <attribute name="Package_Quantity" value="500"/>
+                                    <attribute name="Package_Description" value="4-Pin Surface Mount Device, Body 5 x 3.2 mm"/>
+                                    <attribute name="ciiva_ids" value="780008"/>
+                                    <attribute name="Component_Link_1_Description" value="Manufacturer URL"/>
+                                    <attribute name="vault_guid" value="24D0D680-39A5-4850-90ED-8111495D22A7"/>
+                                    <attribute name="Dropout_Voltage" value="2 V"/>
+                                    <attribute name="Pins" value="3"/>
+                                    <attribute name="Min_Operating_Temperature" value="0 degC"/>
+                                    <attribute name="MPN" value="ABM3B-12.000MHZ-B2-T"/>
+                                    <attribute name="Packaging" value="Tape and Reel"/>
+                                    <attribute name="Component_Link_1_URL" value="http://www.abracon.com/"/>
+                                    <attribute name="imported" value="yes"/>
+                                    <attribute name="Datasheet_Version" value="Aug-15"/>
+                                    <attribute name="Outputs" value="1"/>
+                                    <attribute name="prefix" value="X"/>
+                                    <attribute name="import_ts" value="1521842082"/>
+                                    <attribute name="Case_Package" value="TO-263-4"/>
+                                    <attribute name="Ro_HSCompliant" value="true"/>
+                                    <attribute name="Max_Operating_Temperature" value="125 degC"/>
+                                    <attribute name="Max_Input_Voltage" value="25 V"/>
+                                    <attribute name="Output_Voltage" value="5 V"/>
+                                    <attribute name="vault_revision" value="F364169E-CEC8-420F-9568-55648A1B8707"/>
+                                    <attribute name="Mount" value="Surface Mount"/>
+                                    <attribute name="footprint_variant_name_0" value="Manufacturer Recommended"/>
+                                    <attribute name="release_date" value="1475124701"/>
+                                    <attribute name="REACH_SVHC" value="No SVHC"/>
+                                    <attribute name="Nominal_Output_Voltage" value="5 V"/>
+                                    <attribute name="imported_from" value="vault"/>
+                                    <attribute name="datasheet" value="http://www.abracon.com/Resonators/abm3b.pdf"/>
+                                    <attribute name="Min_Input_Voltage" value="7 V"/>
+                                    <attribute name="Weight" value="0.050897 oz"/>
+                                    <attribute name="Max_Ouput_Current" value="1.5 A"/>
+                                    <attribute name="Radiation_Hardening" value="No"/>
+                                    <attribute name="MF" value="Abracon"/>
+                                    <attribute name="package" value="ABM3B"/>
+                                    <attribute name="Output_Current" value="1.5 A"/>
+                                </technology>
+                            </technologies>
+                        </device>
+                    </devices>
+                </deviceset>
+            </devicesets>
+        </library>
+    </drawing>
+</eagle>
