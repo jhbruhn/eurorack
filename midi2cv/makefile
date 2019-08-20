@@ -41,12 +41,12 @@ UPLOAD_COMMAND  = upload_combo_jtag
 # Packages to build
 TARGET         = midi2cv
 PACKAGES       = midi2cv \
-		peaks/drivers \
+		midi2cv/drivers \
 		stmlib/utils \
 		stmlib/system
 RESOURCES      = midi2cv/resources
 
-TOOLCHAIN_PATH ?= /usr/
+TOOLCHAIN_PATH ?= /usr/local/arm-4.8.3/
 
 include stmlib/makefile.inc
 
