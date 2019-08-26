@@ -1,0 +1,76 @@
+Circuit: * C:\Users\jhbru\Documents\GitHub\eurorack\stereo_mix\simulation\panner.asc
+
+WARNING: Less than two connections to node NC_01.  This node is used by Q:U4:N11.
+WARNING: Less than two connections to node NC_03.  This node is used by Q:U1:N11.
+WARNING: Less than two connections to node NC_05.  This node is used by Q:U9:N11.
+WARNING: Less than two connections to node NC_07.  This node is used by Q:U12:N11.
+Early termination of direct N-R iteration.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+Gmin = 5.6588
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+Gmin = 5.48561
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+vernier = 0.000488281
+Gmin = 5.50166
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+Source Step = 10.2273%
+Source Step = 12.1212%
+Source Step = 14.0152%
+Source Step = 15.9091%
+Source Step = 17.803%
+vernier = 0.09375
+Source Step = 20.1705%
+Source Step = 23.0114%
+Source Step = 25.8523%
+Source Step = 28.6932%
+Source Step = 31.5341%
+vernier = 0.140625
+Source Step = 34.9432%
+Source Step = 39.2045%
+Source Step = 43.4659%
+Source Step = 47.7273%
+Source Step = 51.9886%
+vernier = 0.210938
+Source Step = 56.8892%
+Source Step = 63.2813%
+Source Step = 69.6733%
+Source Step = 76.0653%
+Source Step = 82.4574%
+vernier = 0.316406
+Source Step = 89.4886%
+Source Step = 99.0767%
+Source stepping succeeded in finding the operating point.
+
+
+Date: Mon Aug 26 14:51:10 2019
+Total elapsed time: 6.964 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 16915
+traniter = 14221
+tranpoints = 5468
+accept = 3734
+rejected = 1734
+matrix size = 334
+fillins = 2937
+solver = Normal
+Thread vector: 135.7/104.8[4] 25.7/9.4[4] 28.4/13.6[4] 9.9/5.9[2]  2592/500
+Matrix Compiler1: 420.81 KB object code size  88.7/51.6/[41.4]
+Matrix Compiler2: 82.83 KB object code size  53.7/64.6/[13.5]
+

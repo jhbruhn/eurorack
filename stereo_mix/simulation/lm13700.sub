@@ -1,0 +1,39 @@
+.SUBCKT HALF13700    LIN   INP   INN  IAB  OUT VCC  VSS  BIN  BUF
+QN1     IAB   VN2B   VSS   npnv     3
+QN2     VN2B  VN2B   VSS   npnv     3
+QN3     VN3C  IAB    VN2B  npnv     3
+QN4     VP3B  INN    VN3C  npnv     3
+QN5     VP6B  INP    VN3C  npnv     3
+QN6     LIN   LIN    INN   npnv     3
+QN7     LIN   LIN    INP   npnv     3
+QN8     VN10B VN9B   VSS   npnv     3
+QN9     VN9B  VN9B   VSS   npnv     3
+QN10    OUT   VN10B  VN9B  npnv     3
+QN11    VCC   BIN    VN12B npnv     15
+QN12    VN12B VN12B  BUF   npnv     3
+QN13    VCC   VN12B  BUF   npnv     150
+QP1     VP3B  VP2B   VCC   pnpl     3
+QP2     VP2B  VP2B   VCC   pnpl     3
+QP3     VN10B VP3B   VP2B  pnpl     3
+QP4     VP6B  VP5B   VCC   pnpl     3
+QP5     VP5B  VP5B   VCC   pnpl     3
+QP6     OUT   VP6B   VP5B  pnpl     3
+.ends
+
+.MODEL  npnv      NPN(
+*========================================================== 
++IS=1.1E-18     NF=1.005   BF=220        VAF=130      IKF=5e-03 
++ISE=9.15E-15   NE=2 
+*==========================================================                                          
++CJE=2E-12 CJC=2E-13 CJS=3E-12 TF=.6E-9 )
+
+.MODEL  pnpl     PNP(
+*========================================================== 
++IS=1.1E-18     NF=1.8   BF=5        VAF=170      IKF=6e-03 
++ISE=3E-15      NE=3 
+*==========================================================                                          
++CJE=4E-12 CJC=6E-13 CJS=5E-12 TF=70E-9 )
+
+
+
+.end
