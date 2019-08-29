@@ -1,8 +1,7 @@
-
 # Copyright 2013 Emilie Gillet.
-# 
+#
 # Author: Emilie Gillet (emilie.o.gillet@gmail.com)
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -25,33 +24,20 @@
 
 # System specifications
 F_CRYSTAL      = 8000000L
-F_CPU          = 72000000L
-SYSCLOCK       = SYSCLK_FREQ_72MHz
+F_CPU          = 24000000L
+SYSCLOCK       = SYSCLK_FREQ_24MHz
 FAMILY         = f10x
 DENSITY        = md
 MEMORY_MODE    = flash
+
 # USB            = enabled
 
-#APPLICATION    = TRUE
-BOOTLOADER     = midi2cv_bootloader
-
 # Preferred upload command
-UPLOAD_COMMAND  = upload_combo_jtag
+UPLOAD_COMMAND  = upload_jtag
 
 # Packages to build
-TARGET         = midi2cv
-PACKAGES       = midi2cv \
-		midi2cv/drivers \
-		stmlib/utils \
-		stmlib/system
+TARGET         = midi2cv_bootloader
+PACKAGES       = midi2cv/bootloader midi2cv/drivers stmlib/utils stmlib/system
 RESOURCES      = midi2cv/resources
 
-TOOLCHAIN_PATH ?= /usr/local/arm-4.8.3/
-
 include stmlib/makefile.inc
-
-# Rule for building the firmware update file
-wav:  $(TARGET_BIN)
-	python stm_audio_bootloader/fsk/encoder.py \
-		-s 48000 -b 16 -n 8 -z 4 -p 256 \
-		$(TARGET_BIN)
