@@ -1,0 +1,91 @@
+Circuit: * C:\Users\jhbru\Documents\GitHub\eurorack\stereo_mix\simulation\Draft2.asc
+
+Early termination of direct N-R iteration.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+Gmin = 5.5165
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+Gmin = 5.49501
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+vernier = 0.000488281
+Gmin = 5.50104
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+Source Step = 18.75%
+vernier = 0.015625
+Source Step = 19.0341%
+Source Step = 19.5076%
+Source Step = 19.9811%
+Source Step = 20.4545%
+Source Step = 20.928%
+vernier = 0.0234375
+Source Step = 21.6146%
+Source Step = 22.3248%
+Source Step = 23.035%
+Source Step = 23.7453%
+Source Step = 24.4555%
+vernier = 0.0351563
+Source Step = 25.4498%
+Source Step = 26.5152%
+Source Step = 27.5805%
+Source Step = 28.6458%
+Source Step = 29.7112%
+vernier = 0.0527344
+Source Step = 31.1494%
+Source Step = 32.7474%
+Source Step = 34.3454%
+Source Step = 35.9434%
+Source Step = 37.5414%
+vernier = 0.0791016
+Source Step = 39.6188%
+Source Step = 42.0159%
+Source Step = 44.4129%
+Source Step = 46.8099%
+Source Step = 49.2069%
+vernier = 0.118652
+Source Step = 52.2032%
+Source Step = 55.7987%
+Source Step = 59.3942%
+Source Step = 62.9898%
+Source Step = 66.5853%
+vernier = 0.177979
+Source Step = 70.8999%
+Source Step = 76.2932%
+Source Step = 81.6865%
+Source Step = 87.0798%
+Source Step = 92.4731%
+vernier = 0.266968
+Source Step = 98.6754%
+Source stepping succeeded in finding the operating point.
+
+
+Date: Tue Aug 27 10:07:28 2019
+Total elapsed time: 1.056 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 5212
+traniter = 2128
+tranpoints = 1065
+accept = 1060
+rejected = 5
+matrix size = 82
+fillins = 537
+solver = Normal
+Thread vector: 15.7/6.6[2] 1.9/2.0[1] 7.6/5.0[2] 1.2/2.2[1]  2592/500
+Matrix Compiler1: 58.52 KB object code size  9.5/4.8/[3.2]
+Matrix Compiler2: 16.49 KB object code size  4.6/3.3/[2.5]
+
