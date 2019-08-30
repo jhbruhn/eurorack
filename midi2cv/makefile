@@ -32,7 +32,7 @@ DENSITY        = md
 MEMORY_MODE    = flash
 # USB            = enabled
 
-#APPLICATION    = TRUE
+APPLICATION    = TRUE
 BOOTLOADER     = midi2cv_bootloader
 
 # Preferred upload command
@@ -50,8 +50,3 @@ TOOLCHAIN_PATH ?= /usr/local/arm-4.8.3/
 
 include stmlib/makefile.inc
 
-# Rule for building the firmware update file
-wav:  $(TARGET_BIN)
-	python stm_audio_bootloader/fsk/encoder.py \
-		-s 48000 -b 16 -n 8 -z 4 -p 256 \
-		$(TARGET_BIN)
