@@ -17,5 +17,5 @@ void GPIO::Init() {
 }
 
 void GPIO::Write(GPIO_TypeDef* port, uint16_t pin, bool state) {
-  GPIO_WriteBit(GPIOB, pin, static_cast<BitAction>(state));
+  GPIO_WriteBit(port, pin, static_cast<BitAction>(state));
 }

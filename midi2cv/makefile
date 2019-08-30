@@ -32,7 +32,7 @@ DENSITY        = md
 MEMORY_MODE    = flash
 # USB            = enabled
 
-APPLICATION    = TRUE
+APPLICATION_SMALL    = TRUE
 BOOTLOADER     = midi2cv_bootloader
 
 # Preferred upload command
