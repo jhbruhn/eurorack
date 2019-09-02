@@ -5,6 +5,8 @@
 #include "stmlib/stmlib.h"
 #include <stm32f10x_conf.h>
 
+#define PORT_RST_OLED GPIOB
+#define PIN_RST_OLED GPIO_Pin_0
 #define PORT_SS_DAC0 GPIOB
 #define PIN_SS_DAC0 GPIO_Pin_6
 #define PORT_SS_DAC1 GPIOB
@@ -44,4 +46,7 @@ class GPIO {
     DISALLOW_COPY_AND_ASSIGN(GPIO);
 };
 
+extern GPIO gpio;
+
 #endif
+
