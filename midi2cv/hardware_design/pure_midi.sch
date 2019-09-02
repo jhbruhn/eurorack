@@ -18351,356 +18351,6 @@ Source: HCPL7221.pdf</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="lm4040">
-<packages>
-<package name="TEXAS_INSTRUMENTS_LM4040C5IDBZR_0">
-<description>TI-LM4040C25DBZ3</description>
-<wire x1="0.7" y1="-1.5" x2="0.7" y2="-0.675" width="0.15" layer="21"/>
-<wire x1="-0.3" y1="-1.5" x2="0.7" y2="-1.5" width="0.15" layer="21"/>
-<wire x1="0.7" y1="0.675" x2="0.7" y2="1.5" width="0.15" layer="21"/>
-<wire x1="-0.3" y1="1.5" x2="0.7" y2="1.5" width="0.15" layer="21"/>
-<wire x1="-0.7" y1="-1.52" x2="0.7" y2="-1.52" width="0.1" layer="51"/>
-<wire x1="-0.7" y1="1.52" x2="0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="0.7" y1="-1.52" x2="0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="-0.7" y1="-1.52" x2="-0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="-1.575" y1="-1.6" x2="-1.575" y2="1.6" width="0.1" layer="41"/>
-<wire x1="-1.575" y1="1.6" x2="1.575" y2="1.6" width="0.1" layer="41"/>
-<wire x1="1.575" y1="1.6" x2="1.575" y2="-1.6" width="0.1" layer="41"/>
-<wire x1="1.575" y1="-1.6" x2="-1.575" y2="-1.6" width="0.1" layer="41"/>
-<text x="-0.508" y="-0.127" size="0.35" layer="25">&gt;NAME</text>
-<circle x="-1.1" y="1.775" radius="0.125" width="0.25" layer="21"/>
-<smd name="3" x="1.1" y="0" dx="0.55" dy="0.8" layer="1" roundness="36" rot="R90"/>
-<smd name="2" x="-1.1" y="-0.95" dx="0.55" dy="0.8" layer="1" roundness="36" rot="R90"/>
-<smd name="1" x="-1.1" y="0.95" dx="0.55" dy="0.8" layer="1" roundness="36" rot="R90"/>
-</package>
-<package name="TEXAS_INSTRUMENTS_LM4040C5IDBZR_1">
-<description>TI-LM4040C25DBZ3</description>
-<wire x1="0.7" y1="-1.5" x2="0.7" y2="-0.7" width="0.15" layer="21"/>
-<wire x1="-0.3" y1="-1.5" x2="0.7" y2="-1.5" width="0.15" layer="21"/>
-<wire x1="0.7" y1="0.7" x2="0.7" y2="1.5" width="0.15" layer="21"/>
-<wire x1="-0.3" y1="1.5" x2="0.7" y2="1.5" width="0.15" layer="21"/>
-<wire x1="-0.7" y1="-1.52" x2="0.7" y2="-1.52" width="0.1" layer="51"/>
-<wire x1="-0.7" y1="1.52" x2="0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="0.7" y1="-1.52" x2="0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="-0.7" y1="-1.52" x2="-0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="-1.925" y1="-1.75" x2="-1.925" y2="1.75" width="0.1" layer="41"/>
-<wire x1="-1.925" y1="1.75" x2="1.925" y2="1.75" width="0.1" layer="41"/>
-<wire x1="1.925" y1="1.75" x2="1.925" y2="-1.75" width="0.1" layer="41"/>
-<wire x1="1.925" y1="-1.75" x2="-1.925" y2="-1.75" width="0.1" layer="41"/>
-<text x="-0.508" y="-0.127" size="0.35" layer="25">&gt;NAME</text>
-<circle x="-1.2" y="1.8" radius="0.125" width="0.25" layer="21"/>
-<smd name="3" x="1.2" y="0" dx="0.6" dy="1" layer="1" roundness="34" rot="R90"/>
-<smd name="2" x="-1.2" y="-0.95" dx="0.6" dy="1" layer="1" roundness="34" rot="R90"/>
-<smd name="1" x="-1.2" y="0.95" dx="0.6" dy="1" layer="1" roundness="34" rot="R90"/>
-</package>
-<package name="TEXAS_INSTRUMENTS_LM4040C5IDBZR_2">
-<description>TI-LM4040C25DBZ3</description>
-<wire x1="-0.3" y1="1.5" x2="0.7" y2="1.5" width="0.15" layer="21"/>
-<wire x1="0.7" y1="0.725" x2="0.7" y2="1.5" width="0.15" layer="21"/>
-<wire x1="-0.3" y1="-1.5" x2="0.7" y2="-1.5" width="0.15" layer="21"/>
-<wire x1="0.7" y1="-1.5" x2="0.7" y2="-0.725" width="0.15" layer="21"/>
-<wire x1="-0.7" y1="-1.52" x2="-0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="0.7" y1="-1.52" x2="0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="-0.7" y1="1.52" x2="0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="-0.7" y1="-1.52" x2="0.7" y2="-1.52" width="0.1" layer="51"/>
-<wire x1="-2.375" y1="-2" x2="-2.375" y2="2" width="0.1" layer="41"/>
-<wire x1="-2.375" y1="2" x2="2.375" y2="2" width="0.1" layer="41"/>
-<wire x1="2.375" y1="2" x2="2.375" y2="-2" width="0.1" layer="41"/>
-<wire x1="2.375" y1="-2" x2="-2.375" y2="-2" width="0.1" layer="41"/>
-<text x="-0.508" y="-0.127" size="0.35" layer="25">&gt;NAME</text>
-<circle x="-1.3" y="1.825" radius="0.125" width="0.25" layer="21"/>
-<smd name="1" x="-1.3" y="0.95" dx="0.65" dy="1.2" layer="1" roundness="30" rot="R90"/>
-<smd name="2" x="-1.3" y="-0.95" dx="0.65" dy="1.2" layer="1" roundness="30" rot="R90"/>
-<smd name="3" x="1.3" y="0" dx="0.65" dy="1.2" layer="1" roundness="30" rot="R90"/>
-</package>
-<package name="TEXAS_INSTRUMENTS_LM4040C25IDBZR_0">
-<description>TI-LM4040C25DBZ3</description>
-<wire x1="0.7" y1="-1.5" x2="0.7" y2="-0.675" width="0.15" layer="21"/>
-<wire x1="-0.3" y1="-1.5" x2="0.7" y2="-1.5" width="0.15" layer="21"/>
-<wire x1="0.7" y1="0.675" x2="0.7" y2="1.5" width="0.15" layer="21"/>
-<wire x1="-0.3" y1="1.5" x2="0.7" y2="1.5" width="0.15" layer="21"/>
-<wire x1="-0.7" y1="-1.52" x2="0.7" y2="-1.52" width="0.1" layer="51"/>
-<wire x1="-0.7" y1="1.52" x2="0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="0.7" y1="-1.52" x2="0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="-0.7" y1="-1.52" x2="-0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="-1.575" y1="-1.6" x2="-1.575" y2="1.6" width="0.1" layer="41"/>
-<wire x1="-1.575" y1="1.6" x2="1.575" y2="1.6" width="0.1" layer="41"/>
-<wire x1="1.575" y1="1.6" x2="1.575" y2="-1.6" width="0.1" layer="41"/>
-<wire x1="1.575" y1="-1.6" x2="-1.575" y2="-1.6" width="0.1" layer="41"/>
-<text x="-0.508" y="-0.127" size="0.35" layer="25">&gt;NAME</text>
-<circle x="-1.1" y="1.775" radius="0.125" width="0.25" layer="21"/>
-<smd name="3" x="1.1" y="0" dx="0.55" dy="0.8" layer="1" roundness="36" rot="R90"/>
-<smd name="2" x="-1.1" y="-0.95" dx="0.55" dy="0.8" layer="1" roundness="36" rot="R90"/>
-<smd name="1" x="-1.1" y="0.95" dx="0.55" dy="0.8" layer="1" roundness="36" rot="R90"/>
-</package>
-<package name="TEXAS_INSTRUMENTS_LM4040C25IDBZR_1">
-<description>TI-LM4040C25DBZ3</description>
-<wire x1="0.7" y1="-1.5" x2="0.7" y2="-0.7" width="0.15" layer="21"/>
-<wire x1="-0.3" y1="-1.5" x2="0.7" y2="-1.5" width="0.15" layer="21"/>
-<wire x1="0.7" y1="0.7" x2="0.7" y2="1.5" width="0.15" layer="21"/>
-<wire x1="-0.3" y1="1.5" x2="0.7" y2="1.5" width="0.15" layer="21"/>
-<wire x1="-0.7" y1="-1.52" x2="0.7" y2="-1.52" width="0.1" layer="51"/>
-<wire x1="-0.7" y1="1.52" x2="0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="0.7" y1="-1.52" x2="0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="-0.7" y1="-1.52" x2="-0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="-1.925" y1="-1.75" x2="-1.925" y2="1.75" width="0.1" layer="41"/>
-<wire x1="-1.925" y1="1.75" x2="1.925" y2="1.75" width="0.1" layer="41"/>
-<wire x1="1.925" y1="1.75" x2="1.925" y2="-1.75" width="0.1" layer="41"/>
-<wire x1="1.925" y1="-1.75" x2="-1.925" y2="-1.75" width="0.1" layer="41"/>
-<text x="-0.508" y="-0.127" size="0.35" layer="25">&gt;NAME</text>
-<circle x="-1.2" y="1.8" radius="0.125" width="0.25" layer="21"/>
-<smd name="3" x="1.2" y="0" dx="0.6" dy="1" layer="1" roundness="34" rot="R90"/>
-<smd name="2" x="-1.2" y="-0.95" dx="0.6" dy="1" layer="1" roundness="34" rot="R90"/>
-<smd name="1" x="-1.2" y="0.95" dx="0.6" dy="1" layer="1" roundness="34" rot="R90"/>
-</package>
-<package name="TEXAS_INSTRUMENTS_LM4040C25IDBZR_2">
-<description>TI-LM4040C25DBZ3</description>
-<wire x1="-0.3" y1="1.5" x2="0.7" y2="1.5" width="0.15" layer="21"/>
-<wire x1="0.7" y1="0.725" x2="0.7" y2="1.5" width="0.15" layer="21"/>
-<wire x1="-0.3" y1="-1.5" x2="0.7" y2="-1.5" width="0.15" layer="21"/>
-<wire x1="0.7" y1="-1.5" x2="0.7" y2="-0.725" width="0.15" layer="21"/>
-<wire x1="-0.7" y1="-1.52" x2="-0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="0.7" y1="-1.52" x2="0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="-0.7" y1="1.52" x2="0.7" y2="1.52" width="0.1" layer="51"/>
-<wire x1="-0.7" y1="-1.52" x2="0.7" y2="-1.52" width="0.1" layer="51"/>
-<wire x1="-2.375" y1="-2" x2="-2.375" y2="2" width="0.1" layer="41"/>
-<wire x1="-2.375" y1="2" x2="2.375" y2="2" width="0.1" layer="41"/>
-<wire x1="2.375" y1="2" x2="2.375" y2="-2" width="0.1" layer="41"/>
-<wire x1="2.375" y1="-2" x2="-2.375" y2="-2" width="0.1" layer="41"/>
-<text x="-0.508" y="-0.127" size="0.35" layer="25">&gt;NAME</text>
-<circle x="-1.3" y="1.825" radius="0.125" width="0.25" layer="21"/>
-<smd name="1" x="-1.3" y="0.95" dx="0.65" dy="1.2" layer="1" roundness="30" rot="R90"/>
-<smd name="2" x="-1.3" y="-0.95" dx="0.65" dy="1.2" layer="1" roundness="30" rot="R90"/>
-<smd name="3" x="1.3" y="0" dx="0.65" dy="1.2" layer="1" roundness="30" rot="R90"/>
-</package>
-</packages>
-<symbols>
-<symbol name="TEXAS_INSTRUMENTS_LM4040C5IDBZR_0_0">
-<description>TI-LM4040C25DBZ3</description>
-<polygon width="0.254" layer="94">
-<vertex x="0" y="-10.16"/>
-<vertex x="2.54" y="-7.62"/>
-<vertex x="0" y="-5.08"/>
-</polygon>
-<wire x1="3.556" y1="-10.16" x2="2.54" y2="-9.144" width="0.254" layer="94"/>
-<wire x1="2.54" y1="-9.144" x2="2.54" y2="-6.096" width="0.254" layer="94"/>
-<wire x1="2.54" y1="-6.096" x2="1.524" y2="-5.08" width="0.254" layer="94"/>
-<wire x1="2.54" y1="-12.7" x2="1.27" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="1.27" y1="-12.7" x2="1.27" y2="-8.636" width="0.254" layer="94"/>
-<wire x1="1.27" y1="-8.636" x2="1.27" y2="-8.89" width="0.254" layer="94"/>
-<wire x1="0" y1="-7.62" x2="0" y2="-7.62" width="0.15" layer="94"/>
-<wire x1="2.54" y1="-7.62" x2="2.54" y2="-7.62" width="0.15" layer="94"/>
-<wire x1="2.54" y1="-12.7" x2="2.54" y2="-12.7" width="0.15" layer="94"/>
-<text x="0" y="-2.54" size="2.54" layer="95" align="top-left">&gt;NAME</text>
-<text x="0" y="-17.78" size="2.54" layer="95" align="top-left">LM4040C5IDBZR</text>
-<pin name="ANODE" x="-5.08" y="-7.62" visible="pad" length="middle" direction="pas"/>
-<pin name="CATHODE" x="7.62" y="-7.62" visible="pad" length="middle" direction="pas" rot="R180"/>
-<pin name="NC" x="7.62" y="-12.7" visible="pad" length="middle" direction="pas" rot="R180"/>
-</symbol>
-<symbol name="TEXAS_INSTRUMENTS_LM4040C25IDBZR_0_0">
-<description>TI-LM4040C25DBZ3</description>
-<polygon width="0.254" layer="94">
-<vertex x="0" y="-10.16"/>
-<vertex x="2.54" y="-7.62"/>
-<vertex x="0" y="-5.08"/>
-</polygon>
-<wire x1="3.556" y1="-10.16" x2="2.54" y2="-9.144" width="0.254" layer="94"/>
-<wire x1="2.54" y1="-9.144" x2="2.54" y2="-6.096" width="0.254" layer="94"/>
-<wire x1="2.54" y1="-6.096" x2="1.524" y2="-5.08" width="0.254" layer="94"/>
-<wire x1="2.54" y1="-12.7" x2="1.27" y2="-12.7" width="0.254" layer="94"/>
-<wire x1="1.27" y1="-12.7" x2="1.27" y2="-8.636" width="0.254" layer="94"/>
-<wire x1="1.27" y1="-8.636" x2="1.27" y2="-8.89" width="0.254" layer="94"/>
-<wire x1="0" y1="-7.62" x2="0" y2="-7.62" width="0.15" layer="94"/>
-<wire x1="2.54" y1="-7.62" x2="2.54" y2="-7.62" width="0.15" layer="94"/>
-<wire x1="2.54" y1="-12.7" x2="2.54" y2="-12.7" width="0.15" layer="94"/>
-<text x="0" y="-2.54" size="2.54" layer="95" align="top-left">&gt;NAME</text>
-<text x="0" y="-17.78" size="2.54" layer="95" align="top-left">LM4040C25IDBZR</text>
-<pin name="ANODE" x="-5.08" y="-7.62" visible="pad" length="middle" direction="pas"/>
-<pin name="CATHODE" x="7.62" y="-7.62" visible="pad" length="middle" direction="pas" rot="R180"/>
-<pin name="NC" x="7.62" y="-12.7" visible="pad" length="middle" direction="pas" rot="R180"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="TEXAS_INSTRUMENTS_LM4040C5IDBZR" prefix="U">
-<description>TI-LM4040C25DBZ3</description>
-<gates>
-<gate name="G$1" symbol="TEXAS_INSTRUMENTS_LM4040C5IDBZR_0_0" x="2.54" y="0"/>
-</gates>
-<devices>
-<device name="" package="TEXAS_INSTRUMENTS_LM4040C5IDBZR_0">
-<connects>
-<connect gate="G$1" pin="ANODE" pad="2"/>
-<connect gate="G$1" pin="CATHODE" pad="1"/>
-<connect gate="G$1" pin="NC" pad="3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="1" package="TEXAS_INSTRUMENTS_LM4040C5IDBZR_1">
-<connects>
-<connect gate="G$1" pin="ANODE" pad="2"/>
-<connect gate="G$1" pin="CATHODE" pad="1"/>
-<connect gate="G$1" pin="NC" pad="3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="2" package="TEXAS_INSTRUMENTS_LM4040C5IDBZR_2">
-<connects>
-<connect gate="G$1" pin="ANODE" pad="2"/>
-<connect gate="G$1" pin="CATHODE" pad="1"/>
-<connect gate="G$1" pin="NC" pad="3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="TEXAS_INSTRUMENTS_LM4040C25IDBZR" prefix="U">
-<description>TI-LM4040C25DBZ3</description>
-<gates>
-<gate name="G$0" symbol="TEXAS_INSTRUMENTS_LM4040C25IDBZR_0_0" x="0" y="0"/>
-</gates>
-<devices>
-<device name="TEXAS_INSTRUMENTS_LM4040C25IDBZR_0_0" package="TEXAS_INSTRUMENTS_LM4040C25IDBZR_0">
-<connects>
-<connect gate="G$0" pin="ANODE" pad="2"/>
-<connect gate="G$0" pin="CATHODE" pad="1"/>
-<connect gate="G$0" pin="NC" pad="3"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="CIIVA_IDS" value="1469524"/>
-<attribute name="CODE__JEDEC" value="TO-236"/>
-<attribute name="COMPONENT_LINK_1_DESCRIPTION" value="Manufacturer URL"/>
-<attribute name="COMPONENT_LINK_1_URL" value="http://www.ti.com/"/>
-<attribute name="COMPONENT_LINK_3_DESCRIPTION" value="Package Specification"/>
-<attribute name="COMPONENT_LINK_3_URL" value="http://www.ti.com/litv/pdf/mpds108a"/>
-<attribute name="DATASHEET" value="http://www.ti.com/general/docs/lit/getliterature.tsp?genericPartNumber=LM4040C25&amp;fileType=pdf"/>
-<attribute name="DATASHEET_VERSION" value="SLOS456K"/>
-<attribute name="FOOTPRINT_VARIANT_NAME_0" value="Level C"/>
-<attribute name="FOOTPRINT_VARIANT_NAME_1" value="Level B"/>
-<attribute name="FOOTPRINT_VARIANT_NAME_2" value="Level A"/>
-<attribute name="IMPORTED" value="yes"/>
-<attribute name="IMPORTED_FROM" value="vault"/>
-<attribute name="IMPORT_TS" value="1521848919"/>
-<attribute name="INITIAL_ACCURACY__25DEG_C" value="0.5"/>
-<attribute name="IOUT_IZ_MAXM_A" value="15"/>
-<attribute name="MF" value="Texas Instruments"/>
-<attribute name="MIN_IZ_FOR_REGULATIONUA" value="75"/>
-<attribute name="MOUNTING_TECHNOLOGY" value="Surface Mount"/>
-<attribute name="MPN" value="LM4040C25IDBZR"/>
-<attribute name="PACKAGE" value="DBZ0003A"/>
-<attribute name="PACKAGE_DESCRIPTION" value="3-Pin Plastic Small Outline, Body 2.92 x 1.3 mm, Pitch 0.95 mm"/>
-<attribute name="PACKAGE_VERSION" value="4203227/B"/>
-<attribute name="PREFIX" value="U"/>
-<attribute name="RATING" value="Catalog"/>
-<attribute name="RELEASE_DATE" value="1464596443"/>
-<attribute name="ROHS" value="Yes"/>
-<attribute name="SUB_FAMILY" value="Shunt Voltage Reference"/>
-<attribute name="TEMP_COEFFMAXPPM_DEGREE_C" value="100"/>
-<attribute name="TEMP_COEFFTYPPPM_DEGREE_C" value="15"/>
-<attribute name="VAULT_GUID" value="5413DB6E-9D10-4027-A969-08E6820F4111"/>
-<attribute name="VAULT_REVISION" value="C65482E3-4B49-4B9C-954A-31B6BAF04754"/>
-<attribute name="VO_V" value="2.5"/>
-</technology>
-</technologies>
-</device>
-<device name="TEXAS_INSTRUMENTS_LM4040C25IDBZR_0_1" package="TEXAS_INSTRUMENTS_LM4040C25IDBZR_1">
-<connects>
-<connect gate="G$0" pin="ANODE" pad="2"/>
-<connect gate="G$0" pin="CATHODE" pad="1"/>
-<connect gate="G$0" pin="NC" pad="3"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="CIIVA_IDS" value="1469524"/>
-<attribute name="CODE__JEDEC" value="TO-236"/>
-<attribute name="COMPONENT_LINK_1_DESCRIPTION" value="Manufacturer URL"/>
-<attribute name="COMPONENT_LINK_1_URL" value="http://www.ti.com/"/>
-<attribute name="COMPONENT_LINK_3_DESCRIPTION" value="Package Specification"/>
-<attribute name="COMPONENT_LINK_3_URL" value="http://www.ti.com/litv/pdf/mpds108a"/>
-<attribute name="DATASHEET" value="http://www.ti.com/general/docs/lit/getliterature.tsp?genericPartNumber=LM4040C25&amp;fileType=pdf"/>
-<attribute name="DATASHEET_VERSION" value="SLOS456K"/>
-<attribute name="FOOTPRINT_VARIANT_NAME_0" value="Level C"/>
-<attribute name="FOOTPRINT_VARIANT_NAME_1" value="Level B"/>
-<attribute name="FOOTPRINT_VARIANT_NAME_2" value="Level A"/>
-<attribute name="IMPORTED" value="yes"/>
-<attribute name="IMPORTED_FROM" value="vault"/>
-<attribute name="IMPORT_TS" value="1521848919"/>
-<attribute name="INITIAL_ACCURACY__25DEG_C" value="0.5"/>
-<attribute name="IOUT_IZ_MAXM_A" value="15"/>
-<attribute name="MF" value="Texas Instruments"/>
-<attribute name="MIN_IZ_FOR_REGULATIONUA" value="75"/>
-<attribute name="MOUNTING_TECHNOLOGY" value="Surface Mount"/>
-<attribute name="MPN" value="LM4040C25IDBZR"/>
-<attribute name="PACKAGE" value="DBZ0003A"/>
-<attribute name="PACKAGE_DESCRIPTION" value="3-Pin Plastic Small Outline, Body 2.92 x 1.3 mm, Pitch 0.95 mm"/>
-<attribute name="PACKAGE_VERSION" value="4203227/B"/>
-<attribute name="PREFIX" value="U"/>
-<attribute name="RATING" value="Catalog"/>
-<attribute name="RELEASE_DATE" value="1464596443"/>
-<attribute name="ROHS" value="Yes"/>
-<attribute name="SUB_FAMILY" value="Shunt Voltage Reference"/>
-<attribute name="TEMP_COEFFMAXPPM_DEGREE_C" value="100"/>
-<attribute name="TEMP_COEFFTYPPPM_DEGREE_C" value="15"/>
-<attribute name="VAULT_GUID" value="5413DB6E-9D10-4027-A969-08E6820F4111"/>
-<attribute name="VAULT_REVISION" value="C65482E3-4B49-4B9C-954A-31B6BAF04754"/>
-<attribute name="VO_V" value="2.5"/>
-</technology>
-</technologies>
-</device>
-<device name="TEXAS_INSTRUMENTS_LM4040C25IDBZR_0_2" package="TEXAS_INSTRUMENTS_LM4040C25IDBZR_2">
-<connects>
-<connect gate="G$0" pin="ANODE" pad="2"/>
-<connect gate="G$0" pin="CATHODE" pad="1"/>
-<connect gate="G$0" pin="NC" pad="3"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="CIIVA_IDS" value="1469524"/>
-<attribute name="CODE__JEDEC" value="TO-236"/>
-<attribute name="COMPONENT_LINK_1_DESCRIPTION" value="Manufacturer URL"/>
-<attribute name="COMPONENT_LINK_1_URL" value="http://www.ti.com/"/>
-<attribute name="COMPONENT_LINK_3_DESCRIPTION" value="Package Specification"/>
-<attribute name="COMPONENT_LINK_3_URL" value="http://www.ti.com/litv/pdf/mpds108a"/>
-<attribute name="DATASHEET" value="http://www.ti.com/general/docs/lit/getliterature.tsp?genericPartNumber=LM4040C25&amp;fileType=pdf"/>
-<attribute name="DATASHEET_VERSION" value="SLOS456K"/>
-<attribute name="FOOTPRINT_VARIANT_NAME_0" value="Level C"/>
-<attribute name="FOOTPRINT_VARIANT_NAME_1" value="Level B"/>
-<attribute name="FOOTPRINT_VARIANT_NAME_2" value="Level A"/>
-<attribute name="IMPORTED" value="yes"/>
-<attribute name="IMPORTED_FROM" value="vault"/>
-<attribute name="IMPORT_TS" value="1521848919"/>
-<attribute name="INITIAL_ACCURACY__25DEG_C" value="0.5"/>
-<attribute name="IOUT_IZ_MAXM_A" value="15"/>
-<attribute name="MF" value="Texas Instruments"/>
-<attribute name="MIN_IZ_FOR_REGULATIONUA" value="75"/>
-<attribute name="MOUNTING_TECHNOLOGY" value="Surface Mount"/>
-<attribute name="MPN" value="LM4040C25IDBZR"/>
-<attribute name="PACKAGE" value="DBZ0003A"/>
-<attribute name="PACKAGE_DESCRIPTION" value="3-Pin Plastic Small Outline, Body 2.92 x 1.3 mm, Pitch 0.95 mm"/>
-<attribute name="PACKAGE_VERSION" value="4203227/B"/>
-<attribute name="PREFIX" value="U"/>
-<attribute name="RATING" value="Catalog"/>
-<attribute name="RELEASE_DATE" value="1464596443"/>
-<attribute name="ROHS" value="Yes"/>
-<attribute name="SUB_FAMILY" value="Shunt Voltage Reference"/>
-<attribute name="TEMP_COEFFMAXPPM_DEGREE_C" value="100"/>
-<attribute name="TEMP_COEFFTYPPPM_DEGREE_C" value="15"/>
-<attribute name="VAULT_GUID" value="5413DB6E-9D10-4027-A969-08E6820F4111"/>
-<attribute name="VAULT_REVISION" value="C65482E3-4B49-4B9C-954A-31B6BAF04754"/>
-<attribute name="VO_V" value="2.5"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="SparkFun-Connectors" urn="urn:adsk.eagle:library:513">
 <description>&lt;h3&gt;SparkFun Connectors&lt;/h3&gt;
 This library contains electrically-functional connectors. 
@@ -28347,15 +27997,87 @@ NS Package M08A</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="analog-adr43x">
+<packages>
+<package name="MSOP8" urn="urn:adsk.eagle:footprint:8086236/1">
+<description>&lt;b&gt;Micro Small Outline Package&lt;/b&gt; Grid .65mm&lt;p&gt;</description>
+<wire x1="-1.4" y1="1.4" x2="1.4" y2="1.4" width="0.2032" layer="21"/>
+<wire x1="1.4" y1="1.4" x2="1.4" y2="-1.4" width="0.2032" layer="21"/>
+<wire x1="1.4" y1="-1.4" x2="-1.4" y2="-1.4" width="0.2032" layer="21"/>
+<wire x1="-1.4" y1="-1.4" x2="-1.4" y2="1.4" width="0.2032" layer="21"/>
+<circle x="-1" y="-1" radius="0.2" width="0" layer="21"/>
+<smd name="1" x="-0.975" y="-2.05" dx="0.45" dy="1" layer="1"/>
+<smd name="2" x="-0.325" y="-2.05" dx="0.45" dy="1" layer="1"/>
+<smd name="3" x="0.325" y="-2.05" dx="0.45" dy="1" layer="1"/>
+<smd name="4" x="0.975" y="-2.05" dx="0.45" dy="1" layer="1"/>
+<smd name="5" x="0.975" y="2.05" dx="0.45" dy="1" layer="1"/>
+<smd name="6" x="0.325" y="2.05" dx="0.45" dy="1" layer="1"/>
+<smd name="7" x="-0.325" y="2.05" dx="0.45" dy="1" layer="1"/>
+<smd name="8" x="-0.975" y="2.05" dx="0.45" dy="1" layer="1"/>
+<text x="-1.15" y="0.15" size="1.016" layer="25">&gt;NAME</text>
+<text x="-0.65" y="-1.05" size="1.016" layer="27">&gt;VALUE</text>
+<rectangle x1="-1.1254" y1="-2.45" x2="-0.8254" y2="-1.5" layer="51"/>
+<rectangle x1="-0.4751" y1="-2.45" x2="-0.1751" y2="-1.5" layer="51"/>
+<rectangle x1="0.1751" y1="-2.45" x2="0.4751" y2="-1.5" layer="51"/>
+<rectangle x1="0.8253" y1="-2.45" x2="1.1253" y2="-1.5" layer="51"/>
+<rectangle x1="0.8254" y1="1.5" x2="1.1254" y2="2.45" layer="51"/>
+<rectangle x1="0.1751" y1="1.5" x2="0.4751" y2="2.45" layer="51"/>
+<rectangle x1="-0.4751" y1="1.5" x2="-0.1751" y2="2.45" layer="51"/>
+<rectangle x1="-1.1253" y1="1.5" x2="-0.8253" y2="2.45" layer="51"/>
+</package>
+</packages>
+<symbols>
+<symbol name="ADR43X">
+<pin name="DNC" x="-10.16" y="10.16" length="middle" direction="nc"/>
+<pin name="VIN" x="-10.16" y="5.08" length="middle" direction="pwr"/>
+<pin name="NIC" x="-10.16" y="0" length="middle" direction="nc"/>
+<pin name="GND" x="-10.16" y="-5.08" length="middle" direction="pwr"/>
+<pin name="TRIM" x="15.24" y="-7.62" length="middle" rot="R180"/>
+<pin name="VOUT" x="15.24" y="-2.54" length="middle" direction="pwr" rot="R180"/>
+<pin name="COMP" x="15.24" y="2.54" length="middle" rot="R180"/>
+<pin name="DNC2" x="15.24" y="7.62" length="middle" direction="nc" rot="R180"/>
+<wire x1="-5.08" y1="12.7" x2="-5.08" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-10.16" x2="10.16" y2="-10.16" width="0.254" layer="94"/>
+<wire x1="10.16" y1="-10.16" x2="10.16" y2="12.7" width="0.254" layer="94"/>
+<wire x1="10.16" y1="12.7" x2="-5.08" y2="12.7" width="0.254" layer="94"/>
+<text x="-2.54" y="12.7" size="1.905" layer="95">&gt;NAME</text>
+<text x="-2.54" y="-12.7" size="1.905" layer="96">&gt;VALUE</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="ADR43XXRMZ" prefix="IC" uservalue="yes">
+<gates>
+<gate name="G$1" symbol="ADR43X" x="-2.54" y="-2.54"/>
+</gates>
+<devices>
+<device name="" package="MSOP8">
+<connects>
+<connect gate="G$1" pin="COMP" pad="7"/>
+<connect gate="G$1" pin="DNC" pad="1"/>
+<connect gate="G$1" pin="DNC2" pad="8"/>
+<connect gate="G$1" pin="GND" pad="4"/>
+<connect gate="G$1" pin="NIC" pad="3"/>
+<connect gate="G$1" pin="TRIM" pad="5"/>
+<connect gate="G$1" pin="VIN" pad="2"/>
+<connect gate="G$1" pin="VOUT" pad="6"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
 <variantdefs>
 </variantdefs>
 <classes>
-<class number="0" name="default" width="0" drill="0">
+<class number="0" name="default" width="0.254" drill="0">
 </class>
-<class number="1" name="POWER" width="0.254" drill="0">
+<class number="1" name="POWER" width="0.3048" drill="0">
 </class>
 </classes>
 <parts>
@@ -28469,14 +28191,6 @@ NS Package M08A</description>
 <part name="R6" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="4k7"/>
 <part name="GND16" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="U1" library="lm4040" deviceset="TEXAS_INSTRUMENTS_LM4040C5IDBZR" device="1"/>
-<part name="U3" library="lm4040" deviceset="TEXAS_INSTRUMENTS_LM4040C25IDBZR" device="TEXAS_INSTRUMENTS_LM4040C25IDBZR_0_1"/>
-<part name="R9" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="2k"/>
-<part name="P+6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
-<part name="GND22" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="GND17" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="P+2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
-<part name="R8" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="2k"/>
 <part name="C12" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100n"/>
 <part name="J1" library="SparkFun-Connectors" library_urn="urn:adsk.eagle:library:513" deviceset="CORTEX_DEBUG" device="_PTH" package3d_urn="urn:adsk.eagle:package:38290/1"/>
 <part name="+3V34" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
@@ -28575,6 +28289,18 @@ NS Package M08A</description>
 <part name="C27" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100n"/>
 <part name="GND59" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="C28" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100n"/>
+<part name="IC8" library="analog-adr43x" deviceset="ADR43XXRMZ" device="" value="ADR435"/>
+<part name="IC9" library="analog-adr43x" deviceset="ADR43XXRMZ" device="" value="ADR431"/>
+<part name="P+11" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
+<part name="P+12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
+<part name="GND60" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="GND61" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="C29" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100n"/>
+<part name="C30" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100n"/>
+<part name="GND62" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="GND63" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="C31" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100n"/>
+<part name="C32" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100n"/>
 </parts>
 <sheets>
 <sheet>
@@ -29469,32 +29195,6 @@ NS Package M08A</description>
 <instance part="GND15" gate="1" x="45.72" y="-12.7" smashed="yes">
 <attribute name="VALUE" x="43.18" y="-15.24" size="1.778" layer="96"/>
 </instance>
-<instance part="U1" gate="G$1" x="60.96" y="111.76" smashed="yes" rot="R90">
-<attribute name="NAME" x="63.5" y="111.76" size="2.54" layer="95" rot="R90" align="top-left"/>
-</instance>
-<instance part="U3" gate="G$0" x="104.14" y="111.76" smashed="yes" rot="R90">
-<attribute name="NAME" x="106.68" y="111.76" size="2.54" layer="95" rot="R90" align="top-left"/>
-</instance>
-<instance part="R9" gate="G$1" x="111.76" y="132.08" smashed="yes" rot="R90">
-<attribute name="NAME" x="110.2614" y="128.27" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="115.062" y="128.27" size="1.778" layer="96" rot="R90"/>
-</instance>
-<instance part="P+6" gate="1" x="111.76" y="142.24" smashed="yes">
-<attribute name="VALUE" x="109.22" y="137.16" size="1.778" layer="96" rot="R90"/>
-</instance>
-<instance part="GND22" gate="1" x="111.76" y="99.06" smashed="yes">
-<attribute name="VALUE" x="109.22" y="96.52" size="1.778" layer="96" rot="R90"/>
-</instance>
-<instance part="GND17" gate="1" x="68.58" y="99.06" smashed="yes">
-<attribute name="VALUE" x="66.04" y="96.52" size="1.778" layer="96" rot="R90"/>
-</instance>
-<instance part="P+2" gate="1" x="68.58" y="142.24" smashed="yes">
-<attribute name="VALUE" x="66.04" y="137.16" size="1.778" layer="96" rot="R90"/>
-</instance>
-<instance part="R8" gate="G$1" x="68.58" y="132.08" smashed="yes" rot="R90">
-<attribute name="NAME" x="67.0814" y="128.27" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="71.882" y="128.27" size="1.778" layer="96" rot="R90"/>
-</instance>
 <instance part="C12" gate="G$1" x="185.42" y="-38.1" smashed="yes">
 <attribute name="NAME" x="186.944" y="-37.719" size="1.778" layer="95"/>
 <attribute name="VALUE" x="186.944" y="-42.799" size="1.778" layer="96"/>
@@ -29685,6 +29385,48 @@ NS Package M08A</description>
 <instance part="GND59" gate="1" x="154.94" y="-48.26" smashed="yes">
 <attribute name="VALUE" x="152.4" y="-50.8" size="1.778" layer="96"/>
 </instance>
+<instance part="IC8" gate="G$1" x="48.26" y="119.38" smashed="yes">
+<attribute name="NAME" x="45.72" y="132.08" size="1.905" layer="95"/>
+<attribute name="VALUE" x="45.72" y="106.68" size="1.905" layer="96"/>
+</instance>
+<instance part="IC9" gate="G$1" x="114.3" y="121.92" smashed="yes">
+<attribute name="NAME" x="111.76" y="134.62" size="1.905" layer="95"/>
+<attribute name="VALUE" x="111.76" y="109.22" size="1.905" layer="96"/>
+</instance>
+<instance part="P+11" gate="1" x="25.4" y="129.54" smashed="yes">
+<attribute name="VALUE" x="22.86" y="124.46" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="P+12" gate="1" x="93.98" y="132.08" smashed="yes">
+<attribute name="VALUE" x="91.44" y="127" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="GND60" gate="1" x="25.4" y="109.22" smashed="yes">
+<attribute name="VALUE" x="22.86" y="106.68" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="GND61" gate="1" x="93.98" y="111.76" smashed="yes">
+<attribute name="VALUE" x="91.44" y="109.22" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="C29" gate="G$1" x="25.4" y="119.38" smashed="yes">
+<attribute name="NAME" x="26.924" y="119.761" size="1.778" layer="95"/>
+<attribute name="VALUE" x="26.924" y="114.681" size="1.778" layer="96"/>
+</instance>
+<instance part="C30" gate="G$1" x="93.98" y="121.92" smashed="yes">
+<attribute name="NAME" x="95.504" y="122.301" size="1.778" layer="95"/>
+<attribute name="VALUE" x="95.504" y="117.221" size="1.778" layer="96"/>
+</instance>
+<instance part="GND62" gate="1" x="73.66" y="106.68" smashed="yes">
+<attribute name="VALUE" x="71.12" y="104.14" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="GND63" gate="1" x="139.7" y="106.68" smashed="yes">
+<attribute name="VALUE" x="137.16" y="104.14" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="C31" gate="G$1" x="73.66" y="114.3" smashed="yes">
+<attribute name="NAME" x="75.184" y="114.681" size="1.778" layer="95"/>
+<attribute name="VALUE" x="75.184" y="109.601" size="1.778" layer="96"/>
+</instance>
+<instance part="C32" gate="G$1" x="139.7" y="114.3" smashed="yes">
+<attribute name="NAME" x="141.224" y="114.681" size="1.778" layer="95"/>
+<attribute name="VALUE" x="141.224" y="109.601" size="1.778" layer="96"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -29843,16 +29585,6 @@ NS Package M08A</description>
 <junction x="45.72" y="5.08"/>
 </segment>
 <segment>
-<pinref part="GND17" gate="1" pin="GND"/>
-<pinref part="U1" gate="G$1" pin="ANODE"/>
-<wire x1="68.58" y1="101.6" x2="68.58" y2="106.68" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="U3" gate="G$0" pin="ANODE"/>
-<pinref part="GND22" gate="1" pin="GND"/>
-<wire x1="111.76" y1="106.68" x2="111.76" y2="101.6" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="R25" gate="G$1" pin="2"/>
 <pinref part="GND31" gate="1" pin="GND"/>
 </segment>
@@ -29894,6 +29626,30 @@ NS Package M08A</description>
 <wire x1="195.58" y1="-45.72" x2="185.42" y2="-45.72" width="0.1524" layer="91"/>
 <junction x="185.42" y="-45.72"/>
 </segment>
+<segment>
+<pinref part="IC8" gate="G$1" pin="GND"/>
+<wire x1="38.1" y1="114.3" x2="25.4" y2="114.3" width="0.1524" layer="91"/>
+<pinref part="GND60" gate="1" pin="GND"/>
+<wire x1="25.4" y1="114.3" x2="25.4" y2="111.76" width="0.1524" layer="91"/>
+<pinref part="C29" gate="G$1" pin="2"/>
+<junction x="25.4" y="114.3"/>
+</segment>
+<segment>
+<pinref part="IC9" gate="G$1" pin="GND"/>
+<wire x1="104.14" y1="116.84" x2="93.98" y2="116.84" width="0.1524" layer="91"/>
+<pinref part="GND61" gate="1" pin="GND"/>
+<wire x1="93.98" y1="116.84" x2="93.98" y2="114.3" width="0.1524" layer="91"/>
+<pinref part="C30" gate="G$1" pin="2"/>
+<junction x="93.98" y="116.84"/>
+</segment>
+<segment>
+<pinref part="GND62" gate="1" pin="GND"/>
+<pinref part="C31" gate="G$1" pin="2"/>
+</segment>
+<segment>
+<pinref part="GND63" gate="1" pin="GND"/>
+<pinref part="C32" gate="G$1" pin="2"/>
+</segment>
 </net>
 <net name="+12V" class="1">
 <segment>
@@ -29917,11 +29673,6 @@ NS Package M08A</description>
 <wire x1="58.42" y1="-35.56" x2="60.96" y2="-35.56" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="R9" gate="G$1" pin="2"/>
-<pinref part="P+6" gate="1" pin="+12V"/>
-<wire x1="111.76" y1="137.16" x2="111.76" y2="139.7" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="C12" gate="G$1" pin="1"/>
 <pinref part="P+7" gate="1" pin="+12V"/>
 <wire x1="185.42" y1="-35.56" x2="172.72" y2="-35.56" width="0.1524" layer="91"/>
@@ -29935,9 +29686,22 @@ NS Package M08A</description>
 <wire x1="160.02" y1="-35.56" x2="172.72" y2="-35.56" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="R8" gate="G$1" pin="2"/>
-<pinref part="P+2" gate="1" pin="+12V"/>
-<wire x1="68.58" y1="137.16" x2="68.58" y2="139.7" width="0.1524" layer="91"/>
+<pinref part="IC8" gate="G$1" pin="VIN"/>
+<wire x1="38.1" y1="124.46" x2="25.4" y2="124.46" width="0.1524" layer="91"/>
+<pinref part="P+11" gate="1" pin="+12V"/>
+<wire x1="25.4" y1="124.46" x2="25.4" y2="127" width="0.1524" layer="91"/>
+<pinref part="C29" gate="G$1" pin="1"/>
+<wire x1="25.4" y1="124.46" x2="25.4" y2="121.92" width="0.1524" layer="91"/>
+<junction x="25.4" y="124.46"/>
+</segment>
+<segment>
+<pinref part="IC9" gate="G$1" pin="VIN"/>
+<wire x1="104.14" y1="127" x2="93.98" y2="127" width="0.1524" layer="91"/>
+<pinref part="P+12" gate="1" pin="+12V"/>
+<wire x1="93.98" y1="127" x2="93.98" y2="129.54" width="0.1524" layer="91"/>
+<pinref part="C30" gate="G$1" pin="1"/>
+<wire x1="93.98" y1="127" x2="93.98" y2="124.46" width="0.1524" layer="91"/>
+<junction x="93.98" y="127"/>
 </segment>
 </net>
 <net name="AREF_5" class="1">
@@ -29947,13 +29711,10 @@ NS Package M08A</description>
 <pinref part="U2" gate="A" pin="VREF"/>
 </segment>
 <segment>
-<pinref part="U1" gate="G$1" pin="CATHODE"/>
-<pinref part="R8" gate="G$1" pin="1"/>
-<wire x1="68.58" y1="119.38" x2="68.58" y2="121.92" width="0.1524" layer="91"/>
-<wire x1="68.58" y1="121.92" x2="68.58" y2="127" width="0.1524" layer="91"/>
-<wire x1="68.58" y1="121.92" x2="78.74" y2="121.92" width="0.1524" layer="91"/>
-<junction x="68.58" y="121.92"/>
-<label x="68.58" y="121.92" size="1.778" layer="95"/>
+<pinref part="IC8" gate="G$1" pin="VOUT"/>
+<label x="63.5" y="116.84" size="1.778" layer="95"/>
+<pinref part="C31" gate="G$1" pin="1"/>
+<wire x1="63.5" y1="116.84" x2="73.66" y2="116.84" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -30279,13 +30040,11 @@ NS Package M08A</description>
 <label x="50.8" y="0" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U3" gate="G$0" pin="CATHODE"/>
-<pinref part="R9" gate="G$1" pin="1"/>
-<wire x1="111.76" y1="119.38" x2="111.76" y2="121.92" width="0.1524" layer="91"/>
-<wire x1="111.76" y1="121.92" x2="111.76" y2="127" width="0.1524" layer="91"/>
-<wire x1="111.76" y1="121.92" x2="121.92" y2="121.92" width="0.1524" layer="91"/>
-<junction x="111.76" y="121.92"/>
-<label x="111.76" y="121.92" size="1.778" layer="95"/>
+<pinref part="IC9" gate="G$1" pin="VOUT"/>
+<wire x1="129.54" y1="119.38" x2="139.7" y2="119.38" width="0.1524" layer="91"/>
+<label x="129.54" y="119.38" size="1.778" layer="95"/>
+<pinref part="C32" gate="G$1" pin="1"/>
+<wire x1="139.7" y1="119.38" x2="139.7" y2="116.84" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="RST_DAC0" class="0">
