@@ -1,4 +1,4 @@
-#include <stm32f10x_conf.h>
+#include <stm32f37x_conf.h>
 
 #include "drivers/display.h"
 #include "drivers/gpio.h"

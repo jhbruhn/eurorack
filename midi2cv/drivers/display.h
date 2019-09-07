@@ -1,7 +1,7 @@
 #ifndef MIDI2CV_DRIVERS_DISPLAY_H
 #define MIDI2CV_DRIVERS_DISPLAY_H
 
-#include <stm32f10x_conf.h>
+#include <stm32f37x_conf.h>
 #include "stmlib/stmlib.h"
 
 #define DISPLAY_WIDTH 128

@@ -27,12 +27,10 @@
 F_CRYSTAL      = 8000000L
 F_CPU          = 72000000L
 SYSCLOCK       = SYSCLK_FREQ_72MHz
-FAMILY         = f10x
-DENSITY        = md
-MEMORY_MODE    = flash
+FAMILY         = f37x
 # USB            = enabled
-
-APPLICATION_SMALL    = TRUE
+U8G2           = enabled
+APPLICATION_LARGE = TRUE
 BOOTLOADER     = midi2cv_bootloader
 
 # Preferred upload command
@@ -43,7 +41,7 @@ TARGET         = midi2cv
 PACKAGES       = midi2cv \
 		midi2cv/drivers \
 		stmlib/utils \
-		stmlib/system
+		stmlib/system 
 RESOURCES      = midi2cv/resources
 
 TOOLCHAIN_PATH ?= /usr/local/arm-4.8.3/

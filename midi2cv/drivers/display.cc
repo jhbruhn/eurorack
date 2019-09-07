@@ -1,7 +1,7 @@
 #include "display.h"
 #include "gpio.h"
-#include <stm32f10x_conf.h>
-
+#include <stm32f37x_conf.h>
+#include <u8g2.h>
 // SH1106 command definitions
 #define SH1106_CMD_SETMUX (uint8_t)0xA8    // Set multiplex ratio (N, number of lines active on display)
 #define SH1106_CMD_SETOFFS (uint8_t)0xD3   // Set display offset
