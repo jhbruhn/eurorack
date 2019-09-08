@@ -1,4 +1,4 @@
-#eurorack modules
+# eurorack modules
 
 Welcome to my Eurorack module stash. This is a collection of modules I (partially) designed for use with eurorack synthesizers.
 
