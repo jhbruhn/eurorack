@@ -4,7 +4,7 @@
 
 using namespace stmlib;
 
-const uint32_t kStartAddress = 0x08001000;
+const uint32_t kStartAddress = 0x08008000;
 
 int main(void) {
   SystemInit();

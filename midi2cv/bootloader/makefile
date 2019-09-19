@@ -24,12 +24,11 @@
 
 # System specifications
 F_CRYSTAL      = 8000000L
-F_CPU          = 24000000L
-SYSCLOCK       = SYSCLK_FREQ_24MHz
-FAMILY         = f10x
-DENSITY        = md
+F_CPU          = 72000000L
+SYSCLOCK       = SYSCLK_FREQ_72MHz
+FAMILY         = f37x
 MEMORY_MODE    = flash
-
+U8G2	= enabled
 # USB            = enabled
 
 # Preferred upload command

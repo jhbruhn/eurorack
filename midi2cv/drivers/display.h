@@ -3,10 +3,7 @@
 
 #include <stm32f37x_conf.h>
 #include "stmlib/stmlib.h"
-
-#define DISPLAY_WIDTH 128
-#define DISPLAY_HEIGHT 64
-
+#include <u8g2.h>
 
 
 class Display {
@@ -15,15 +12,10 @@ class Display {
     ~Display() {}
 
     void Init();
-    void WritePixel(uint8_t x, uint8_t  y, bool color);
-    void Clear();
-    void Update();
+    u8g2_t* u8g2();    
   private:
     DISALLOW_COPY_AND_ASSIGN(Display);
-    void WriteCommand(uint8_t byte);
-    void WriteData(uint8_t* data, uint8_t length);
-    
-    uint8_t buffer[DISPLAY_WIDTH*DISPLAY_HEIGHT / 8];
+    void InitGLib();    
 };
-
+extern Display display;
 #endif
