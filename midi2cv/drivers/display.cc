@@ -4,6 +4,7 @@
 #include "stmlib/utils/random.h"
 #include <stm32f37x_conf.h>
 #include <u8g2.h>
+#include "spi_mode.h"
 
 using namespace stmlib;
 
@@ -20,6 +21,8 @@ u8g2_t* Display::u8g2()
 {
     return &u8g2_;
 }
+
+void InitSPI(void);
 
 void Display::Init()
 {
@@ -53,25 +56,14 @@ void Display::Init()
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
     SPI_I2S_DeInit(SPI2);
     // Initialize SPI
-    SPI_InitTypeDef spi_init;
-    spi_init.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
-    spi_init.SPI_Mode = SPI_Mode_Master;
-    spi_init.SPI_DataSize = SPI_DataSize_8b;
-    spi_init.SPI_CPOL = SPI_CPOL_High;
-    spi_init.SPI_CPHA = SPI_CPHA_2Edge;
-    spi_init.SPI_NSS = SPI_NSS_Soft;
-    spi_init.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
-    spi_init.SPI_FirstBit = SPI_FirstBit_MSB;
-    spi_init.SPI_CRCPolynomial = 7;
-    SPI_Init(SPI2, &spi_init);
-    SPI_Cmd(SPI2, ENABLE);
-
+    InitSPI(SPI_MODE_DISPLAY);
     GPIO_WriteBit(GPIOB, kPinReset, Bit_RESET);
     asm("nop");
 
     GPIO_WriteBit(GPIOB, kPinReset, Bit_SET);
     InitGLib();
 }
+
 
 uint8_t u8x8_stm32_gpio_and_delay(U8X8_UNUSED u8x8_t* u8x8,
     U8X8_UNUSED uint8_t msg, U8X8_UNUSED uint8_t arg_int,
@@ -104,6 +96,7 @@ uint8_t u8x8_byte_4wire_hw_spi(u8x8_t* u8x8, uint8_t msg, uint8_t arg_int,
 	    GPIO_WriteBit(GPIOB, kPinDataCommand, Bit_RESET);
 	break;
     case U8X8_MSG_BYTE_START_TRANSFER:
+	InitSPI(SPI_MODE_DISPLAY);
 	GPIO_WriteBit(GPIOB, kPinEnable, Bit_RESET);
 	break;
     case U8X8_MSG_BYTE_END_TRANSFER:
@@ -120,7 +113,7 @@ void Display::InitGLib()
     u8g2_Setup_sh1106_128x64_noname_f(&u8g2_, U8G2_R0, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay);
     output_buf = default_buf = u8g2_.tile_buf_ptr;
     u8g2_InitDisplay(&u8g2_);
-    u8g2_SetContrast(&u8g2_, 127);
+    u8g2_SetContrast(&u8g2_, 255);
     u8g2_SetPowerSave(&u8g2_, 0);
 
     Random::Seed(42);

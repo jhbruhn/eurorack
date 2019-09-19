@@ -52,7 +52,7 @@ void TIM2_IRQHandler(void)
 	return;
     }
     TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-    
+
     // this will get called with 192 kHz (foof)
     // we want to reduce the amount of times the ui gets polled to 1kHz
     // which still is a lot (60fps would be enough tbh)
@@ -62,6 +62,15 @@ void TIM2_IRQHandler(void)
     if (count % 192 == 0) {
 	ui.Flush();
 	count = 0;
+    }
+
+    if (count % 48 == 0) { // write audiodac1
+    }
+    if (count % 48 == 1) { // write audiodac2
+    }
+    if (count % 48 == 2) { // write audiodac3
+    }
+    if (count % 48 == 3) { // write audiodac4
     }
 }
 }
@@ -103,7 +112,7 @@ void Init(void)
     SysTick_Config(F_CPU / 8000);
     IWDG_Enable();
     gpio.Init();
-    asm("bkpt #0");
+    // asm("bkpt #0");
     display.Init();
     InitTimers();
 }
@@ -112,6 +121,8 @@ int main(void)
 {
     Init();
     while (1) {
+	// In this loop we do things that dont depend on any timing, but that have to be done.
+	// you should not write on spi here because that should happen in the TIM2 interrupt
 	ui.Update();
     }
 }
