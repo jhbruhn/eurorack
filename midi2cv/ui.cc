@@ -27,5 +27,10 @@ void UI::Update()
 	dy = -1;
     if (y <= 7)
 	dy = 1;
-    u8g2_SendBuffer(u8g2_);
+    display.Swap();
+}
+
+void UI::Flush()
+{
+    display.Flush();
 }

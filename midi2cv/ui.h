@@ -9,6 +9,7 @@ public:
     ~UI() {}
 
     void Update();
+    void Flush();
 
 private:
     DISALLOW_COPY_AND_ASSIGN(UI);

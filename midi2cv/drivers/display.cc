@@ -12,6 +12,9 @@ const uint16_t kPinReset = GPIO_Pin_0;
 const uint16_t kPinDataCommand = GPIO_Pin_9;
 
 u8g2_t u8g2_;
+uint8_t* default_buf;
+uint8_t second_buf[1024];
+uint8_t* output_buf;
 
 u8g2_t* Display::u8g2()
 {
@@ -115,8 +118,27 @@ uint8_t u8x8_byte_4wire_hw_spi(u8x8_t* u8x8, uint8_t msg, uint8_t arg_int,
 void Display::InitGLib()
 {
     u8g2_Setup_sh1106_128x64_noname_f(&u8g2_, U8G2_R0, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay);
+    output_buf = default_buf = u8g2_.tile_buf_ptr;
     u8g2_InitDisplay(&u8g2_);
     u8g2_SetContrast(&u8g2_, 127);
     u8g2_SetPowerSave(&u8g2_, 0);
+
     Random::Seed(42);
+}
+
+void Display::Flush()
+{
+    uint8_t* cache = u8g2_.tile_buf_ptr;
+    u8g2_.tile_buf_ptr = output_buf;
+    u8g2_SendBuffer(&u8g2_);
+    u8g2_.tile_buf_ptr = cache;
+}
+
+void Display::Swap()
+{
+    output_buf = u8g2_.tile_buf_ptr;
+    if (output_buf == default_buf)
+	u8g2_.tile_buf_ptr = second_buf;
+    else
+	u8g2_.tile_buf_ptr = default_buf;
 }

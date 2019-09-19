@@ -60,7 +60,7 @@ void TIM2_IRQHandler(void)
     static uint8_t count = 0;
     count++;
     if (count % 192 == 0) {
-	ui.Update();
+	ui.Flush();
 	count = 0;
     }
 }
@@ -112,6 +112,6 @@ int main(void)
 {
     Init();
     while (1) {
-	//ui.Update();
+	ui.Update();
     }
 }
