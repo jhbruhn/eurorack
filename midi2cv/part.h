@@ -8,10 +8,10 @@ enum MIDIThruMode { OFF,
 enum BiOutputMode {
   PITCH_UNI,
   PITCH_BI,
-  SAW,
+  SAWTOOTH,
   SQUARE,
   SINE,
-  TRI
+  TRIANGLE
 };
 
 enum UniOutputMode {
