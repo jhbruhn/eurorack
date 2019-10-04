@@ -4,6 +4,7 @@
 #include "drivers/gpio.h"
 #include "stmlib/system/system_clock.h"
 #include "ui.h"
+#include "part.h"
 
 using namespace stmlib;
 
