@@ -12,7 +12,7 @@ GPIO gpio;
 Display display;
 UI ui;
 //SystemClock system_clock;
-Part part[4];
+Part part[PART_COUNT];
 
 // Default interrupt handlers.
 extern "C" {

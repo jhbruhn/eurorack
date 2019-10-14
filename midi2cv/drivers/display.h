@@ -5,6 +5,9 @@
 #include <stm32f37x_conf.h>
 #include <u8g2.h>
 
+#define DISPLAY_WIDTH 128
+#define DISPLAY_HEIGHT 64
+
 class Display {
 public:
     Display() {}
