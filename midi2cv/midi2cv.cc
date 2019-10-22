@@ -56,12 +56,12 @@ void TIM2_IRQHandler(void)
   TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 
   // this will get called with 192 kHz (foof)
-  // we want to reduce the amount of times the ui gets polled to 1kHz
+  // we want to reduce the amount of times the ui gets polled to 500 Hz
   // which still is a lot (60fps would be enough tbh)
 
   static uint8_t count = 0;
   count++;
-  if (count % 192 == 0) {
+  if (count % (192 * 2) == 0) {
     ui.Flush();
     count = 0;
   }
