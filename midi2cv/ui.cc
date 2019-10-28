@@ -1,5 +1,6 @@
 #include "ui.h"
 #include "drivers/display.h"
+#include "midi2cv/drivers/encoder.h"
 #include "part.h"
 #include "stmlib/utils/random.h"
 #include <u8g2.h>
@@ -10,9 +11,23 @@ using namespace stmlib;
 
 const char part_names[4][2] = { "A", "B", "C", "D" };
 
-void UI::Update()
+void UI::Init()
 {
+  input_queue.Init();
+}
+
+void UI::Poll()
+{
+  encoder.Debounce();
+  int32_t increment = encoder.increment();
+  if (increment != 0) {
+    input_queue.AddEvent(CONTROL_ENCODER, 0, increment);
+  }
+}
+
+void UI::Draw() {
   u8g2_ClearBuffer(display.u8g2());
+
   switch (current_menu) {
   case MENU_PART_1:
   case MENU_PART_2:
@@ -25,6 +40,7 @@ void UI::Update()
 
     break;
   }
+
   display.Swap();
 }
 
@@ -52,4 +68,44 @@ void UI::DrawPartMenu(Menu_t menu)
 void UI::Flush()
 {
   display.Flush();
+}
+
+bool UI::DoEvents()
+{
+  bool refresh_display = false;
+  while (input_queue.available()) {
+    Event e = input_queue.PullEvent();
+    if (e.control_type == CONTROL_ENCODER_CLICK) {
+      OnClick();
+    } else if (e.control_type == CONTROL_ENCODER_LONG_CLICK) {
+      OnLongClick();
+    } else if (e.control_type == CONTROL_ENCODER) {
+      OnIncrement(e);
+    }
+    refresh_display = true;
+  }
+
+  if (input_queue.idle_time() > 1000) {
+    refresh_display = true;
+  }
+
+  if(refresh_display) {
+    input_queue.Touch();
+    Draw();
+  }
+
+  return refresh_display;
+}
+
+void UI::OnClick()
+{
+}
+
+void UI::OnLongClick()
+{
+}
+
+void UI::OnIncrement(Event& e)
+{
+  current_menu = (Menu_t) (((uint32_t)current_menu + e.data) % MENU_COUNT);
 }

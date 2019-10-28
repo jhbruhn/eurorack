@@ -1,6 +1,7 @@
 #include <stm32f37x_conf.h>
 
 #include "drivers/display.h"
+#include "drivers/encoder.h"
 #include "drivers/gpio.h"
 #include "part.h"
 #include "stmlib/system/system_clock.h"
@@ -10,8 +11,9 @@ using namespace stmlib;
 
 GPIO gpio;
 Display display;
+Encoder encoder;
+
 UI ui;
-//SystemClock system_clock;
 Part part[PART_COUNT];
 
 // Default interrupt handlers.
@@ -46,6 +48,7 @@ void SysTick_Handler()
 {
   IWDG_ReloadCounter();
   system_clock.Tick();
+  ui.Poll();
 }
 
 void TIM2_IRQHandler(void)
@@ -116,6 +119,8 @@ void Init(void)
   gpio.Init();
   // asm("bkpt #0");
   display.Init();
+  encoder.Init();
+  ui.Init();
   InitTimers();
 }
 
@@ -125,6 +130,8 @@ int main(void)
   while (1) {
     // In this loop we do things that dont depend on any timing, but that have to be done.
     // you should not write on spi here because that should happen in the TIM2 interrupt
-    ui.Update();
+    // do we want to call the watchdog here? it's the only part thats getting interrupted after all
+    // (next to the interrupts themselves potentially interrupting each other)
+    ui.DoEvents();
   }
 }

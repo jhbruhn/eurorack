@@ -22,8 +22,6 @@ u8g2_t* Display::u8g2()
   return &u8g2_;
 }
 
-void InitSPI(void);
-
 void Display::Init()
 {
   // init SS/CS/RST GPIO

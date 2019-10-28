@@ -1,0 +1,6 @@
+:packadd termdebug
+
+let termdebugger = "/usr/bin/arm-none-eabi-gdb"
+:map <c-d> :Termdebug /home/jhbruhn/eurorack/eurorack-dev-environment/eurorack-modules/build/midi2cv/midi2cv.elf --eval-command='target remote localhost:3333'
+
+
