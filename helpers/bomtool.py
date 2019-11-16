@@ -8,7 +8,8 @@ from collections import OrderedDict
 package_remap = {
         "R0603": "0603_R",
         "C0603": "0603_C",
-        
+        "R0402": "0402_R",
+        "C0402": "0402_C",
         "SO08": "SOIC-8_150mil",
         "SO14": "SOIC-14_150MIL"
 }
