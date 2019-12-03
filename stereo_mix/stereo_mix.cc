@@ -1,5 +1,4 @@
 #include <avr/pgmspace.h>
-#include <math.h>
 
 #include "avrlib/adc.h"
 #include "avrlib/avrlib.h"
@@ -47,18 +46,18 @@ int main(void)
     AnalogInputs::Scan();
     for (int i = 0; i < NUM_CHANNELS; i++) {
       volume[i] = pgm_read_word_near(lut_res_linear_to_exp + AnalogInputs::Read(i));
-      if(volume[i] < 7) // some ADSRs dont seem to close completely, lets gate very low voltages...
+      if (volume[i] < 7) // some ADSRs dont seem to close completely, lets gate very low voltages...
         volume[i] = 0;
       pan[i] = AnalogInputs::Read(i + NUM_CHANNELS);
     }
 
-    Dac1::Write(((uint32_t)(volume[0]) * pgm_read_word(lut_res_left_sin_pan  + pan[0])) >> 8, 0);
+    Dac1::Write(((uint32_t)(volume[0]) * pgm_read_word(lut_res_left_sin_pan + pan[0])) >> 8, 0);
     Dac1::Write(((uint32_t)(volume[0]) * pgm_read_word(lut_res_right_cos_pan + pan[0])) >> 8, 1);
-    Dac2::Write(((uint32_t)(volume[1]) * pgm_read_word(lut_res_left_sin_pan  + pan[1])) >> 8, 0);
+    Dac2::Write(((uint32_t)(volume[1]) * pgm_read_word(lut_res_left_sin_pan + pan[1])) >> 8, 0);
     Dac2::Write(((uint32_t)(volume[1]) * pgm_read_word(lut_res_right_cos_pan + pan[1])) >> 8, 1);
-    Dac3::Write(((uint32_t)(volume[2]) * pgm_read_word(lut_res_left_sin_pan  + pan[2])) >> 8, 0);
+    Dac3::Write(((uint32_t)(volume[2]) * pgm_read_word(lut_res_left_sin_pan + pan[2])) >> 8, 0);
     Dac3::Write(((uint32_t)(volume[2]) * pgm_read_word(lut_res_right_cos_pan + pan[2])) >> 8, 1);
-    Dac4::Write(((uint32_t)(volume[3]) * pgm_read_word(lut_res_left_sin_pan  + pan[3])) >> 8, 0);
+    Dac4::Write(((uint32_t)(volume[3]) * pgm_read_word(lut_res_left_sin_pan + pan[3])) >> 8, 0);
     Dac4::Write(((uint32_t)(volume[3]) * pgm_read_word(lut_res_right_cos_pan + pan[3])) >> 8, 1);
   }
 }
