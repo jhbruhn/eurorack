@@ -1,3 +1,6 @@
 [submodule "stmlib"]
 	path = stmlib
 	url = https://github.com/jhbruhn/stmlib.git 
+[submodule "avrlib"]
+	path = avrlib
+	url = https://github.com/pichenettes/avril.git

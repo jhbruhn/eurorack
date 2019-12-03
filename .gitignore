@@ -52,3 +52,9 @@ eagle.epf
 
 # file locks introduced since 7.x
 *.lck
+
+**/compile_commands.json
+**/.clangd/
+
+*.pyc
+*.size
