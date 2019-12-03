@@ -1,6 +1,8 @@
 #ifndef MIDI2CV_PART_H
 #define MIDI2CV_PART_H
 
+#include <inttypes.h>
+
 #define PART_COUNT 4
 
 #define TOTAL_COLUMN_COUNT 4
