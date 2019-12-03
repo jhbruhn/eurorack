@@ -29,7 +29,7 @@ typedef AdcInputScanner AnalogInputs;
 #define NUM_CHANNELS 4
 
 uint16_t volume[NUM_CHANNELS];
-float pan[NUM_CHANNELS];
+uint16_t pan[NUM_CHANNELS];
 
 int main(void)
 {
@@ -49,17 +49,16 @@ int main(void)
       volume[i] = pgm_read_word_near(lut_res_linear_to_exp + AnalogInputs::Read(i));
       if(volume[i] < 7) // some ADSRs dont seem to close completely, lets gate very low voltages...
         volume[i] = 0;
-      int16_t panRead = AnalogInputs::Read(i + NUM_CHANNELS);
-      pan[i] = (panRead / 1024.0) * M_PI_2; // convert 0 to 90° to radians
+      pan[i] = AnalogInputs::Read(i + NUM_CHANNELS);
     }
 
-    Dac1::Write((uint16_t)((volume[0]) * sin(pan[0])) << 2, 0);
-    Dac1::Write((uint16_t)((volume[0]) * cos(pan[0])) << 2, 1);
-    Dac2::Write((uint16_t)((volume[1]) * sin(pan[1])) << 2, 0);
-    Dac2::Write((uint16_t)((volume[1]) * cos(pan[1])) << 2, 1);
-    Dac3::Write((uint16_t)((volume[2]) * sin(pan[2])) << 2, 0);
-    Dac3::Write((uint16_t)((volume[2]) * cos(pan[2])) << 2, 1);
-    Dac4::Write((uint16_t)((volume[3]) * sin(pan[3])) << 2, 0);
-    Dac4::Write((uint16_t)((volume[3]) * cos(pan[3])) << 2, 1);
+    Dac1::Write(((uint32_t)(volume[0]) * pgm_read_word(lut_res_left_sin_pan  + pan[0])) >> 8, 0);
+    Dac1::Write(((uint32_t)(volume[0]) * pgm_read_word(lut_res_right_cos_pan + pan[0])) >> 8, 1);
+    Dac2::Write(((uint32_t)(volume[1]) * pgm_read_word(lut_res_left_sin_pan  + pan[1])) >> 8, 0);
+    Dac2::Write(((uint32_t)(volume[1]) * pgm_read_word(lut_res_right_cos_pan + pan[1])) >> 8, 1);
+    Dac3::Write(((uint32_t)(volume[2]) * pgm_read_word(lut_res_left_sin_pan  + pan[2])) >> 8, 0);
+    Dac3::Write(((uint32_t)(volume[2]) * pgm_read_word(lut_res_right_cos_pan + pan[2])) >> 8, 1);
+    Dac4::Write(((uint32_t)(volume[3]) * pgm_read_word(lut_res_left_sin_pan  + pan[3])) >> 8, 0);
+    Dac4::Write(((uint32_t)(volume[3]) * pgm_read_word(lut_res_right_cos_pan + pan[3])) >> 8, 1);
   }
 }

@@ -40,9 +40,15 @@ extern const prog_uint16_t* const lookup_table_table[];
 extern const prog_uint32_t* const lookup_table_32_table[];
 
 extern const prog_uint16_t lut_res_linear_to_exp[] PROGMEM;
+extern const prog_uint16_t lut_res_left_sin_pan[] PROGMEM;
+extern const prog_uint16_t lut_res_right_cos_pan[] PROGMEM;
 #define STR_RES_DUMMY 0  // dummy
 #define LUT_RES_LINEAR_TO_EXP 0
 #define LUT_RES_LINEAR_TO_EXP_SIZE 1024
+#define LUT_RES_LEFT_SIN_PAN 1
+#define LUT_RES_LEFT_SIN_PAN_SIZE 1024
+#define LUT_RES_RIGHT_COS_PAN 2
+#define LUT_RES_RIGHT_COS_PAN_SIZE 1024
 
 }  // namespace stereo_mix
 
