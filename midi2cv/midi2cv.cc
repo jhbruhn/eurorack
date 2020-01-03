@@ -3,6 +3,8 @@
 #include "drivers/display.h"
 #include "drivers/encoder.h"
 #include "drivers/gpio.h"
+#include "menu/menu_items.h"
+#include "menu/menu.h"
 #include "part.h"
 #include "stmlib/system/system_clock.h"
 #include "ui.h"
@@ -15,6 +17,12 @@ Encoder encoder;
 
 UI ui;
 Part part[PART_COUNT];
+
+UIntMenuItem item("peda", 0, 0, 42, 1);
+FloatMenuItem item2("peda", 0, 0, 42, 1);
+FloatMenuItem item3("peda", 0, 0, 42, 1);
+Menu menu;
+
 
 // Default interrupt handlers.
 extern "C" {
@@ -58,25 +66,15 @@ void TIM2_IRQHandler(void)
   }
   TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 
-  // this will get called with 192 kHz (foof)
-  // we want to reduce the amount of times the ui gets polled to 500 Hz
+  // this will get called with 8kHz (foof)
   // which still is a lot (60fps would be enough tbh)
 
-  static uint8_t count = 0;
-  count++;
-  if (count % (192 * 2) == 0) {
-    ui.Flush();
-    count = 0;
-  }
+  ui.Flush();
 
-  if (count % 48 == 0) { // write audiodac1
-  }
-  if (count % 48 == 1) { // write audiodac2
-  }
-  if (count % 48 == 2) { // write audiodac3
-  }
-  if (count % 48 == 3) { // write audiodac4
-  }
+  // write audiodac1
+  // write audiodac2
+  // write audiodac3
+  // write audiodac4
 }
 }
 
@@ -84,7 +82,7 @@ void InitTimers(void)
 {
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
   TIM_TimeBaseInitTypeDef timer_init;
-  timer_init.TIM_Period = F_CPU / (48000 * 4) - 1; // 192 kHz, 48kHz for each audio DAC
+  timer_init.TIM_Period = F_CPU / (8000) - 1; // 192 kHz, 48kHz for each audio DAC
   timer_init.TIM_Prescaler = 0;
   timer_init.TIM_ClockDivision = TIM_CKD_DIV1;
   timer_init.TIM_CounterMode = TIM_CounterMode_Up;
@@ -127,6 +125,13 @@ void Init(void)
 int main(void)
 {
   Init();
+
+  menu.add_item(&item);
+  menu.add_item(&item2);
+  menu.add_item(&item3);
+  item.increase();
+  item2.increase();
+  item3.increase();
   while (1) {
     // In this loop we do things that dont depend on any timing, but that have to be done.
     // you should not write on spi here because that should happen in the TIM2 interrupt
