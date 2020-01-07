@@ -7,9 +7,9 @@
 #include "avrlib/devices/mcp492x.h"
 #include "avrlib/gpio.h"
 #include "avrlib/spi.h"
+#include "avrlib/time.h"
 #include "avrlib/watchdog_timer.h"
 #include "stereo_mix/resources.h"
-#include "avrlib/time.h"
 
 #define degToRad(angleInDegrees) ((angleInDegrees)*M_PI / 180.0)
 
@@ -25,14 +25,19 @@ typedef Dac<dac3Spi, BUFFERED_REFERENCE, 1> Dac3;
 typedef SpiMaster<NumberedGpio<3>, MSB_FIRST, 2> dac4Spi;
 typedef Dac<dac4Spi, BUFFERED_REFERENCE, 1> Dac4;
 
+typedef SpiMaster<NumberedGpio<4>, MSB_FIRST, 2> oDac1Spi;
+typedef Dac<oDac1Spi, BUFFERED_REFERENCE, 1> oDac1;
+typedef SpiMaster<NumberedGpio<5>, MSB_FIRST, 2> oDac2Spi;
+typedef Dac<oDac2Spi, BUFFERED_REFERENCE, 1> oDac2;
+typedef SpiMaster<NumberedGpio<6>, MSB_FIRST, 2> oDac3Spi;
+typedef Dac<oDac3Spi, BUFFERED_REFERENCE, 1> oDac3;
+typedef SpiMaster<NumberedGpio<7>, MSB_FIRST, 2> oDac4Spi;
+typedef Dac<oDac4Spi, BUFFERED_REFERENCE, 1> oDac4;
 typedef AdcInputScanner AnalogInputs;
-typedef InputArray<AnalogInputs, 8, 4> Pots;
-
-Pots pots;
 
 #define NUM_CHANNELS 4
 
-uint16_t volume[NUM_CHANNELS];
+uint32_t volume[NUM_CHANNELS];
 uint16_t pan[NUM_CHANNELS];
 
 int main(void)
@@ -43,48 +48,38 @@ int main(void)
   Dac3::Init();
   Dac4::Init();
 
-  pots.Init();
-  //Adc::set_reference(ADC_DEFAULT);
-  //Adc::set_alignment(ADC_LEFT_ALIGNED);
+  oDac1::Init();
+  oDac2::Init();
+  oDac3::Init();
+  oDac4::Init();
+
+  AnalogInputs::Init();
+
   AnalogInputs::set_num_inputs(8);
   while (true) {
     ResetWatchdog();
 
-    Pots::Event event = pots.Read();
-    if (event.event != EVENT_NONE) {
-      if (event.id < NUM_CHANNELS) {    // volume pots
-        volume[event.id] = event.value; //pgm_read_word_near(lut_res_linear_to_exp + (event.value >> 6));
-      } else {                          // pan pots
-        pan[event.id - NUM_CHANNELS] = event.value >> 6;
-      }
-    } else {
-      //volume[1] = 4095;
-    }
-    AnalogInputs::Scan();
-    /*AnalogInputs.Scan();
     for (int i = 0; i < NUM_CHANNELS; i++) {
-      volume[i] = pgm_read_word_near(lut_res_linear_to_exp + (AnalogInputs.Read8(i) << 2));
-      if (volume[i] < 7) // some ADSRs dont seem to close completely, lets gate very low voltages...
-        volume[i] = 0;
-      pan[i] = AnalogInputs.Read8(i + NUM_CHANNELS) << 2;
-    }*/
+      volume[i] = pgm_read_word_near(lut_res_linear_to_exp + (AnalogInputs::Read(i))) >> 1;
+      pan[i] = AnalogInputs::Read(i + NUM_CHANNELS);
+    }
 
-    Dac1::Write(4095, 0);
-    Dac1::Write(4095, 1);
-    //Dac1::Write(((uint32_t)(volume[0]) * /*pgm_read_word_near(lut_res_left_sin_pan + */ (pan[0])) >> 8, 0);
-    //Dac1::Write(((uint32_t)(volume[0]) * /*pgm_read_word_near(lut_res_right_cos_pan +*/ (1024 - pan[0])) >> 8, 1);
-    Dac2::Write(volume[1] >> 4, 0);
-    Dac2::Write(volume[1] >> 4, 1);
-    //Dac2::Write(((uint32_t)(volume[1]) * /*pgm_read_word_near(lut_res_left_sin_pan + */ (pan[1])) >> 8, 0);
-    //Dac2::Write(((uint32_t)(volume[1]) * /*pgm_read_word_near(lut_res_right_cos_pan +*/ (1024 - pan[1])) >> 8, 1);
-    //Dac3::Write(((uint32_t)(volume[2]) * /*pgm_read_word_near(lut_res_left_sin_pan + */ (pan[2])) >> 8, 0);
-    //Dac3::Write(((uint32_t)(volume[2]) * /*pgm_read_word_near(lut_res_right_cos_pan +*/ (1024 - pan[2])) >> 8, 1);
-    //Dac4::Write(((uint32_t)(volume[3]) * /*pgm_read_word_near(lut_res_left_sin_pan + */ (pan[3])) >> 8, 0);
-    //Dac4::Write(((uint32_t)(volume[3]) * /*pgm_read_word_near(lut_res_right_cos_pan +*/ (1024 - pan[3])) >> 8, 1);
+    AnalogInputs::Scan();
+
+#define WRITE(DAC, ODAC, N)                                                          \
+  DAC::Write((volume[N] * (pgm_read_word(lut_res_left_sin_pan + pan[N]))) >> 8, 0);  \
+  ODAC::Write((volume[N] * (pgm_read_word(lut_res_left_sin_pan + pan[N]))) >> 8, 0); \
+  DAC::Write((volume[N] * (pgm_read_word(lut_res_right_cos_pan + pan[N]))) >> 8, 1); \
+  ODAC::Write((volume[N] * (pgm_read_word(lut_res_right_cos_pan + pan[N]))) >> 8, 1);
+
+    WRITE(Dac1, oDac1, 0);
+    WRITE(Dac2, oDac2, 1);
+    WRITE(Dac3, oDac3, 2);
+    WRITE(Dac4, oDac4, 3);
   }
 }
 
-TIMER_0_TICK {
+TIMER_0_TICK
+{
   TickSystemClock();
 }
-
