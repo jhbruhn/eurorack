@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.4.2">
+<eagle version="9.5.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -159,185 +159,6 @@
 </layers>
 <schematic xreflabel="%F%N/%S.%C%R" xrefpart="/%S.%C%R">
 <libraries>
-<library name="MusicThingModular">
-<description>&lt;B&gt;Music Thing Modular parts library &lt;/b&gt;
-&lt;ul&gt;
-&lt;li&gt;Components for Eurorack modular synths 
-&lt;/ul&gt;</description>
-<packages>
-<package name="THONKICONN">
-<description>3.5mm socket for Eurorack modular synths</description>
-<pad name="P$3_TIP" x="0" y="4.84" drill="1.55" shape="square"/>
-<pad name="P$2_SWITCH" x="0" y="-3.38" drill="1.55" shape="square"/>
-<pad name="P$1_SLEEVE" x="0" y="-6.48" drill="1.35" shape="square"/>
-<wire x1="-4.5" y1="6" x2="4.5" y2="6" width="0.127" layer="21"/>
-<wire x1="4.5" y1="6" x2="4.5" y2="-4.5" width="0.127" layer="21"/>
-<wire x1="4.5" y1="-4.5" x2="-4.5" y2="-4.5" width="0.127" layer="21"/>
-<wire x1="-4.5" y1="-4.5" x2="-4.5" y2="6" width="0.127" layer="21"/>
-<text x="-3.8" y="1.5" size="1" layer="21" font="vector">&gt;NAME</text>
-<wire x1="-0.5" y1="0" x2="0.5" y2="0" width="0.08" layer="21"/>
-<wire x1="0" y1="0.5" x2="0" y2="-0.5" width="0.08" layer="21"/>
-</package>
-<package name="WQP-PJ301M-12_JACK">
-<wire x1="-4.5" y1="6" x2="-1.5" y2="6" width="0.127" layer="51"/>
-<wire x1="-1.5" y1="6" x2="1.5" y2="6" width="0.127" layer="51"/>
-<wire x1="1.5" y1="6" x2="4.5" y2="6" width="0.127" layer="51"/>
-<wire x1="-4.5" y1="6" x2="-4.5" y2="-4.5" width="0.127" layer="51"/>
-<wire x1="-4.5" y1="-4.5" x2="0.2" y2="-4.5" width="0.127" layer="51"/>
-<wire x1="0.2" y1="-4.5" x2="4.5" y2="-4.5" width="0.127" layer="51"/>
-<wire x1="4.5" y1="-4.5" x2="4.5" y2="6" width="0.127" layer="51"/>
-<circle x="0" y="0" radius="3.162275" width="0.127" layer="51"/>
-<wire x1="-1.5" y1="6" x2="-1.5" y2="4" width="0.127" layer="51"/>
-<wire x1="-1.5" y1="4" x2="1.5" y2="4" width="0.127" layer="51"/>
-<wire x1="1.5" y1="4" x2="1.5" y2="6" width="0.127" layer="51"/>
-<pad name="P$1_TIP" x="0" y="5" drill="1.1" thermals="no"/>
-<pad name="P$2_SWITCH" x="0" y="-3.5" drill="1.1"/>
-<pad name="P$3_SLEEVE" x="0" y="-6.5" drill="1.1"/>
-<circle x="0" y="0" radius="2.690721875" width="0.127" layer="21"/>
-<wire x1="-0.2" y1="-4.6" x2="-0.2" y2="-6.7" width="0.127" layer="51"/>
-<wire x1="-0.2" y1="-6.7" x2="0.2" y2="-6.7" width="0.127" layer="51"/>
-<wire x1="0.2" y1="-6.7" x2="0.2" y2="-4.5" width="0.127" layer="51"/>
-<rectangle x1="-2.8" y1="-2.8" x2="2.8" y2="2.8" layer="41"/>
-<text x="4.5212" y="-4.7244" size="1.016" layer="21" rot="SR180">&gt;NAME</text>
-<wire x1="-4.5" y1="5.5" x2="-4.5" y2="6" width="0.127" layer="21"/>
-<wire x1="-4.5" y1="6" x2="-4" y2="6" width="0.127" layer="21"/>
-<wire x1="4" y1="6" x2="4.5" y2="6" width="0.127" layer="21"/>
-<wire x1="4.5" y1="6" x2="4.5" y2="5.5" width="0.127" layer="21"/>
-<wire x1="4.5" y1="-4" x2="4.5" y2="-4.5" width="0.127" layer="21"/>
-<wire x1="4.5" y1="-4.5" x2="4" y2="-4.5" width="0.127" layer="21"/>
-<wire x1="-4.5" y1="-4" x2="-4.5" y2="-4.5" width="0.127" layer="21"/>
-<wire x1="-4.5" y1="-4.5" x2="-4" y2="-4.5" width="0.127" layer="21"/>
-</package>
-<package name="9MM_SNAP-IN_POT">
-<description>9mm vertical snap-in pot, Alpha / Panasonic style</description>
-<wire x1="-4.1" y1="5.4" x2="4.1" y2="5.4" width="0.2032" layer="21"/>
-<wire x1="4.65" y1="4.85" x2="4.65" y2="-5.35" width="0.2032" layer="51"/>
-<wire x1="4.1" y1="-5.9" x2="-4.1" y2="-5.9" width="0.2032" layer="21"/>
-<wire x1="-4.65" y1="-5.35" x2="-4.65" y2="4.85" width="0.2032" layer="51"/>
-<wire x1="-4.75" y1="0.9" x2="-5.5" y2="0.9" width="0.2032" layer="51"/>
-<wire x1="-5.5" y1="0.9" x2="-5.5" y2="-0.9" width="0.2032" layer="51"/>
-<wire x1="-5.5" y1="-0.9" x2="-4.75" y2="-0.9" width="0.2032" layer="51"/>
-<wire x1="4.75" y1="-0.9" x2="5.5" y2="-0.9" width="0.2032" layer="51"/>
-<wire x1="5.5" y1="-0.9" x2="5.5" y2="0.9" width="0.2032" layer="51"/>
-<wire x1="5.5" y1="0.9" x2="4.75" y2="0.9" width="0.2032" layer="51"/>
-<wire x1="-4.1" y1="4.85" x2="-4.65" y2="4.85" width="0.2032" layer="21"/>
-<wire x1="-4.1" y1="5.4" x2="-4.1" y2="4.85" width="0.2032" layer="21"/>
-<wire x1="-4.1" y1="-5.35" x2="-4.1" y2="-5.9" width="0.2032" layer="21"/>
-<wire x1="-4.65" y1="-5.35" x2="-4.1" y2="-5.35" width="0.2032" layer="21"/>
-<wire x1="4.1" y1="-5.35" x2="4.65" y2="-5.35" width="0.2032" layer="21"/>
-<wire x1="4.1" y1="-5.9" x2="4.1" y2="-5.35" width="0.2032" layer="21"/>
-<wire x1="4.1" y1="4.85" x2="4.1" y2="5.4" width="0.2032" layer="21"/>
-<wire x1="4.65" y1="4.85" x2="4.1" y2="4.85" width="0.2032" layer="21"/>
-<wire x1="-4.65" y1="2.65" x2="-4.65" y2="4.85" width="0.2032" layer="21"/>
-<wire x1="-4.65" y1="-5.35" x2="-4.65" y2="-2.15" width="0.2032" layer="21"/>
-<wire x1="4.65" y1="4.85" x2="4.65" y2="2.65" width="0.2032" layer="21"/>
-<wire x1="4.65" y1="-2.15" x2="4.65" y2="-5.35" width="0.2032" layer="21"/>
-<circle x="0" y="0" radius="1.397" width="0.0508" layer="21"/>
-<pad name="1" x="-2.5" y="-7" drill="1.1" shape="square" rot="R270"/>
-<pad name="2" x="0" y="-7" drill="1.1" shape="octagon" rot="R270"/>
-<pad name="3" x="2.5" y="-7" drill="1.1" shape="octagon" rot="R270"/>
-<pad name="CHASSIS2" x="4.5" y="0" drill="2.1" diameter="2.794" rot="R270"/>
-<pad name="CHASSIS1" x="-4.5" y="0" drill="2.1" diameter="2.794" rot="R270"/>
-<text x="-3.81" y="2.54" size="1.0668" layer="25">&gt;NAME</text>
-<text x="-3.81" y="-3.81" size="1.27" layer="27">&gt;VALUE</text>
-<rectangle x1="-2.925" y1="-7.325" x2="-2.075" y2="-6" layer="51"/>
-<rectangle x1="-0.425" y1="-7.325" x2="0.425" y2="-6" layer="51"/>
-<rectangle x1="2.075" y1="-7.325" x2="2.925" y2="-6" layer="51"/>
-<circle x="0" y="0" radius="1.016" width="0.0508" layer="21"/>
-</package>
-</packages>
-<symbols>
-<symbol name="THONKICONN">
-<description>pj301-b vertical 3.5mm jack socket</description>
-<wire x1="-2.54" y1="2.54" x2="0" y2="2.54" width="0.1524" layer="94"/>
-<wire x1="0" y1="2.54" x2="1.524" y2="1.016" width="0.1524" layer="94"/>
-<wire x1="1.524" y1="1.016" x2="2.286" y2="1.778" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="0" x2="-0.762" y2="0" width="0.1524" layer="94"/>
-<wire x1="-0.762" y1="0" x2="-0.762" y2="2.286" width="0.1524" layer="94"/>
-<wire x1="-0.762" y1="2.286" x2="-1.016" y2="1.524" width="0.254" layer="94"/>
-<wire x1="-1.016" y1="1.524" x2="-0.508" y2="1.524" width="0.254" layer="94"/>
-<wire x1="-0.508" y1="1.524" x2="-0.762" y2="2.286" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="-2.54" x2="4.572" y2="-2.54" width="0.1524" layer="94"/>
-<text x="-2.54" y="4.064" size="1.778" layer="95">&gt;NAME</text>
-<rectangle x1="2.286" y1="-0.508" x2="7.874" y2="0.508" layer="94" rot="R90"/>
-<pin name="SLEEVE" x="-5.08" y="-2.54" visible="off" length="short" direction="pas"/>
-<pin name="TIP" x="-5.08" y="2.54" visible="off" length="short" direction="pas"/>
-<pin name="SWITCH" x="-5.08" y="0" visible="off" length="short" direction="pas"/>
-</symbol>
-<symbol name="POTENTIOMETER">
-<wire x1="0" y1="-5.08" x2="0" y2="-4.572" width="0.1524" layer="94"/>
-<wire x1="0" y1="-4.572" x2="-1.016" y2="-3.81" width="0.254" layer="94"/>
-<wire x1="-1.016" y1="-3.81" x2="1.27" y2="-2.54" width="0.254" layer="94"/>
-<wire x1="1.27" y1="-2.54" x2="-1.016" y2="-1.27" width="0.254" layer="94"/>
-<wire x1="-1.016" y1="-1.27" x2="1.27" y2="0" width="0.254" layer="94"/>
-<wire x1="1.27" y1="0" x2="-1.016" y2="1.27" width="0.254" layer="94"/>
-<wire x1="-1.016" y1="1.27" x2="1.27" y2="2.54" width="0.254" layer="94"/>
-<wire x1="1.27" y1="2.54" x2="-1.016" y2="3.81" width="0.254" layer="94"/>
-<wire x1="-1.016" y1="3.81" x2="0" y2="4.572" width="0.254" layer="94"/>
-<wire x1="0" y1="4.572" x2="0" y2="5.08" width="0.1524" layer="94"/>
-<wire x1="1.27" y1="0" x2="2.54" y2="1.27" width="0.2032" layer="94"/>
-<wire x1="2.54" y1="-1.27" x2="1.27" y2="0" width="0.2032" layer="94"/>
-<wire x1="2.54" y1="1.27" x2="2.54" y2="-1.27" width="0.2032" layer="94"/>
-<wire x1="2.032" y1="-4.699" x2="2.032" y2="-2.159" width="0.1524" layer="94"/>
-<wire x1="2.032" y1="-2.159" x2="2.667" y2="-3.429" width="0.1524" layer="94"/>
-<wire x1="2.667" y1="-3.429" x2="1.397" y2="-3.429" width="0.1524" layer="94"/>
-<wire x1="1.397" y1="-3.429" x2="2.032" y2="-2.159" width="0.1524" layer="94"/>
-<text x="-5.08" y="-2.54" size="1.778" layer="95" rot="R90">&gt;NAME</text>
-<text x="-2.54" y="-2.54" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
-<pin name="A" x="0" y="-7.62" visible="off" length="short" direction="pas" rot="R90"/>
-<pin name="E" x="0" y="7.62" visible="off" length="short" direction="pas" rot="R270"/>
-<pin name="S" x="5.08" y="0" visible="off" length="short" direction="pas" rot="R180"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="THONKICONN" prefix="U">
-<description>3.5mm socket for Eurorack modular synths</description>
-<gates>
-<gate name="G$1" symbol="THONKICONN" x="0" y="0"/>
-</gates>
-<devices>
-<device name="OLD" package="THONKICONN">
-<connects>
-<connect gate="G$1" pin="SLEEVE" pad="P$1_SLEEVE"/>
-<connect gate="G$1" pin="SWITCH" pad="P$2_SWITCH"/>
-<connect gate="G$1" pin="TIP" pad="P$3_TIP"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="NEW" package="WQP-PJ301M-12_JACK">
-<connects>
-<connect gate="G$1" pin="SLEEVE" pad="P$3_SLEEVE"/>
-<connect gate="G$1" pin="SWITCH" pad="P$2_SWITCH"/>
-<connect gate="G$1" pin="TIP" pad="P$1_TIP"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="9MM_SNAP-IN_POT" prefix="VR" uservalue="yes">
-<description>9mm vertical snap-in pot, Alpha / Panasonic style</description>
-<gates>
-<gate name="G$1" symbol="POTENTIOMETER" x="0" y="0"/>
-</gates>
-<devices>
-<device name="_" package="9MM_SNAP-IN_POT">
-<connects>
-<connect gate="G$1" pin="A" pad="1"/>
-<connect gate="G$1" pin="E" pad="3"/>
-<connect gate="G$1" pin="S" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="supply1" urn="urn:adsk.eagle:library:371">
 <description>&lt;b&gt;Supply Symbols&lt;/b&gt;&lt;p&gt;
  GND, VCC, 0V, +5V, -5V, etc.&lt;p&gt;
@@ -16961,6 +16782,152 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 </deviceset>
 </devicesets>
 </library>
+<library name="jhbruhn-physical">
+<packages>
+<package name="WQP-PJ301M-12_JACK">
+<wire x1="-4.5" y1="6" x2="-1.5" y2="6" width="0.127" layer="51"/>
+<wire x1="-1.5" y1="6" x2="1.5" y2="6" width="0.127" layer="51"/>
+<wire x1="1.5" y1="6" x2="4.5" y2="6" width="0.127" layer="51"/>
+<wire x1="-4.5" y1="6" x2="-4.5" y2="-4.5" width="0.127" layer="51"/>
+<wire x1="-4.5" y1="-4.5" x2="0.2" y2="-4.5" width="0.127" layer="51"/>
+<wire x1="0.2" y1="-4.5" x2="4.5" y2="-4.5" width="0.127" layer="51"/>
+<wire x1="4.5" y1="-4.5" x2="4.5" y2="6" width="0.127" layer="51"/>
+<circle x="0" y="0" radius="3.162275" width="0.127" layer="51"/>
+<wire x1="-1.5" y1="6" x2="-1.5" y2="4" width="0.127" layer="51"/>
+<wire x1="-1.5" y1="4" x2="1.5" y2="4" width="0.127" layer="51"/>
+<wire x1="1.5" y1="4" x2="1.5" y2="6" width="0.127" layer="51"/>
+<pad name="P$1_TIP" x="0" y="5" drill="1.1" thermals="no"/>
+<pad name="P$2_SWITCH" x="0" y="-3.5" drill="1.1"/>
+<pad name="P$3_SLEEVE" x="0" y="-6.5" drill="1.1"/>
+<circle x="0" y="0" radius="2.690721875" width="0.127" layer="21"/>
+<wire x1="-0.2" y1="-4.6" x2="-0.2" y2="-6.7" width="0.127" layer="51"/>
+<wire x1="-0.2" y1="-6.7" x2="0.2" y2="-6.7" width="0.127" layer="51"/>
+<wire x1="0.2" y1="-6.7" x2="0.2" y2="-4.5" width="0.127" layer="51"/>
+<rectangle x1="-2.8" y1="-2.8" x2="2.8" y2="2.8" layer="41"/>
+<text x="4.5212" y="-4.7244" size="0.8128" layer="21" font="vector" rot="SR180">&gt;NAME</text>
+<wire x1="-4.5" y1="5.5" x2="-4.5" y2="6" width="0.127" layer="21"/>
+<wire x1="-4.5" y1="6" x2="-4" y2="6" width="0.127" layer="21"/>
+<wire x1="4" y1="6" x2="4.5" y2="6" width="0.127" layer="21"/>
+<wire x1="4.5" y1="6" x2="4.5" y2="5.5" width="0.127" layer="21"/>
+<wire x1="4.5" y1="-4" x2="4.5" y2="-4.5" width="0.127" layer="21"/>
+<wire x1="4.5" y1="-4.5" x2="4" y2="-4.5" width="0.127" layer="21"/>
+<wire x1="-4.5" y1="-4" x2="-4.5" y2="-4.5" width="0.127" layer="21"/>
+<wire x1="-4.5" y1="-4.5" x2="-4" y2="-4.5" width="0.127" layer="21"/>
+</package>
+<package name="9MM_SNAP-IN_POT">
+<description>9mm vertical snap-in pot, Alpha / Panasonic style</description>
+<wire x1="-4.1" y1="5.4" x2="4.1" y2="5.4" width="0.2032" layer="21"/>
+<wire x1="4.65" y1="4.85" x2="4.65" y2="-5.35" width="0.2032" layer="51"/>
+<wire x1="4.1" y1="-5.9" x2="-4.1" y2="-5.9" width="0.2032" layer="21"/>
+<wire x1="-4.65" y1="-5.35" x2="-4.65" y2="4.85" width="0.2032" layer="51"/>
+<wire x1="-4.75" y1="0.9" x2="-5.5" y2="0.9" width="0.2032" layer="51"/>
+<wire x1="-5.5" y1="0.9" x2="-5.5" y2="-0.9" width="0.2032" layer="51"/>
+<wire x1="-5.5" y1="-0.9" x2="-4.75" y2="-0.9" width="0.2032" layer="51"/>
+<wire x1="4.75" y1="-0.9" x2="5.5" y2="-0.9" width="0.2032" layer="51"/>
+<wire x1="5.5" y1="-0.9" x2="5.5" y2="0.9" width="0.2032" layer="51"/>
+<wire x1="5.5" y1="0.9" x2="4.75" y2="0.9" width="0.2032" layer="51"/>
+<wire x1="-4.1" y1="4.85" x2="-4.65" y2="4.85" width="0.2032" layer="21"/>
+<wire x1="-4.1" y1="5.4" x2="-4.1" y2="4.85" width="0.2032" layer="21"/>
+<wire x1="-4.1" y1="-5.35" x2="-4.1" y2="-5.9" width="0.2032" layer="21"/>
+<wire x1="-4.65" y1="-5.35" x2="-4.1" y2="-5.35" width="0.2032" layer="21"/>
+<wire x1="4.1" y1="-5.35" x2="4.65" y2="-5.35" width="0.2032" layer="21"/>
+<wire x1="4.1" y1="-5.9" x2="4.1" y2="-5.35" width="0.2032" layer="21"/>
+<wire x1="4.1" y1="4.85" x2="4.1" y2="5.4" width="0.2032" layer="21"/>
+<wire x1="4.65" y1="4.85" x2="4.1" y2="4.85" width="0.2032" layer="21"/>
+<wire x1="-4.65" y1="2.65" x2="-4.65" y2="4.85" width="0.2032" layer="21"/>
+<wire x1="-4.65" y1="-5.35" x2="-4.65" y2="-2.15" width="0.2032" layer="21"/>
+<wire x1="4.65" y1="4.85" x2="4.65" y2="2.65" width="0.2032" layer="21"/>
+<wire x1="4.65" y1="-2.15" x2="4.65" y2="-5.35" width="0.2032" layer="21"/>
+<circle x="0" y="0" radius="1.397" width="0.0508" layer="21"/>
+<pad name="1" x="-2.5" y="-7" drill="1.1" shape="square" rot="R270"/>
+<pad name="2" x="0" y="-7" drill="1.1" shape="octagon" rot="R270"/>
+<pad name="3" x="2.5" y="-7" drill="1.1" shape="octagon" rot="R270"/>
+<pad name="CHASSIS2" x="4.5" y="0" drill="2.1" diameter="2.794" rot="R270"/>
+<pad name="CHASSIS1" x="-4.5" y="0" drill="2.1" diameter="2.794" rot="R270"/>
+<text x="-5.08" y="1.27" size="0.8128" layer="25" font="vector" rot="R90">&gt;NAME</text>
+<text x="5.969" y="1.27" size="0.8128" layer="27" font="vector" rot="R90">&gt;VALUE</text>
+<rectangle x1="-2.925" y1="-7.325" x2="-2.075" y2="-6" layer="51"/>
+<rectangle x1="-0.425" y1="-7.325" x2="0.425" y2="-6" layer="51"/>
+<rectangle x1="2.075" y1="-7.325" x2="2.925" y2="-6" layer="51"/>
+<circle x="0" y="0" radius="1.016" width="0.0508" layer="21"/>
+</package>
+</packages>
+<symbols>
+<symbol name="JACK">
+<wire x1="-2.54" y1="2.54" x2="0" y2="2.54" width="0.1524" layer="94"/>
+<wire x1="0" y1="2.54" x2="1.524" y2="1.016" width="0.1524" layer="94"/>
+<wire x1="1.524" y1="1.016" x2="2.286" y2="1.778" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="0" x2="-0.762" y2="0" width="0.1524" layer="94"/>
+<wire x1="-0.762" y1="0" x2="-0.762" y2="2.286" width="0.1524" layer="94"/>
+<wire x1="-0.762" y1="2.286" x2="-1.016" y2="1.524" width="0.254" layer="94"/>
+<wire x1="-1.016" y1="1.524" x2="-0.508" y2="1.524" width="0.254" layer="94"/>
+<wire x1="-0.508" y1="1.524" x2="-0.762" y2="2.286" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="-2.54" x2="4.572" y2="-2.54" width="0.1524" layer="94"/>
+<text x="-2.54" y="4.064" size="1.778" layer="95">&gt;NAME</text>
+<text x="-2.54" y="-6.096" size="1.778" layer="96">&gt;VALUE</text>
+<rectangle x1="2.286" y1="-0.508" x2="7.874" y2="0.508" layer="94" rot="R90"/>
+<pin name="1" x="-5.08" y="-2.54" visible="pad" length="short" direction="pas"/>
+<pin name="2" x="-5.08" y="2.54" visible="pad" length="short" direction="pas"/>
+<pin name="3" x="-5.08" y="0" visible="pad" length="short" direction="pas"/>
+</symbol>
+<symbol name="POT_EU-">
+<wire x1="-0.762" y1="2.54" x2="-0.762" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="0.762" y1="-2.54" x2="0.762" y2="2.54" width="0.254" layer="94"/>
+<wire x1="2.54" y1="0" x2="1.651" y2="0" width="0.1524" layer="94"/>
+<wire x1="1.651" y1="0" x2="-1.8796" y2="1.7526" width="0.1524" layer="94"/>
+<wire x1="0.762" y1="2.54" x2="-0.762" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-0.762" y1="-2.54" x2="0.762" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-2.1597" y1="1.2939" x2="-3.1989" y2="2.4495" width="0.1524" layer="94"/>
+<wire x1="-3.1989" y1="2.4495" x2="-1.7018" y2="2.2352" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="-2.54" x2="-2.54" y2="-0.508" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="-0.508" x2="-3.048" y2="-1.524" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="-0.508" x2="-2.032" y2="-1.524" width="0.1524" layer="94"/>
+<wire x1="-2.1597" y1="1.2939" x2="-1.7018" y2="2.2352" width="0.1524" layer="94"/>
+<text x="-5.969" y="-3.81" size="1.778" layer="95" rot="R90">&gt;NAME</text>
+<text x="-3.81" y="-3.81" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
+<pin name="A" x="0" y="-5.08" visible="pad" length="short" direction="pas" rot="R90"/>
+<pin name="E" x="0" y="5.08" visible="pad" length="short" direction="pas" rot="R270"/>
+<pin name="S" x="5.08" y="0" visible="pad" length="short" direction="pas" rot="R180"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="WQP-PJ301M-12_JACK" prefix="J">
+<gates>
+<gate name="G$1" symbol="JACK" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="WQP-PJ301M-12_JACK">
+<connects>
+<connect gate="G$1" pin="1" pad="P$3_SLEEVE"/>
+<connect gate="G$1" pin="2" pad="P$1_TIP"/>
+<connect gate="G$1" pin="3" pad="P$2_SWITCH"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="9MM_SNAP-IN_POT" prefix="VR" uservalue="yes">
+<description>9mm vertical snap-in pot, Alpha / Panasonic style</description>
+<gates>
+<gate name="G$1" symbol="POT_EU-" x="0" y="0"/>
+</gates>
+<devices>
+<device name="_" package="9MM_SNAP-IN_POT">
+<connects>
+<connect gate="G$1" pin="A" pad="1"/>
+<connect gate="G$1" pin="E" pad="3"/>
+<connect gate="G$1" pin="S" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -16971,34 +16938,34 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 </class>
 </classes>
 <parts>
-<part name="U5" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="U6" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="VR3" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_">
+<part name="U5" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="U6" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="VR3" library="jhbruhn-physical" deviceset="9MM_SNAP-IN_POT" device="_">
 <attribute name="SPICEPREFIX" value="J"/>
 </part>
-<part name="U7" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="U8" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="VR4" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_">
+<part name="U7" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="U8" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="VR4" library="jhbruhn-physical" deviceset="9MM_SNAP-IN_POT" device="_">
 <attribute name="SPICEPREFIX" value="J"/>
 </part>
-<part name="U9" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="U10" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="VR5" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_">
+<part name="U9" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="U10" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="VR5" library="jhbruhn-physical" deviceset="9MM_SNAP-IN_POT" device="_">
 <attribute name="SPICEPREFIX" value="J"/>
 </part>
-<part name="U11" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="U12" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="VR6" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_">
+<part name="U11" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="U12" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="VR6" library="jhbruhn-physical" deviceset="9MM_SNAP-IN_POT" device="_">
 <attribute name="SPICEPREFIX" value="J"/>
 </part>
-<part name="U13" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="U14" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="VR7" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_">
+<part name="U13" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="U14" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="VR7" library="jhbruhn-physical" deviceset="9MM_SNAP-IN_POT" device="_">
 <attribute name="SPICEPREFIX" value="J"/>
 </part>
-<part name="U15" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="U16" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="VR8" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_">
+<part name="U15" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="U16" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="VR8" library="jhbruhn-physical" deviceset="9MM_SNAP-IN_POT" device="_">
 <attribute name="SPICEPREFIX" value="J"/>
 </part>
 <part name="GND13" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
@@ -17013,28 +16980,24 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <part name="GND22" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND23" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND24" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="U1" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="U2" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="VR1" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_">
+<part name="U1" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="U2" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="VR1" library="jhbruhn-physical" deviceset="9MM_SNAP-IN_POT" device="_">
 <attribute name="SPICEPREFIX" value="J"/>
 </part>
-<part name="U3" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="U4" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="VR2" library="MusicThingModular" deviceset="9MM_SNAP-IN_POT" device="_">
+<part name="U3" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="U4" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="VR2" library="jhbruhn-physical" deviceset="9MM_SNAP-IN_POT" device="_">
 <attribute name="SPICEPREFIX" value="J"/>
 </part>
 <part name="GND9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND10" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND11" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="U17" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="U18" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="U19" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="U20" library="MusicThingModular" deviceset="THONKICONN" device="OLD" value="THONKICONNOLD"/>
-<part name="GND25" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="U19" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
+<part name="U20" library="jhbruhn-physical" deviceset="WQP-PJ301M-12_JACK" device="" value="WQP-PJ301M-12_JACK"/>
 <part name="GND26" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND27" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="GND28" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="JP1" library="pinhead" library_urn="urn:adsk.eagle:library:325" deviceset="PINHD-1X20" device="" package3d_urn="urn:adsk.eagle:package:22441/2"/>
 <part name="P+9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+12V" device=""/>
 <part name="P-7" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="-12V" device=""/>
@@ -17216,82 +17179,82 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <nets>
 <net name="GND" class="0">
 <segment>
-<pinref part="U5" gate="G$1" pin="SLEEVE"/>
+<pinref part="U5" gate="G$1" pin="1"/>
 <pinref part="GND13" gate="1" pin="GND"/>
 <wire x1="-15.24" y1="55.88" x2="-17.78" y2="55.88" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U6" gate="G$1" pin="SLEEVE"/>
+<pinref part="U6" gate="G$1" pin="1"/>
 <pinref part="GND14" gate="1" pin="GND"/>
 <wire x1="-15.24" y1="45.72" x2="-17.78" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U7" gate="G$1" pin="SLEEVE"/>
+<pinref part="U7" gate="G$1" pin="1"/>
 <pinref part="GND15" gate="1" pin="GND"/>
 <wire x1="-15.24" y1="35.56" x2="-17.78" y2="35.56" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U8" gate="G$1" pin="SLEEVE"/>
+<pinref part="U8" gate="G$1" pin="1"/>
 <pinref part="GND16" gate="1" pin="GND"/>
 <wire x1="-15.24" y1="25.4" x2="-17.78" y2="25.4" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U16" gate="G$1" pin="SLEEVE"/>
+<pinref part="U16" gate="G$1" pin="1"/>
 <pinref part="GND17" gate="1" pin="GND"/>
 <wire x1="104.14" y1="27.94" x2="101.6" y2="27.94" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U15" gate="G$1" pin="SLEEVE"/>
+<pinref part="U15" gate="G$1" pin="1"/>
 <pinref part="GND18" gate="1" pin="GND"/>
 <wire x1="104.14" y1="38.1" x2="101.6" y2="38.1" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U14" gate="G$1" pin="SLEEVE"/>
+<pinref part="U14" gate="G$1" pin="1"/>
 <pinref part="GND19" gate="1" pin="GND"/>
 <wire x1="104.14" y1="48.26" x2="101.6" y2="48.26" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U13" gate="G$1" pin="SLEEVE"/>
+<pinref part="U13" gate="G$1" pin="1"/>
 <pinref part="GND20" gate="1" pin="GND"/>
 <wire x1="104.14" y1="58.42" x2="101.6" y2="58.42" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U12" gate="G$1" pin="SLEEVE"/>
+<pinref part="U12" gate="G$1" pin="1"/>
 <pinref part="GND21" gate="1" pin="GND"/>
 <wire x1="104.14" y1="83.82" x2="101.6" y2="83.82" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U11" gate="G$1" pin="SLEEVE"/>
+<pinref part="U11" gate="G$1" pin="1"/>
 <pinref part="GND22" gate="1" pin="GND"/>
 <wire x1="104.14" y1="93.98" x2="101.6" y2="93.98" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U10" gate="G$1" pin="SLEEVE"/>
+<pinref part="U10" gate="G$1" pin="1"/>
 <pinref part="GND23" gate="1" pin="GND"/>
 <wire x1="104.14" y1="104.14" x2="101.6" y2="104.14" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U9" gate="G$1" pin="SLEEVE"/>
+<pinref part="U9" gate="G$1" pin="1"/>
 <pinref part="GND24" gate="1" pin="GND"/>
 <wire x1="104.14" y1="114.3" x2="101.6" y2="114.3" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U1" gate="G$1" pin="SLEEVE"/>
+<pinref part="U1" gate="G$1" pin="1"/>
 <pinref part="GND9" gate="1" pin="GND"/>
 <wire x1="-15.24" y1="111.76" x2="-17.78" y2="111.76" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="SLEEVE"/>
+<pinref part="U2" gate="G$1" pin="1"/>
 <pinref part="GND10" gate="1" pin="GND"/>
 <wire x1="-15.24" y1="101.6" x2="-17.78" y2="101.6" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U3" gate="G$1" pin="SLEEVE"/>
+<pinref part="U3" gate="G$1" pin="1"/>
 <pinref part="GND11" gate="1" pin="GND"/>
 <wire x1="-15.24" y1="91.44" x2="-17.78" y2="91.44" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U4" gate="G$1" pin="SLEEVE"/>
+<pinref part="U4" gate="G$1" pin="1"/>
 <pinref part="GND12" gate="1" pin="GND"/>
 <wire x1="-15.24" y1="81.28" x2="-17.78" y2="81.28" width="0.1524" layer="91"/>
 </segment>
@@ -17303,38 +17266,42 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <segment>
 <pinref part="VR2" gate="G$1" pin="A"/>
 <pinref part="GND1" gate="1" pin="GND"/>
+<wire x1="35.56" y1="86.36" x2="33.02" y2="86.36" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="VR4" gate="G$1" pin="A"/>
 <pinref part="GND2" gate="1" pin="GND"/>
+<wire x1="35.56" y1="30.48" x2="33.02" y2="30.48" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="VR8" gate="G$1" pin="A"/>
 <pinref part="GND3" gate="1" pin="GND"/>
+<wire x1="154.94" y1="33.02" x2="152.4" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="VR6" gate="G$1" pin="A"/>
 <pinref part="GND4" gate="1" pin="GND"/>
+<wire x1="154.94" y1="88.9" x2="152.4" y2="88.9" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="REF_5" class="0">
 <segment>
-<pinref part="U7" gate="G$1" pin="SWITCH"/>
+<pinref part="U7" gate="G$1" pin="3"/>
 <wire x1="-17.78" y1="38.1" x2="-12.7" y2="38.1" width="0.1524" layer="91"/>
 <label x="-12.7" y="38.1" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U11" gate="G$1" pin="SWITCH"/>
+<pinref part="U11" gate="G$1" pin="3"/>
 <wire x1="101.6" y1="96.52" x2="106.68" y2="96.52" width="0.1524" layer="91"/>
 <label x="106.68" y="96.52" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U15" gate="G$1" pin="SWITCH"/>
+<pinref part="U15" gate="G$1" pin="3"/>
 <wire x1="101.6" y1="40.64" x2="106.68" y2="40.64" width="0.1524" layer="91"/>
 <label x="106.68" y="40.64" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U3" gate="G$1" pin="SWITCH"/>
+<pinref part="U3" gate="G$1" pin="3"/>
 <wire x1="-17.78" y1="93.98" x2="-12.7" y2="93.98" width="0.1524" layer="91"/>
 <label x="-12.7" y="93.98" size="1.778" layer="95" xref="yes"/>
 </segment>
@@ -17346,22 +17313,22 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 </net>
 <net name="REF_10" class="0">
 <segment>
-<pinref part="U8" gate="G$1" pin="SWITCH"/>
+<pinref part="U8" gate="G$1" pin="3"/>
 <wire x1="-17.78" y1="27.94" x2="-12.7" y2="27.94" width="0.1524" layer="91"/>
 <label x="-12.7" y="27.94" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U12" gate="G$1" pin="SWITCH"/>
+<pinref part="U12" gate="G$1" pin="3"/>
 <wire x1="101.6" y1="86.36" x2="106.68" y2="86.36" width="0.1524" layer="91"/>
 <label x="106.68" y="86.36" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U16" gate="G$1" pin="SWITCH"/>
+<pinref part="U16" gate="G$1" pin="3"/>
 <wire x1="101.6" y1="30.48" x2="106.68" y2="30.48" width="0.1524" layer="91"/>
 <label x="106.68" y="30.48" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U4" gate="G$1" pin="SWITCH"/>
+<pinref part="U4" gate="G$1" pin="3"/>
 <wire x1="-17.78" y1="83.82" x2="-12.7" y2="83.82" width="0.1524" layer="91"/>
 <label x="-12.7" y="83.82" size="1.778" layer="95" xref="yes"/>
 </segment>
@@ -17387,10 +17354,10 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 </net>
 <net name="2_IN_L" class="0">
 <segment>
-<pinref part="U6" gate="G$1" pin="SWITCH"/>
+<pinref part="U6" gate="G$1" pin="3"/>
 <wire x1="-17.78" y1="48.26" x2="-12.7" y2="48.26" width="0.1524" layer="91"/>
 <wire x1="-12.7" y1="48.26" x2="-12.7" y2="60.96" width="0.1524" layer="91"/>
-<pinref part="U5" gate="G$1" pin="TIP"/>
+<pinref part="U5" gate="G$1" pin="2"/>
 <wire x1="-12.7" y1="60.96" x2="-17.78" y2="60.96" width="0.1524" layer="91"/>
 <wire x1="-12.7" y1="60.96" x2="30.48" y2="60.96" width="0.1524" layer="91"/>
 <junction x="-12.7" y="60.96"/>
@@ -17405,8 +17372,8 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <net name="N$13" class="0">
 <segment>
 <pinref part="VR4" gate="G$1" pin="E"/>
-<pinref part="U8" gate="G$1" pin="TIP"/>
-<wire x1="20.32" y1="30.48" x2="-17.78" y2="30.48" width="0.1524" layer="91"/>
+<pinref part="U8" gate="G$1" pin="2"/>
+<wire x1="22.86" y1="30.48" x2="-17.78" y2="30.48" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="3_VOLUME_CV" class="0">
@@ -17425,16 +17392,16 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <net name="N$21" class="0">
 <segment>
 <pinref part="VR6" gate="G$1" pin="E"/>
-<pinref part="U12" gate="G$1" pin="TIP"/>
-<wire x1="139.7" y1="88.9" x2="101.6" y2="88.9" width="0.1524" layer="91"/>
+<pinref part="U12" gate="G$1" pin="2"/>
+<wire x1="142.24" y1="88.9" x2="101.6" y2="88.9" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="4_IN_L" class="0">
 <segment>
-<pinref part="U14" gate="G$1" pin="SWITCH"/>
+<pinref part="U14" gate="G$1" pin="3"/>
 <wire x1="101.6" y1="50.8" x2="106.68" y2="50.8" width="0.1524" layer="91"/>
 <wire x1="106.68" y1="50.8" x2="106.68" y2="63.5" width="0.1524" layer="91"/>
-<pinref part="U13" gate="G$1" pin="TIP"/>
+<pinref part="U13" gate="G$1" pin="2"/>
 <wire x1="106.68" y1="63.5" x2="101.6" y2="63.5" width="0.1524" layer="91"/>
 <wire x1="106.68" y1="63.5" x2="149.86" y2="63.5" width="0.1524" layer="91"/>
 <junction x="106.68" y="63.5"/>
@@ -17448,7 +17415,7 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 </net>
 <net name="4_IN_R" class="0">
 <segment>
-<pinref part="U14" gate="G$1" pin="TIP"/>
+<pinref part="U14" gate="G$1" pin="2"/>
 <wire x1="101.6" y1="53.34" x2="109.22" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="109.22" y1="53.34" x2="109.22" y2="60.96" width="0.1524" layer="91"/>
 <wire x1="109.22" y1="60.96" x2="149.86" y2="60.96" width="0.1524" layer="91"/>
@@ -17463,12 +17430,12 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <net name="4_PAN_CV_IN" class="0">
 <segment>
 <wire x1="116.84" y1="55.88" x2="127" y2="55.88" width="0.1524" layer="91"/>
-<pinref part="U15" gate="G$1" pin="TIP"/>
+<pinref part="U15" gate="G$1" pin="2"/>
 <wire x1="127" y1="55.88" x2="149.86" y2="55.88" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="43.18" x2="116.84" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="116.84" y1="43.18" x2="116.84" y2="55.88" width="0.1524" layer="91"/>
 <pinref part="VR7" gate="G$1" pin="E"/>
-<wire x1="127" y1="53.34" x2="127" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="127" y1="50.8" x2="127" y2="55.88" width="0.1524" layer="91"/>
 <junction x="127" y="55.88"/>
 <label x="127" y="55.88" size="1.778" layer="95"/>
 </segment>
@@ -17483,7 +17450,7 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <wire x1="142.24" y1="38.1" x2="142.24" y2="50.8" width="0.1524" layer="91"/>
 <wire x1="142.24" y1="50.8" x2="149.86" y2="50.8" width="0.1524" layer="91"/>
 <pinref part="VR7" gate="G$1" pin="A"/>
-<wire x1="127" y1="38.1" x2="142.24" y2="38.1" width="0.1524" layer="91"/>
+<wire x1="127" y1="40.64" x2="142.24" y2="38.1" width="0.1524" layer="91"/>
 <label x="127" y="38.1" size="1.778" layer="95"/>
 </segment>
 <segment>
@@ -17508,16 +17475,16 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <net name="N$28" class="0">
 <segment>
 <pinref part="VR8" gate="G$1" pin="E"/>
-<pinref part="U16" gate="G$1" pin="TIP"/>
-<wire x1="139.7" y1="33.02" x2="101.6" y2="33.02" width="0.1524" layer="91"/>
+<pinref part="U16" gate="G$1" pin="2"/>
+<wire x1="142.24" y1="33.02" x2="101.6" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="1_IN_L" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="SWITCH"/>
+<pinref part="U2" gate="G$1" pin="3"/>
 <wire x1="-17.78" y1="104.14" x2="-12.7" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="-12.7" y1="104.14" x2="-12.7" y2="116.84" width="0.1524" layer="91"/>
-<pinref part="U1" gate="G$1" pin="TIP"/>
+<pinref part="U1" gate="G$1" pin="2"/>
 <wire x1="-12.7" y1="116.84" x2="-17.78" y2="116.84" width="0.1524" layer="91"/>
 <wire x1="-12.7" y1="116.84" x2="30.48" y2="116.84" width="0.1524" layer="91"/>
 <junction x="-12.7" y="116.84"/>
@@ -17531,7 +17498,7 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 </net>
 <net name="1_IN_R" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="TIP"/>
+<pinref part="U2" gate="G$1" pin="2"/>
 <wire x1="-17.78" y1="106.68" x2="-10.16" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="-10.16" y1="106.68" x2="-10.16" y2="114.3" width="0.1524" layer="91"/>
 <wire x1="-10.16" y1="114.3" x2="30.48" y2="114.3" width="0.1524" layer="91"/>
@@ -17562,7 +17529,7 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <wire x1="22.86" y1="91.44" x2="22.86" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="22.86" y1="104.14" x2="30.48" y2="104.14" width="0.1524" layer="91"/>
 <pinref part="VR1" gate="G$1" pin="A"/>
-<wire x1="7.62" y1="91.44" x2="22.86" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="7.62" y1="93.98" x2="22.86" y2="91.44" width="0.1524" layer="91"/>
 <label x="7.62" y="91.44" size="1.778" layer="95"/>
 </segment>
 <segment>
@@ -17574,8 +17541,8 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <net name="N$17" class="0">
 <segment>
 <pinref part="VR2" gate="G$1" pin="E"/>
-<pinref part="U4" gate="G$1" pin="TIP"/>
-<wire x1="20.32" y1="86.36" x2="-17.78" y2="86.36" width="0.1524" layer="91"/>
+<pinref part="U4" gate="G$1" pin="2"/>
+<wire x1="22.86" y1="86.36" x2="-17.78" y2="86.36" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="1_PAN_CV_IN" class="0">
@@ -17586,12 +17553,12 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 </segment>
 <segment>
 <wire x1="-2.54" y1="109.22" x2="7.62" y2="109.22" width="0.1524" layer="91"/>
-<pinref part="U3" gate="G$1" pin="TIP"/>
+<pinref part="U3" gate="G$1" pin="2"/>
 <wire x1="7.62" y1="109.22" x2="30.48" y2="109.22" width="0.1524" layer="91"/>
 <wire x1="-17.78" y1="96.52" x2="-2.54" y2="96.52" width="0.1524" layer="91"/>
 <wire x1="-2.54" y1="96.52" x2="-2.54" y2="109.22" width="0.1524" layer="91"/>
 <pinref part="VR1" gate="G$1" pin="E"/>
-<wire x1="7.62" y1="106.68" x2="7.62" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="7.62" y1="104.14" x2="7.62" y2="109.22" width="0.1524" layer="91"/>
 <junction x="7.62" y="109.22"/>
 <label x="10.16" y="109.22" size="1.778" layer="95"/>
 </segment>
@@ -17616,7 +17583,7 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <label x="-55.88" y="76.2" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U6" gate="G$1" pin="TIP"/>
+<pinref part="U6" gate="G$1" pin="2"/>
 <wire x1="-17.78" y1="50.8" x2="-10.16" y2="50.8" width="0.1524" layer="91"/>
 <wire x1="-10.16" y1="50.8" x2="-10.16" y2="58.42" width="0.1524" layer="91"/>
 <wire x1="-10.16" y1="58.42" x2="30.48" y2="58.42" width="0.1524" layer="91"/>
@@ -17631,12 +17598,12 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 </segment>
 <segment>
 <wire x1="-2.54" y1="53.34" x2="7.62" y2="53.34" width="0.1524" layer="91"/>
-<pinref part="U7" gate="G$1" pin="TIP"/>
+<pinref part="U7" gate="G$1" pin="2"/>
 <wire x1="7.62" y1="53.34" x2="30.48" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="-17.78" y1="40.64" x2="-2.54" y2="40.64" width="0.1524" layer="91"/>
 <wire x1="-2.54" y1="40.64" x2="-2.54" y2="53.34" width="0.1524" layer="91"/>
 <pinref part="VR3" gate="G$1" pin="E"/>
-<wire x1="7.62" y1="50.8" x2="7.62" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="7.62" y1="48.26" x2="7.62" y2="53.34" width="0.1524" layer="91"/>
 <junction x="7.62" y="53.34"/>
 <label x="7.62" y="53.34" size="1.778" layer="95"/>
 </segment>
@@ -17665,7 +17632,7 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <wire x1="22.86" y1="35.56" x2="22.86" y2="48.26" width="0.1524" layer="91"/>
 <wire x1="22.86" y1="48.26" x2="30.48" y2="48.26" width="0.1524" layer="91"/>
 <pinref part="VR3" gate="G$1" pin="A"/>
-<wire x1="7.62" y1="35.56" x2="22.86" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="7.62" y1="38.1" x2="22.86" y2="35.56" width="0.1524" layer="91"/>
 <label x="7.62" y="35.56" size="1.778" layer="95"/>
 </segment>
 </net>
@@ -17689,10 +17656,10 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <label x="-55.88" y="63.5" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U10" gate="G$1" pin="SWITCH"/>
+<pinref part="U10" gate="G$1" pin="3"/>
 <wire x1="101.6" y1="106.68" x2="106.68" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="106.68" y1="106.68" x2="106.68" y2="119.38" width="0.1524" layer="91"/>
-<pinref part="U9" gate="G$1" pin="TIP"/>
+<pinref part="U9" gate="G$1" pin="2"/>
 <wire x1="106.68" y1="119.38" x2="101.6" y2="119.38" width="0.1524" layer="91"/>
 <wire x1="106.68" y1="119.38" x2="149.86" y2="119.38" width="0.1524" layer="91"/>
 <junction x="106.68" y="119.38"/>
@@ -17706,7 +17673,7 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <label x="-55.88" y="60.96" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U10" gate="G$1" pin="TIP"/>
+<pinref part="U10" gate="G$1" pin="2"/>
 <wire x1="101.6" y1="109.22" x2="109.22" y2="109.22" width="0.1524" layer="91"/>
 <wire x1="109.22" y1="109.22" x2="109.22" y2="116.84" width="0.1524" layer="91"/>
 <wire x1="109.22" y1="116.84" x2="149.86" y2="116.84" width="0.1524" layer="91"/>
@@ -17721,12 +17688,12 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 </segment>
 <segment>
 <wire x1="116.84" y1="111.76" x2="127" y2="111.76" width="0.1524" layer="91"/>
-<pinref part="U11" gate="G$1" pin="TIP"/>
+<pinref part="U11" gate="G$1" pin="2"/>
 <wire x1="127" y1="111.76" x2="149.86" y2="111.76" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="99.06" x2="116.84" y2="99.06" width="0.1524" layer="91"/>
 <wire x1="116.84" y1="99.06" x2="116.84" y2="111.76" width="0.1524" layer="91"/>
 <pinref part="VR5" gate="G$1" pin="E"/>
-<wire x1="127" y1="109.22" x2="127" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="127" y1="106.68" x2="127" y2="111.76" width="0.1524" layer="91"/>
 <junction x="127" y="111.76"/>
 <label x="129.54" y="111.76" size="1.778" layer="95"/>
 </segment>
@@ -17755,7 +17722,7 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <wire x1="142.24" y1="93.98" x2="142.24" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="142.24" y1="106.68" x2="149.86" y2="106.68" width="0.1524" layer="91"/>
 <pinref part="VR5" gate="G$1" pin="A"/>
-<wire x1="127" y1="93.98" x2="142.24" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="127" y1="96.52" x2="142.24" y2="93.98" width="0.1524" layer="91"/>
 <label x="127" y="93.98" size="1.778" layer="95"/>
 </segment>
 </net>
@@ -17780,29 +17747,17 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <plain>
 </plain>
 <instances>
-<instance part="U17" gate="G$1" x="38.1" y="66.04" smashed="yes">
-<attribute name="NAME" x="35.56" y="70.104" size="1.778" layer="95"/>
-</instance>
-<instance part="U18" gate="G$1" x="38.1" y="40.64" smashed="yes">
-<attribute name="NAME" x="35.56" y="44.704" size="1.778" layer="95"/>
-</instance>
 <instance part="U19" gate="G$1" x="71.12" y="66.04" smashed="yes">
 <attribute name="NAME" x="68.58" y="70.104" size="1.778" layer="95"/>
 </instance>
 <instance part="U20" gate="G$1" x="71.12" y="40.64" smashed="yes">
 <attribute name="NAME" x="68.58" y="44.704" size="1.778" layer="95"/>
 </instance>
-<instance part="GND25" gate="1" x="33.02" y="60.96" smashed="yes">
-<attribute name="VALUE" x="30.48" y="58.42" size="1.778" layer="96"/>
-</instance>
 <instance part="GND26" gate="1" x="66.04" y="60.96" smashed="yes">
 <attribute name="VALUE" x="63.5" y="58.42" size="1.778" layer="96"/>
 </instance>
 <instance part="GND27" gate="1" x="66.04" y="35.56" smashed="yes">
 <attribute name="VALUE" x="63.5" y="33.02" size="1.778" layer="96"/>
-</instance>
-<instance part="GND28" gate="1" x="33.02" y="35.56" smashed="yes">
-<attribute name="VALUE" x="30.48" y="33.02" size="1.778" layer="96"/>
 </instance>
 <instance part="GND43" gate="1" x="129.54" y="35.56" smashed="yes">
 <attribute name="VALUE" x="127" y="33.02" size="1.778" layer="96"/>
@@ -17817,20 +17772,12 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <nets>
 <net name="GND" class="0">
 <segment>
-<pinref part="U17" gate="G$1" pin="SLEEVE"/>
-<pinref part="GND25" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="U19" gate="G$1" pin="SLEEVE"/>
+<pinref part="U19" gate="G$1" pin="1"/>
 <pinref part="GND26" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="U20" gate="G$1" pin="SLEEVE"/>
+<pinref part="U20" gate="G$1" pin="1"/>
 <pinref part="GND27" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="U18" gate="G$1" pin="SLEEVE"/>
-<pinref part="GND28" gate="1" pin="GND"/>
 </segment>
 <segment>
 <pinref part="GND43" gate="1" pin="GND"/>
@@ -17839,62 +17786,38 @@ Source: http://www.ctscorp.com/components/Datasheets/CTSChipArrayDs.pdf</descrip
 <pinref part="JP2" gate="A" pin="5"/>
 </segment>
 </net>
-<net name="BYPASS_L" class="0">
-<segment>
-<pinref part="U17" gate="G$1" pin="TIP"/>
-<wire x1="33.02" y1="68.58" x2="15.24" y2="68.58" width="0.1524" layer="91"/>
-<label x="20.32" y="68.58" size="1.778" layer="95"/>
-</segment>
-<segment>
-<wire x1="157.48" y1="45.72" x2="129.54" y2="45.72" width="0.1524" layer="91"/>
-<label x="129.54" y="45.72" size="1.778" layer="95"/>
-<pinref part="JP2" gate="A" pin="3"/>
-</segment>
-</net>
-<net name="BYPASS_R" class="0">
-<segment>
-<pinref part="U18" gate="G$1" pin="TIP"/>
-<wire x1="33.02" y1="43.18" x2="15.24" y2="43.18" width="0.1524" layer="91"/>
-<label x="25.4" y="43.18" size="1.778" layer="95"/>
-</segment>
-<segment>
-<wire x1="157.48" y1="43.18" x2="129.54" y2="43.18" width="0.1524" layer="91"/>
-<label x="129.54" y="43.18" size="1.778" layer="95"/>
-<pinref part="JP2" gate="A" pin="4"/>
-</segment>
-</net>
 <net name="OUT_R" class="0">
-<segment>
-<pinref part="U20" gate="G$1" pin="TIP"/>
-<wire x1="50.8" y1="43.18" x2="66.04" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="50.8" y1="33.02" x2="50.8" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="20.32" y1="33.02" x2="50.8" y2="33.02" width="0.1524" layer="91"/>
-<pinref part="U18" gate="G$1" pin="SWITCH"/>
-<wire x1="33.02" y1="40.64" x2="20.32" y2="40.64" width="0.1524" layer="91"/>
-<wire x1="20.32" y1="40.64" x2="20.32" y2="33.02" width="0.1524" layer="91"/>
-<label x="55.88" y="40.64" size="1.778" layer="95"/>
-</segment>
 <segment>
 <wire x1="157.48" y1="48.26" x2="129.54" y2="48.26" width="0.1524" layer="91"/>
 <label x="129.54" y="48.26" size="1.778" layer="95"/>
 <pinref part="JP2" gate="A" pin="2"/>
 </segment>
+<segment>
+<label x="129.54" y="43.18" size="1.778" layer="95"/>
+<pinref part="JP2" gate="A" pin="4"/>
+<wire x1="157.48" y1="43.18" x2="83.82" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="83.82" y1="43.18" x2="83.82" y2="27.94" width="0.1524" layer="91"/>
+<pinref part="U20" gate="G$1" pin="2"/>
+<wire x1="50.8" y1="43.18" x2="66.04" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="50.8" y1="27.94" x2="50.8" y2="43.18" width="0.1524" layer="91"/>
+<label x="55.88" y="40.64" size="1.778" layer="95"/>
+<wire x1="83.82" y1="27.94" x2="50.8" y2="27.94" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="OUT_L" class="0">
-<segment>
-<pinref part="U19" gate="G$1" pin="TIP"/>
-<wire x1="53.34" y1="68.58" x2="66.04" y2="68.58" width="0.1524" layer="91"/>
-<wire x1="53.34" y1="68.58" x2="53.34" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="53.34" y1="58.42" x2="20.32" y2="58.42" width="0.1524" layer="91"/>
-<pinref part="U17" gate="G$1" pin="SWITCH"/>
-<wire x1="33.02" y1="66.04" x2="20.32" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="20.32" y1="66.04" x2="20.32" y2="58.42" width="0.1524" layer="91"/>
-<label x="55.88" y="66.04" size="1.778" layer="95"/>
-</segment>
 <segment>
 <wire x1="157.48" y1="50.8" x2="129.54" y2="50.8" width="0.1524" layer="91"/>
 <label x="129.54" y="50.8" size="1.778" layer="95"/>
 <pinref part="JP2" gate="A" pin="1"/>
+</segment>
+<segment>
+<label x="129.54" y="45.72" size="1.778" layer="95"/>
+<pinref part="JP2" gate="A" pin="3"/>
+<pinref part="U19" gate="G$1" pin="2"/>
+<wire x1="53.34" y1="68.58" x2="66.04" y2="68.58" width="0.1524" layer="91"/>
+<label x="55.88" y="66.04" size="1.778" layer="95"/>
+<wire x1="157.48" y1="45.72" x2="53.34" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="53.34" y1="45.72" x2="53.34" y2="68.58" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
