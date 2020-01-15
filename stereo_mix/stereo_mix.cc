@@ -26,19 +26,20 @@ typedef SpiMaster<NumberedGpio<3>, MSB_FIRST, 2> dac4Spi;
 typedef Dac<dac4Spi, BUFFERED_REFERENCE, 1> Dac4;
 
 typedef SpiMaster<NumberedGpio<4>, MSB_FIRST, 2> oDac1Spi;
-typedef Dac<oDac1Spi, BUFFERED_REFERENCE, 1> oDac1;
+typedef Dac<oDac1Spi, BUFFERED_REFERENCE, 0> oDac1;
 typedef SpiMaster<NumberedGpio<5>, MSB_FIRST, 2> oDac2Spi;
-typedef Dac<oDac2Spi, BUFFERED_REFERENCE, 1> oDac2;
+typedef Dac<oDac2Spi, BUFFERED_REFERENCE, 0> oDac2;
 typedef SpiMaster<NumberedGpio<6>, MSB_FIRST, 2> oDac3Spi;
-typedef Dac<oDac3Spi, BUFFERED_REFERENCE, 1> oDac3;
+typedef Dac<oDac3Spi, BUFFERED_REFERENCE, 0> oDac3;
 typedef SpiMaster<NumberedGpio<7>, MSB_FIRST, 2> oDac4Spi;
-typedef Dac<oDac4Spi, BUFFERED_REFERENCE, 1> oDac4;
+typedef Dac<oDac4Spi, BUFFERED_REFERENCE, 0> oDac4;
+
 typedef AdcInputScanner AnalogInputs;
 
 #define NUM_CHANNELS 4
 
 uint32_t volume[NUM_CHANNELS];
-uint16_t pan[NUM_CHANNELS];
+uint16_t pan[NUM_CHANNELS * 2];
 
 int main(void)
 {
@@ -56,26 +57,37 @@ int main(void)
   AnalogInputs::Init();
 
   AnalogInputs::set_num_inputs(8);
+
+#define WRITE(DAC, ODAC, N)                                    \
+  DAC::Write((volume[N] * pan[N * NUM_CHANNELS]) >> 8, 0);     \
+  ODAC::Write((volume[N] * pan[N * NUM_CHANNELS]) >> 8, 0);    \
+  DAC::Write((volume[N] * pan[N * NUM_CHANNELS + 1]) >> 8, 1); \
+  ODAC::Write((volume[N] * pan[N * NUM_CHANNELS + 1]) >> 8, 1);
+
   while (true) {
     ResetWatchdog();
 
     for (int i = 0; i < NUM_CHANNELS; i++) {
-      volume[i] = pgm_read_word_near(lut_res_linear_to_exp + (AnalogInputs::Read(i))) >> 1;
-      pan[i] = AnalogInputs::Read(i + NUM_CHANNELS);
+      volume[i] = pgm_read_word_near(lut_res_linear_to_exp + (AnalogInputs::Read(i)));
+      pan[i * NUM_CHANNELS] = pgm_read_word(lut_res_left_sin_pan + AnalogInputs::Read(i + NUM_CHANNELS));
+      pan[i * NUM_CHANNELS + 1] = pgm_read_word(lut_res_right_cos_pan + AnalogInputs::Read(i + NUM_CHANNELS));
+
+      switch (i) {
+      case 0:
+        WRITE(Dac1, oDac1, i);
+        break;
+      case 1:
+        WRITE(Dac2, oDac2, i);
+        break;
+      case 2:
+        WRITE(Dac3, oDac3, i);
+        break;
+      case 3:
+        WRITE(Dac4, oDac4, i);
+        break;
+      }
+      AnalogInputs::Scan();
     }
-
-    AnalogInputs::Scan();
-
-#define WRITE(DAC, ODAC, N)                                                          \
-  DAC::Write((volume[N] * (pgm_read_word(lut_res_left_sin_pan + pan[N]))) >> 8, 0);  \
-  ODAC::Write((volume[N] * (pgm_read_word(lut_res_left_sin_pan + pan[N]))) >> 8, 0); \
-  DAC::Write((volume[N] * (pgm_read_word(lut_res_right_cos_pan + pan[N]))) >> 8, 1); \
-  ODAC::Write((volume[N] * (pgm_read_word(lut_res_right_cos_pan + pan[N]))) >> 8, 1);
-
-    WRITE(Dac1, oDac1, 0);
-    WRITE(Dac2, oDac2, 1);
-    WRITE(Dac3, oDac3, 2);
-    WRITE(Dac4, oDac4, 3);
   }
 }
 
