@@ -129,6 +129,8 @@ int main(void)
   menu.add_item(&item);
   menu.add_item(&item2);
   menu.add_item(&item3);
+  menu.render(0, 0, 0, 0, 0);
+
   item.increase();
   item2.increase();
   item3.increase();

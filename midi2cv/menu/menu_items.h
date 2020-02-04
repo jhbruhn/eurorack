@@ -14,6 +14,7 @@ template <class T>
 class MenuItem : public AbstractMenuItem {
   private:
   const char* label;
+  bool visible;
   T value;
   T step;
   char stringRepresentation[24];
@@ -21,6 +22,7 @@ class MenuItem : public AbstractMenuItem {
   protected:
   MenuItem(const char* _label, T _initialValue)
       : label(_label)
+      , visible(true)
       , value(_initialValue) {};
 
   virtual void to_string(char* buf) = 0;
