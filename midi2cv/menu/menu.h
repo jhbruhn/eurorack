@@ -13,12 +13,15 @@ class Menu {
   uint8_t selectedItem;
   uint8_t currentScrollStart; // index we start rendering the menu from (for scrolling)
   int8_t currentEditingItem;
+  uint8_t width, height;
 
   public:
-  Menu()
+  Menu(uint8_t width_, uint8_t height_)
       : selectedItem(0)
       , currentScrollStart(0)
-      , currentEditingItem(-1) {};
+      , currentEditingItem(-1)
+      , width(width_)
+      , height(height_) {};
 
   void up();
   void down();

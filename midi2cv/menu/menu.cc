@@ -6,6 +6,9 @@
 
 void Menu::render(u8g2_t* u8g2_, uint8_t xStart, uint8_t yStart, uint8_t width, uint8_t height)
 {
+  this->width = width;
+  this->height = height;
+
   uint8_t maxVisibleItems = height / MENU_ITEM_HEIGHT;
 
   uint8_t itemsToRender = std::min(maxVisibleItems, uint8_t(this->itemCount - currentScrollStart));
@@ -27,5 +30,36 @@ void Menu::render(u8g2_t* u8g2_, uint8_t xStart, uint8_t yStart, uint8_t width, 
 
     uint8_t valueStringWidth = u8g2_GetStrWidth(u8g2_, item->get_string_representation());
     u8g2_DrawStr(u8g2_, xStart + width - valueStringWidth, yPosition + MENU_ITEM_HEIGHT, item->get_string_representation());
+  }
+}
+
+void Menu::up()
+{
+  if (this->selectedItem > 0) {
+    if (this->selectedItem - this->currentScrollStart == 1) { // keep scroll start one up
+      this->currentScrollStart--;
+    }
+
+    this->selectedItem--;
+
+    if (this->selectedItem == 0) {
+      this->currentScrollStart = 0;
+    }
+  }
+}
+
+void Menu::down()
+{
+  uint8_t maxVisibleItems = height / MENU_ITEM_HEIGHT;
+  if (this->selectedItem < this->itemCount - 1) {
+    if (this->selectedItem - this->currentScrollStart == maxVisibleItems - 1) {
+      this->currentScrollStart++;
+    }
+
+    this->selectedItem++;
+
+    if (this->selectedItem >= this->itemCount - 1 - maxVisibleItems) { // last item
+      this->currentScrollStart = this->itemCount - 1 - maxVisibleItems;
+    }
   }
 }
