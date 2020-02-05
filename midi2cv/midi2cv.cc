@@ -3,8 +3,8 @@
 #include "drivers/display.h"
 #include "drivers/encoder.h"
 #include "drivers/gpio.h"
-#include "menu/menu_items.h"
 #include "menu/menu.h"
+#include "menu/menu_items.h"
 #include "part.h"
 #include "stmlib/system/system_clock.h"
 #include "ui.h"
@@ -17,12 +17,6 @@ Encoder encoder;
 
 UI ui;
 Part part[PART_COUNT];
-
-UIntMenuItem item("peda", 0, 0, 42, 1);
-FloatMenuItem item2("peda", 0, 0, 42, 1);
-FloatMenuItem item3("peda", 0, 0, 42, 1);
-Menu menu;
-
 
 // Default interrupt handlers.
 extern "C" {
@@ -68,8 +62,12 @@ void TIM2_IRQHandler(void)
 
   // this will get called with 8kHz (foof)
   // which still is a lot (60fps would be enough tbh)
-
-  ui.Flush();
+  static uint8_t count = 0;
+  count++;
+  if (count % (192 * 2) == 0) {
+    ui.Flush();
+    count = 0;
+  }
 
   // write audiodac1
   // write audiodac2
@@ -82,7 +80,7 @@ void InitTimers(void)
 {
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
   TIM_TimeBaseInitTypeDef timer_init;
-  timer_init.TIM_Period = F_CPU / (8000) - 1; // 192 kHz, 48kHz for each audio DAC
+  timer_init.TIM_Period = F_CPU / (48000 * 4) - 1;
   timer_init.TIM_Prescaler = 0;
   timer_init.TIM_ClockDivision = TIM_CKD_DIV1;
   timer_init.TIM_CounterMode = TIM_CounterMode_Up;
@@ -113,9 +111,9 @@ void Init(void)
 
   system_clock.Init();
   SysTick_Config(F_CPU / 8000);
-  IWDG_Enable();
+
+  //IWDG_Enable();
   gpio.Init();
-  // asm("bkpt #0");
   display.Init();
   encoder.Init();
   ui.Init();
@@ -126,14 +124,6 @@ int main(void)
 {
   Init();
 
-  menu.add_item(&item);
-  menu.add_item(&item2);
-  menu.add_item(&item3);
-  menu.render(0, 0, 0, 0, 0);
-
-  item.increase();
-  item2.increase();
-  item3.increase();
   while (1) {
     // In this loop we do things that dont depend on any timing, but that have to be done.
     // you should not write on spi here because that should happen in the TIM2 interrupt
