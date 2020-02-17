@@ -46,6 +46,8 @@ class MenuItem : public AbstractMenuItem {
 
   char* get_string_representation()
   {
+    if (!stringRepresentation[0])
+      this->to_string(stringRepresentation);
     return stringRepresentation;
   }
 };
@@ -94,10 +96,7 @@ class UIntMenuItem : public NumberMenuItem<uint32_t> {
 
   public:
   UIntMenuItem(const char* _label, uint32_t _initialValue, uint32_t _minimumValue, uint32_t _maximumValue, uint32_t _step)
-      : NumberMenuItem(_label, _initialValue, _minimumValue, _maximumValue, _step)
-  {
-    this->set_value(_initialValue);
-  };
+      : NumberMenuItem(_label, _initialValue, _minimumValue, _maximumValue, _step) {};
 };
 
 class IntMenuItem : public NumberMenuItem<int32_t> {
