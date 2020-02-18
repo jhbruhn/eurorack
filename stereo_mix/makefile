@@ -18,7 +18,7 @@ PACKAGES       = avrlib avrlib/devices stereo_mix
 RESOURCES      = stereo_mix/resources
 PROGRAMMER     = atmelice_isp
 
-LFUSE          = ff
+LFUSE          = ef
 HFUSE          = d8
 EFUSE          = 05
 LOCK           = ff

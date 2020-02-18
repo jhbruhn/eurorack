@@ -1,9 +1,6 @@
-#include <avr/pgmspace.h>
-
 #include "avrlib/adc.h"
 #include "avrlib/avrlib.h"
 #include "avrlib/boot.h"
-#include "avrlib/deprecated/devices/input_array.h"
 #include "avrlib/devices/mcp492x.h"
 #include "avrlib/gpio.h"
 #include "avrlib/spi.h"
@@ -67,27 +64,26 @@ int main(void)
   while (true) {
     ResetWatchdog();
 
-    for (int i = 0; i < NUM_CHANNELS; i++) {
-      volume[i] = pgm_read_word_near(lut_res_linear_to_exp + (AnalogInputs::Read(i)));
-      pan[i * NUM_CHANNELS] = pgm_read_word(lut_res_left_sin_pan + AnalogInputs::Read(i + NUM_CHANNELS));
-      pan[i * NUM_CHANNELS + 1] = pgm_read_word(lut_res_right_cos_pan + AnalogInputs::Read(i + NUM_CHANNELS));
+    int i = AnalogInputs::current_pin() % NUM_CHANNELS;
+    volume[i] = pgm_read_word_near(lut_res_linear_to_exp + (AnalogInputs::Read(i) >> 1)) << 1;
+    pan[i * NUM_CHANNELS] = pgm_read_word(lut_res_left_sin_pan + (AnalogInputs::Read(i + NUM_CHANNELS) >> 1)) << 1;
+    pan[i * NUM_CHANNELS + 1] = pgm_read_word(lut_res_right_cos_pan + (AnalogInputs::Read(i + NUM_CHANNELS) >> 1)) << 1;
 
-      switch (i) {
-      case 0:
-        WRITE(Dac1, oDac1, i);
-        break;
-      case 1:
-        WRITE(Dac2, oDac2, i);
-        break;
-      case 2:
-        WRITE(Dac3, oDac3, i);
-        break;
-      case 3:
-        WRITE(Dac4, oDac4, i);
-        break;
-      }
-      AnalogInputs::Scan();
+    switch (i) {
+    case 0:
+      WRITE(Dac1, oDac1, i);
+      break;
+    case 1:
+      WRITE(Dac2, oDac2, i);
+      break;
+    case 2:
+      WRITE(Dac3, oDac3, i);
+      break;
+    case 3:
+      WRITE(Dac4, oDac4, i);
+      break;
     }
+    AnalogInputs::Scan();
   }
 }
 
