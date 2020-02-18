@@ -8,8 +8,6 @@
 #include "avrlib/watchdog_timer.h"
 #include "stereo_mix/resources.h"
 
-#define degToRad(angleInDegrees) ((angleInDegrees)*M_PI / 180.0)
-
 using namespace avrlib;
 using namespace stereo_mix;
 
@@ -55,19 +53,19 @@ int main(void)
 
   AnalogInputs::set_num_inputs(8);
 
-#define WRITE(DAC, ODAC, N)                                    \
-  DAC::Write((volume[N] * pan[N * NUM_CHANNELS]) >> 8, 0);     \
-  ODAC::Write((volume[N] * pan[N * NUM_CHANNELS]) >> 8, 0);    \
-  DAC::Write((volume[N] * pan[N * NUM_CHANNELS + 1]) >> 8, 1); \
-  ODAC::Write((volume[N] * pan[N * NUM_CHANNELS + 1]) >> 8, 1);
+#define WRITE(DAC, ODAC, N)                                     \
+  DAC::Write((volume[N] * pan[N * NUM_CHANNELS]) >> 12, 0);     \
+  ODAC::Write((volume[N] * pan[N * NUM_CHANNELS]) >> 12, 0);    \
+  DAC::Write((volume[N] * pan[N * NUM_CHANNELS + 1]) >> 12, 1); \
+  ODAC::Write((volume[N] * pan[N * NUM_CHANNELS + 1]) >> 12, 1);
 
   while (true) {
     ResetWatchdog();
 
     int i = AnalogInputs::current_pin() % NUM_CHANNELS;
-    volume[i] = pgm_read_word_near(lut_res_linear_to_exp + (AnalogInputs::Read(i) >> 1)) << 1;
-    pan[i * NUM_CHANNELS] = pgm_read_word(lut_res_left_sin_pan + (AnalogInputs::Read(i + NUM_CHANNELS) >> 1)) << 1;
-    pan[i * NUM_CHANNELS + 1] = pgm_read_word(lut_res_right_cos_pan + (AnalogInputs::Read(i + NUM_CHANNELS) >> 1)) << 1;
+    volume[i] = pgm_read_word_near(lut_res_linear_to_exp + (AnalogInputs::Read(i) >> 1));
+    pan[i * NUM_CHANNELS] = pgm_read_word(lut_res_left_sin_pan + (AnalogInputs::Read(i + NUM_CHANNELS) >> 1));
+    pan[i * NUM_CHANNELS + 1] = pgm_read_word(lut_res_right_cos_pan + (AnalogInputs::Read(i + NUM_CHANNELS) >> 1));
 
     switch (i) {
     case 0:
