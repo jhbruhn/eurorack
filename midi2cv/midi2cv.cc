@@ -48,9 +48,8 @@ void PendSV_Handler() {}
 // called every 1ms
 void SysTick_Handler()
 {
-  IWDG_ReloadCounter();
-  system_clock.Tick();
   ui.Poll();
+  system_clock.Tick();
 }
 
 void TIM2_IRQHandler(void)
@@ -110,7 +109,7 @@ void Init(void)
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
 
   system_clock.Init();
-  SysTick_Config(F_CPU / 8000);
+  SysTick_Config(F_CPU / 1000);
 
   //IWDG_Enable();
   gpio.Init();
@@ -130,5 +129,6 @@ int main(void)
     // do we want to call the watchdog here? it's the only part thats getting interrupted after all
     // (next to the interrupts themselves potentially interrupting each other)
     ui.DoEvents();
+    IWDG_ReloadCounter();
   }
 }

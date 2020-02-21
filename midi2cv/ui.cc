@@ -9,7 +9,8 @@
 
 using namespace stmlib;
 
-#define HEADER_HEIGHT 16
+#define HEADER_HEIGHT 14
+const uint32_t kEncoderLongPressTime = 600;
 
 const char part_names[4][2] = { "A", "B", "C", "D" };
 
@@ -20,7 +21,7 @@ UIntMenuItem item3("ralle", 0, 0, 100, 1);
 UIntMenuItem item4("ralle1", 0, 0, 100, 1);
 UIntMenuItem item5("ralle2", 0, 0, 100, 1);
 UIntMenuItem item6("ralle3", 0, 0, 100, 1);
-UIntMenuItem item7("ralle4", 0, 0, 100, 1);
+FloatMenuItem item7("ralle4", 0, 0, 100, .25f);
 
 void UI::Init()
 {
@@ -38,6 +39,24 @@ void UI::Init()
 void UI::Poll()
 {
   encoder.Debounce();
+
+  if (encoder.just_pressed()) {
+    encoder_press_time_ = system_clock.milliseconds();
+    encoder_long_press_event_sent_ = false;
+  }
+  if (!encoder_long_press_event_sent_) {
+    if (encoder.pressed()) {
+      uint32_t duration = system_clock.milliseconds() - encoder_press_time_;
+      if (duration >= kEncoderLongPressTime && !encoder_long_press_event_sent_) {
+        input_queue.AddEvent(CONTROL_ENCODER_LONG_CLICK, 0, 0);
+        encoder_long_press_event_sent_ = true;
+      }
+    }
+    if (encoder.released()) {
+      input_queue.AddEvent(CONTROL_ENCODER_CLICK, 0, 0);
+    }
+  }
+
   int32_t increment = encoder.increment();
   if (increment != 0) {
     input_queue.AddEvent(CONTROL_ENCODER, 0, increment);
@@ -53,9 +72,9 @@ void UI::Draw()
   case MENU_PART_2:
   case MENU_PART_3:
   case MENU_PART_4:
-    //DrawHeader();
+    DrawHeader();
     //DrawPartMenu(current_menu);
-    menu.render(display.u8g2(), 0, 0, 128, 64);
+    menu.render(display.u8g2(), 0, 15, 128, 64 - 15);
     break;
   default:
 
@@ -77,7 +96,7 @@ void UI::DrawHeader()
       u8g2_DrawFrame(display.u8g2(), i * (DISPLAY_WIDTH / PART_COUNT), 0, (DISPLAY_WIDTH / PART_COUNT) - 1, HEADER_HEIGHT);
 
     u8g2_SetDrawColor(display.u8g2(), 2);
-    u8g2_DrawStr(display.u8g2(), i * (DISPLAY_WIDTH / PART_COUNT) + 5, 2 + 10, part_names[i]);
+    u8g2_DrawStr(display.u8g2(), i * (DISPLAY_WIDTH / PART_COUNT) + 5, 0 + 10, part_names[i]);
     u8g2_SetDrawColor(display.u8g2(), 1);
   }
 }
@@ -120,6 +139,7 @@ bool UI::DoEvents()
 
 void UI::OnClick()
 {
+  menu.enter();
 }
 
 void UI::OnLongClick()

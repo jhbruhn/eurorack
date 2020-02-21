@@ -8,6 +8,8 @@ class AbstractMenuItem {
   public:
   virtual const char* get_label();
   virtual char* get_string_representation();
+  virtual void increase();
+  virtual void decrease();
 };
 
 template <class T>
@@ -55,15 +57,16 @@ class MenuItem : public AbstractMenuItem {
 template <class T>
 class NumberMenuItem : public MenuItem<T> {
   private:
-  T step;
   T minimumValue;
   T maximumValue;
+  T step;
 
   protected:
   NumberMenuItem(const char* _label, T _initialValue, T _minimumValue, T _maximumValue, T _step)
       : MenuItem<T>(_label, _initialValue)
       , minimumValue(_minimumValue)
-      , maximumValue(_maximumValue) {};
+      , maximumValue(_maximumValue)
+      , step(_step) {};
 
   virtual const char* get_format_string() = 0;
 
@@ -75,13 +78,13 @@ class NumberMenuItem : public MenuItem<T> {
   public:
   void increase()
   {
-    if (this->get_value() + step <= maximumValue)
+    if (this->get_value() + step <= maximumValue && this->get_value() + step >= minimumValue)
       this->set_value(this->get_value() + step);
   };
 
   void decrease()
   {
-    if (this->get_value() - step >= minimumValue)
+    if (this->get_value() - step >= minimumValue && this->get_value() - step <= maximumValue)
       this->set_value(this->get_value() - step);
   };
 };
@@ -117,7 +120,7 @@ class FloatMenuItem : public NumberMenuItem<float> {
   protected:
   const char* get_format_string()
   {
-    return "%f.2";
+    return "%.2f";
   }
 
   public:
