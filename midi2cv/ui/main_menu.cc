@@ -66,5 +66,7 @@ void MainMenu::render(u8g2_t* u8g2, int x, int y, int width, int height)
     u8g2_SetDrawColor(u8g2, 1);
   }
 
-  this->partMenus[this->selectedPart].render(u8g2, x, y + kHeaderHeight, width, height - kHeaderHeight);
+  u8g2_DrawHLine(u8g2, 0, kHeaderHeight + 1, width);
+
+  this->partMenus[this->selectedPart].render(u8g2, x, y + kHeaderHeight + 3, width, height - kHeaderHeight - 3);
 }

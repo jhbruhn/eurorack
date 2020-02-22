@@ -102,6 +102,56 @@ class UIntMenuItem : public NumberMenuItem<uint32_t> {
       : NumberMenuItem(_label, _initialValue, _minimumValue, _maximumValue, _step) {};
 };
 
+class IntMenuItem : public NumberMenuItem<int32_t> {
+  private:
+  protected:
+  const char* get_format_string()
+  {
+    return "%d";
+  }
+
+  public:
+  IntMenuItem(const char* _label, int32_t _initialValue, int32_t _minimumValue, int32_t _maximumValue, int32_t _step)
+      : NumberMenuItem(_label, _initialValue, _minimumValue, _maximumValue, _step) {};
+};
+
+class FloatMenuItem : public NumberMenuItem<float> {
+  private:
+  protected:
+  const char* get_format_string()
+  {
+    return "%.2f";
+  }
+
+  public:
+  FloatMenuItem(const char* _label, float _initialValue, float _minimumValue, float _maximumValue, float _step)
+      : NumberMenuItem(_label, _initialValue, _minimumValue, _maximumValue, _step) {};
+};
+
+class BoolMenuItem : public NumberMenuItem<bool> {
+
+  private:
+  const char* on_string;
+  const char* off_string;
+
+  protected:
+  const char* get_format_string()
+  {
+    bool value = this->get_value();
+
+    if (value)
+      return this->on_string;
+    else
+      return this->off_string;
+  }
+
+  public:
+  BoolMenuItem(const char* _label, bool _initialValue, const char* _on_string, const char* _off_string)
+      : NumberMenuItem(_label, _initialValue, 0, 1, 1)
+      , on_string(_on_string)
+      , off_string(_off_string) {};
+};
+
 class MidiNoteMenuItem : public NumberMenuItem<uint8_t> {
   private:
   char string_buffer[4];
@@ -138,30 +188,4 @@ class MidiNoteMenuItem : public NumberMenuItem<uint8_t> {
     note_strings[10] = "A#";
     note_strings[11] = "B";
   };
-};
-
-class IntMenuItem : public NumberMenuItem<int32_t> {
-  private:
-  protected:
-  const char* get_format_string()
-  {
-    return "%d";
-  }
-
-  public:
-  IntMenuItem(const char* _label, int32_t _initialValue, int32_t _minimumValue, int32_t _maximumValue, int32_t _step)
-      : NumberMenuItem(_label, _initialValue, _minimumValue, _maximumValue, _step) {};
-};
-
-class FloatMenuItem : public NumberMenuItem<float> {
-  private:
-  protected:
-  const char* get_format_string()
-  {
-    return "%.2f";
-  }
-
-  public:
-  FloatMenuItem(const char* _label, float _initialValue, float _minimumValue, float _maximumValue, float _step)
-      : NumberMenuItem(_label, _initialValue, _minimumValue, _maximumValue, _step) {};
 };

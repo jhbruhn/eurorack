@@ -19,7 +19,7 @@ class PartMenu {
   Menu menu;
   UIntMenuItem item_voice_count;
   UIntMenuItem item_voice_detail;
-  UIntMenuItem item_midi_filter_enabled;
+  BoolMenuItem item_midi_filter_enabled;
   UIntMenuItem item_midi_channel;
   MidiNoteMenuItem item_midi_lowest_note;
   MidiNoteMenuItem item_midi_highest_note;

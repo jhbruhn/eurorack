@@ -12,7 +12,7 @@ void Menu::render(u8g2_t* u8g2_, uint8_t xStart, uint8_t yStart, uint8_t width, 
   uint8_t maxVisibleItems = height / kMenuItemHeight;
 
   uint8_t itemsToRender = std::min(maxVisibleItems, uint8_t(this->itemCount - currentScrollStart));
-  u8g2_SetFont(u8g2_, u8g2_font_6x12_tf);
+  u8g2_SetFont(u8g2_, u8g2_font_6x10_tf);
   for (uint8_t i = 0; i < itemsToRender; i++) {
     bool selected = this->selectedItem == (i + this->currentScrollStart);
     bool editing = this->currentEditingItem == (i + this->currentScrollStart);
