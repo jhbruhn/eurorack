@@ -3,8 +3,6 @@
 
 #include <inttypes.h>
 
-#define PART_COUNT 4
-
 #define TOTAL_COLUMN_COUNT 4
 
 typedef enum { MIDI_THRU_OFF,

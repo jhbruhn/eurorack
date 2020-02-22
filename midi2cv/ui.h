@@ -32,8 +32,6 @@ class UI {
   uint32_t encoder_press_time_;
 
   void Draw();
-  void DrawHeader();
-  void DrawPartMenu(Menu_t menu);
 
   void OnClick();
   void OnLongClick();

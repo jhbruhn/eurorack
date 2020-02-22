@@ -22,7 +22,7 @@ void Menu::render(u8g2_t* u8g2_, uint8_t xStart, uint8_t yStart, uint8_t width, 
 
     u8g2_SetDrawColor(u8g2_, selected ? 1 : 0);
 
-    if(editing) {
+    if (editing) {
       u8g2_DrawFrame(u8g2_, xStart, yPosition, width, MENU_ITEM_HEIGHT);
     } else if (selected) {
       u8g2_DrawBox(u8g2_, xStart, yPosition, width, MENU_ITEM_HEIGHT);
@@ -69,11 +69,22 @@ void Menu::down()
   }
 }
 
-void Menu::enter()
+bool Menu::enter()
 {
   if (this->currentEditingItem >= 0) {
     this->currentEditingItem = -1;
-    return;
+    return true;
   }
   this->currentEditingItem = this->selectedItem;
+  return false;
 }
+
+bool Menu::back()
+{
+  if (this->currentEditingItem >= 0) {
+    this->currentEditingItem = -1;
+    return false;
+  }
+  return true;
+}
+

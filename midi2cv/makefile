@@ -39,10 +39,11 @@ UPLOAD_COMMAND  = upload_combo_jtag
 # Packages to build
 TARGET         = midi2cv
 PACKAGES       = midi2cv \
-		midi2cv/drivers \
-    midi2cv/menu \
-		stmlib/utils \
-		stmlib/system
+                 midi2cv/drivers \
+                 midi2cv/menu \
+                 midi2cv/ui \
+                 stmlib/utils \
+                 stmlib/system
 RESOURCES      = midi2cv/resources
 
 TOOLCHAIN_PATH ?= /usr/local/arm-4.8.3/

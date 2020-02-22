@@ -8,6 +8,7 @@
 #include "part.h"
 #include "stmlib/system/system_clock.h"
 #include "ui.h"
+#include "config.h"
 
 using namespace stmlib;
 

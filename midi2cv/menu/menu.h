@@ -25,7 +25,8 @@ class Menu {
 
   void up();
   void down();
-  void enter();
+  bool back(); // returns true true if nothing happened here and the action can be delegated to up
+  bool enter(); // returns true if it wants to give up control
 
   void add_item(AbstractMenuItem* item)
   {
