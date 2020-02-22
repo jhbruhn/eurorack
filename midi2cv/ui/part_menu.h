@@ -17,9 +17,10 @@ class PartMenu {
 
   private:
   Menu menu;
-  UIntMenuItem item1;
-  UIntMenuItem item2;
-  UIntMenuItem item3;
-  UIntMenuItem item4;
-  UIntMenuItem item5;
+  UIntMenuItem item_voice_count;
+  UIntMenuItem item_voice_detail;
+  UIntMenuItem item_midi_filter_enabled;
+  UIntMenuItem item_midi_channel;
+  MidiNoteMenuItem item_midi_lowest_note;
+  MidiNoteMenuItem item_midi_highest_note;
 };

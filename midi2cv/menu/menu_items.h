@@ -102,6 +102,44 @@ class UIntMenuItem : public NumberMenuItem<uint32_t> {
       : NumberMenuItem(_label, _initialValue, _minimumValue, _maximumValue, _step) {};
 };
 
+class MidiNoteMenuItem : public NumberMenuItem<uint8_t> {
+  private:
+  char string_buffer[4];
+  const char* note_strings[12];
+
+  protected:
+  const char* get_format_string() { return ""; }
+
+  public:
+  char* get_string_representation()
+  {
+    uint8_t currentNote = this->get_value();
+    int note = currentNote % 12;
+    int octave = (currentNote / 12) - 1;
+
+    sprintf(this->string_buffer, "%s%d", note_strings[note], octave);
+
+    return this->string_buffer;
+  }
+
+  MidiNoteMenuItem(const char* _label, uint8_t _initialValue)
+      : NumberMenuItem(_label, _initialValue, 0, 127, 1)
+  {
+    note_strings[0] = "C";
+    note_strings[1] = "C#";
+    note_strings[2] = "D";
+    note_strings[3] = "D#";
+    note_strings[4] = "E";
+    note_strings[5] = "F";
+    note_strings[6] = "F#";
+    note_strings[7] = "G";
+    note_strings[8] = "G#";
+    note_strings[9] = "A";
+    note_strings[10] = "A#";
+    note_strings[11] = "B";
+  };
+};
+
 class IntMenuItem : public NumberMenuItem<int32_t> {
   private:
   protected:

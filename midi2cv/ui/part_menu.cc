@@ -5,17 +5,19 @@
 
 PartMenu::PartMenu()
     : menu(128, 64)
-    , item1("wolle", 0, 0, 100, 1)
-    , item2("petry", 0, 0, 100, 1)
-    , item3("schale", 0, 0, 100, 1)
-    , item4("eine", 0, 0, 100, 1)
-    , item5("schale?", 0, 0, 100, 1)
+    , item_voice_count("Voice Count", 1, 1, 4, 1)
+    , item_voice_detail("Voice Detail", 1, 1, 4, 1)
+    , item_midi_filter_enabled("MIDI Filter Enabled", 0, 0, 1, 1)
+    , item_midi_channel("MIDI Channel", 0, 0, 100, 1)
+    , item_midi_lowest_note("MIDI Lowest Note", 0)
+    , item_midi_highest_note("MIDI Highest Note", 0)
 {
-  this->menu.add_item(&this->item1);
-  this->menu.add_item(&this->item2);
-  this->menu.add_item(&this->item3);
-  this->menu.add_item(&this->item4);
-  this->menu.add_item(&this->item5);
+  this->menu.add_item(&this->item_voice_count);
+  this->menu.add_item(&this->item_voice_detail);
+  this->menu.add_item(&this->item_midi_filter_enabled);
+  this->menu.add_item(&this->item_midi_channel);
+  this->menu.add_item(&this->item_midi_lowest_note);
+  this->menu.add_item(&this->item_midi_highest_note);
 }
 
 void PartMenu::up()
