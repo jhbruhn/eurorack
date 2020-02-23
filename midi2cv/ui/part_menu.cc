@@ -4,8 +4,7 @@
 #include <u8g2.h>
 
 PartMenu::PartMenu()
-    : menu(128, 64)
-    , item_voice_count("voice count", 1, 1, 4, 1)
+    : item_voice_count("voice count", 1, 1, 4, 1)
     , item_voice_detail("voice detail", 1, 1, 4, 1)
     , item_midi_filter_enabled("MIDI filter", 0, "on", "off")
     , item_midi_channel("MIDI channel", 0, 0, 100, 1)

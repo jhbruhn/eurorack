@@ -16,12 +16,12 @@ class Menu {
   uint8_t width, height;
 
   public:
-  Menu(uint8_t width_, uint8_t height_)
+  Menu()
       : selectedItem(0)
       , currentScrollStart(0)
       , currentEditingItem(-1)
-      , width(width_)
-      , height(height_) {};
+      , width(10)
+      , height(10) {};
 
   void up();
   void down();
