@@ -2,65 +2,19 @@
 #include "gpio.h"
 #include "spi_mode.h"
 #include "stmlib/system/system_clock.h"
-#include "stmlib/utils/random.h"
+#include <U8g2lib.h>
 #include <stm32f37x_conf.h>
 #include <u8g2.h>
 
 using namespace stmlib;
 
-const uint16_t kPinEnable = GPIO_Pin_2;
-const uint16_t kPinReset = GPIO_Pin_0;
-const uint16_t kPinDataCommand = GPIO_Pin_9;
+static const uint16_t kPinEnable = GPIO_Pin_2;
+static const uint16_t kPinReset = GPIO_Pin_0;
+static const uint16_t kPinDataCommand = GPIO_Pin_9;
 
-u8g2_t u8g2_;
-uint8_t* default_buf;
-uint8_t second_buf[1024];
-uint8_t* output_buf;
-
-u8g2_t* Display::u8g2()
-{
-  return &u8g2_;
-}
-
-void Display::Init()
-{
-  // init SS/CS/RST GPIO
-  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
-
-  GPIO_InitTypeDef gpio_init;
-  gpio_init.GPIO_Mode = GPIO_Mode_OUT;
-  gpio_init.GPIO_OType = GPIO_OType_PP;
-  gpio_init.GPIO_Speed = GPIO_Speed_50MHz;
-  gpio_init.GPIO_PuPd = GPIO_PuPd_NOPULL;
-  gpio_init.GPIO_Pin = kPinEnable | kPinReset | kPinDataCommand;
-  GPIO_Init(GPIOB, &gpio_init);
-
-  GPIO_WriteBit(GPIOB, kPinEnable, Bit_SET);
-
-  // init AF GPIO
-  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
-
-  gpio_init.GPIO_Mode = GPIO_Mode_AF;
-  gpio_init.GPIO_OType = GPIO_OType_PP;
-  gpio_init.GPIO_Speed = GPIO_Speed_50MHz;
-  gpio_init.GPIO_PuPd = GPIO_PuPd_NOPULL;
-  gpio_init.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_14 | GPIO_Pin_15;
-  GPIO_Init(GPIOB, &gpio_init);
-  GPIO_PinAFConfig(GPIOB, GPIO_PinSource8, GPIO_AF_5);
-  GPIO_PinAFConfig(GPIOB, GPIO_PinSource14, GPIO_AF_5);
-  GPIO_PinAFConfig(GPIOB, GPIO_PinSource15, GPIO_AF_5);
-
-  // init SPI
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
-  SPI_I2S_DeInit(SPI2);
-  // Initialize SPI
-  InitSPI(SPI_MODE_DISPLAY);
-  GPIO_WriteBit(GPIOB, kPinReset, Bit_RESET);
-  asm("nop");
-
-  GPIO_WriteBit(GPIOB, kPinReset, Bit_SET);
-  InitGLib();
-}
+static uint8_t* default_buf;
+static uint8_t second_buf[1024];
+static uint8_t* output_buf;
 
 uint8_t u8x8_stm32_gpio_and_delay(U8X8_UNUSED u8x8_t* u8x8,
     U8X8_UNUSED uint8_t msg, U8X8_UNUSED uint8_t arg_int,
@@ -105,30 +59,84 @@ uint8_t u8x8_byte_4wire_hw_spi(u8x8_t* u8x8, uint8_t msg, uint8_t arg_int,
   return 1;
 }
 
+class U8G2_SH1106_128x64_NONAME_F_SPI : public U8G2 {
+  public:
+  U8G2_SH1106_128x64_NONAME_F_SPI()
+      : U8G2()
+  {
+    u8g2_Setup_sh1106_128x64_noname_f(&this->u8g2, U8G2_R0, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay);
+    output_buf = default_buf = this->u8g2.tile_buf_ptr;
+    /*u8g2_InitDisplay(&u8g2_);
+  u8g2_SetContrast(&u8g2_, 255);
+  u8g2_SetPowerSave(&u8g2_, 0);*/
+  }
+};
+
+U8G2_SH1106_128x64_NONAME_F_SPI u8g2_;
+
+U8G2* Display::u8g2()
+{
+  return &u8g2_;
+}
+
+void Display::Init()
+{
+  // init SS/CS/RST GPIO
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
+
+  GPIO_InitTypeDef gpio_init;
+  gpio_init.GPIO_Mode = GPIO_Mode_OUT;
+  gpio_init.GPIO_OType = GPIO_OType_PP;
+  gpio_init.GPIO_Speed = GPIO_Speed_50MHz;
+  gpio_init.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  gpio_init.GPIO_Pin = kPinEnable | kPinReset | kPinDataCommand;
+  GPIO_Init(GPIOB, &gpio_init);
+
+  GPIO_WriteBit(GPIOB, kPinEnable, Bit_SET);
+
+  // init AF GPIO
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
+
+  gpio_init.GPIO_Mode = GPIO_Mode_AF;
+  gpio_init.GPIO_OType = GPIO_OType_PP;
+  gpio_init.GPIO_Speed = GPIO_Speed_50MHz;
+  gpio_init.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  gpio_init.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_14 | GPIO_Pin_15;
+  GPIO_Init(GPIOB, &gpio_init);
+  GPIO_PinAFConfig(GPIOB, GPIO_PinSource8, GPIO_AF_5);
+  GPIO_PinAFConfig(GPIOB, GPIO_PinSource14, GPIO_AF_5);
+  GPIO_PinAFConfig(GPIOB, GPIO_PinSource15, GPIO_AF_5);
+
+  // init SPI
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
+  SPI_I2S_DeInit(SPI2);
+  // Initialize SPI
+  InitSPI(SPI_MODE_DISPLAY);
+  GPIO_WriteBit(GPIOB, kPinReset, Bit_RESET);
+  asm("nop");
+
+  GPIO_WriteBit(GPIOB, kPinReset, Bit_SET);
+  InitGLib();
+}
+
 void Display::InitGLib()
 {
-  u8g2_Setup_sh1106_128x64_noname_f(&u8g2_, U8G2_R0, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay);
-  output_buf = default_buf = u8g2_.tile_buf_ptr;
-  u8g2_InitDisplay(&u8g2_);
-  u8g2_SetContrast(&u8g2_, 255);
-  u8g2_SetPowerSave(&u8g2_, 0);
-
-  Random::Seed(42);
+  u8g2_.begin();
 }
 
 void Display::Flush()
 {
-  uint8_t* cache = u8g2_.tile_buf_ptr;
-  u8g2_.tile_buf_ptr = output_buf;
-  u8g2_SendBuffer(&u8g2_);
-  u8g2_.tile_buf_ptr = cache;
+  uint8_t* cache = u8g2_.getU8g2()->tile_buf_ptr;
+  u8g2_.getU8g2()->tile_buf_ptr = output_buf;
+  u8g2_.sendBuffer();
+  u8g2_.getU8g2()->tile_buf_ptr = cache;
 }
 
 void Display::Swap()
 {
-  output_buf = u8g2_.tile_buf_ptr;
+  output_buf = u8g2_.getU8g2()->tile_buf_ptr;
   if (output_buf == default_buf)
-    u8g2_.tile_buf_ptr = second_buf;
+    u8g2_.getU8g2()->tile_buf_ptr = second_buf;
   else
-    u8g2_.tile_buf_ptr = default_buf;
+    u8g2_.getU8g2()->tile_buf_ptr = default_buf;
 }

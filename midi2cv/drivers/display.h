@@ -3,7 +3,7 @@
 
 #include "stmlib/stmlib.h"
 #include <stm32f37x_conf.h>
-#include <u8g2.h>
+#include <U8g2lib.h>
 
 #define DISPLAY_WIDTH 128
 #define DISPLAY_HEIGHT 64
@@ -14,7 +14,7 @@ public:
     ~Display() {}
 
     void Init();
-    u8g2_t* u8g2();
+    U8G2* u8g2();
     void Flush();
     void Swap();
 

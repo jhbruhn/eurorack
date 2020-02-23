@@ -2,7 +2,7 @@
 
 #include "../menu/menu.h"
 #include "../menu/menu_items.h"
-#include <u8g2.h>
+#include <U8g2lib.h>
 
 class PartMenu {
   public:
@@ -13,7 +13,7 @@ class PartMenu {
   void up();
   void down();
 
-  void render(u8g2_t* u8g2, int x, int y, int width, int height);
+  void render(U8G2* u8g2, int x, int y, int width, int height);
 
   private:
   Menu menu;

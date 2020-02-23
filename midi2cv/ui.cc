@@ -49,7 +49,7 @@ void UI::Poll()
 
 void UI::Draw()
 {
-  u8g2_ClearBuffer(display.u8g2());
+  display.u8g2()->clearBuffer();
 
   mainMenu.render(display.u8g2(), 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 

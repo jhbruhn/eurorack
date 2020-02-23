@@ -54,7 +54,7 @@ bool PartMenu::enter()
   return false;
 }
 
-void PartMenu::render(u8g2_t* u8g2, int x, int y, int width, int height)
+void PartMenu::render(U8G2* u8g2, int x, int y, int width, int height)
 {
   menu.render(u8g2, x, y, width, height);
 }

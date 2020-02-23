@@ -4,7 +4,7 @@
 
 const int kMenuItemHeight = 12;
 
-void Menu::render(u8g2_t* u8g2_, uint8_t xStart, uint8_t yStart, uint8_t width, uint8_t height)
+void Menu::render(U8G2* u8g2_, uint8_t xStart, uint8_t yStart, uint8_t width, uint8_t height)
 {
   this->width = width;
   this->height = height;
@@ -12,7 +12,7 @@ void Menu::render(u8g2_t* u8g2_, uint8_t xStart, uint8_t yStart, uint8_t width, 
   uint8_t maxVisibleItems = height / kMenuItemHeight;
 
   uint8_t itemsToRender = std::min(maxVisibleItems, uint8_t(this->itemCount - currentScrollStart));
-  u8g2_SetFont(u8g2_, u8g2_font_6x10_tf);
+  u8g2_->setFont(u8g2_font_6x10_tf);
   for (uint8_t i = 0; i < itemsToRender; i++) {
     bool selected = this->selectedItem == (i + this->currentScrollStart);
     bool editing = this->currentEditingItem == (i + this->currentScrollStart);
@@ -20,19 +20,19 @@ void Menu::render(u8g2_t* u8g2_, uint8_t xStart, uint8_t yStart, uint8_t width, 
 
     AbstractMenuItem* item = this->items[i + this->currentScrollStart];
 
-    u8g2_SetDrawColor(u8g2_, selected ? 1 : 0);
+    u8g2_->setDrawColor(selected ? 1 : 0);
 
     if (editing) {
-      u8g2_DrawFrame(u8g2_, xStart, yPosition, width, kMenuItemHeight);
+      u8g2_->drawFrame(xStart, yPosition, width, kMenuItemHeight);
     } else if (selected) {
-      u8g2_DrawBox(u8g2_, xStart, yPosition, width, kMenuItemHeight);
+      u8g2_->drawBox(xStart, yPosition, width, kMenuItemHeight);
     }
 
-    u8g2_SetDrawColor(u8g2_, editing || !selected ? 1 : 0);
-    u8g2_DrawStr(u8g2_, xStart + 2, yPosition + kMenuItemHeight - 3, item->get_label());
+    u8g2_->setDrawColor(editing || !selected ? 1 : 0);
+    u8g2_->drawStr(xStart + 2, yPosition + kMenuItemHeight - 3, item->get_label());
 
-    uint8_t valueStringWidth = u8g2_GetStrWidth(u8g2_, item->get_string_representation());
-    u8g2_DrawStr(u8g2_, xStart + width - valueStringWidth - 2, yPosition + kMenuItemHeight - 3, item->get_string_representation());
+    uint8_t valueStringWidth = u8g2_->getStrWidth(item->get_string_representation());
+    u8g2_->drawStr(xStart + width - valueStringWidth - 2, yPosition + kMenuItemHeight - 3, item->get_string_representation());
   }
 }
 

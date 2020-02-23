@@ -2,7 +2,7 @@
 
 #include "menu_items.h"
 
-#include <u8g2.h>
+#include <U8g2lib.h>
 
 #define MAXIMUM_MENU_ITEM_COUNT 16
 
@@ -25,7 +25,7 @@ class Menu {
 
   void up();
   void down();
-  bool back(); // returns true true if nothing happened here and the action can be delegated to up
+  bool back();  // returns true true if nothing happened here and the action can be delegated to up
   bool enter(); // returns true if it wants to give up control
 
   void add_item(AbstractMenuItem* item)
@@ -35,5 +35,5 @@ class Menu {
     }
   }
 
-  void render(u8g2_t* u8g2_, uint8_t x, uint8_t y, uint8_t width, uint8_t height);
+  void render(U8G2* u8g2_, uint8_t x, uint8_t y, uint8_t width, uint8_t height);
 };

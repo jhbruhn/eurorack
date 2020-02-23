@@ -43,30 +43,30 @@ void MainMenu::down()
   }
 }
 
-void MainMenu::render(u8g2_t* u8g2, int x, int y, int width, int height)
+void MainMenu::render(U8G2* u8g2, int x, int y, int width, int height)
 {
-  u8g2_SetFont(u8g2, /*u8g2_font_5x8_tf*/ u8g2_font_pcsenior_8u);
+  u8g2->setFont(/*u8g2_font_5x8_tf*/ u8g2_font_pcsenior_8u);
   for (int i = 0; i < PART_COUNT; i++) {
-    u8g2_SetFontMode(u8g2, 1);
-    u8g2_SetDrawColor(u8g2, 1);
+    u8g2->setFontMode(1);
+    u8g2->setDrawColor(1);
 
     if (this->selectedPart == i) {
       if (this->activePartMenu == i) {
-        u8g2_DrawBox(u8g2, x + 1 + i * (width / PART_COUNT), y + 1, (width / PART_COUNT) - 3, kHeaderHeight - 2);
+        u8g2->drawBox(x + 1 + i * (width / PART_COUNT), y + 1, (width / PART_COUNT) - 3, kHeaderHeight - 2);
       } else {
-        u8g2_DrawFrame(u8g2, x + 1 + i * (width / PART_COUNT), y + 1, (width / PART_COUNT) - 3, kHeaderHeight - 2);
-        u8g2_DrawFrame(u8g2, x + i * (width / PART_COUNT), y, (width / PART_COUNT) - 1, kHeaderHeight);
+        u8g2->drawFrame(x + 1 + i * (width / PART_COUNT), y + 1, (width / PART_COUNT) - 3, kHeaderHeight - 2);
+        u8g2->drawFrame(x + i * (width / PART_COUNT), y, (width / PART_COUNT) - 1, kHeaderHeight);
       }
     } else {
-      u8g2_DrawFrame(u8g2, x + 1 + i * (width / PART_COUNT), y + 1, (width / PART_COUNT) - 3, kHeaderHeight - 2);
+      u8g2->drawFrame(x + 1 + i * (width / PART_COUNT), y + 1, (width / PART_COUNT) - 3, kHeaderHeight - 2);
     }
 
-    u8g2_SetDrawColor(u8g2, 2);
-    u8g2_DrawStr(u8g2, x + i * (width / PART_COUNT) + 5, y + 9, kPartNames[i]);
-    u8g2_SetDrawColor(u8g2, 1);
+    u8g2->setDrawColor(2);
+    u8g2->drawStr(x + i * (width / PART_COUNT) + 5, y + 9, kPartNames[i]);
+    u8g2->setDrawColor(1);
   }
 
-  u8g2_DrawHLine(u8g2, 0, kHeaderHeight + 1, width);
+  u8g2->drawHLine(0, kHeaderHeight + 1, width);
 
   this->partMenus[this->selectedPart].render(u8g2, x, y + kHeaderHeight + 3, width, height - kHeaderHeight - 3);
 }

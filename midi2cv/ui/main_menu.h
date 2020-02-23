@@ -2,7 +2,7 @@
 
 #include "../config.h"
 #include "part_menu.h"
-#include <u8g2.h>
+#include <U8g2lib.h>
 
 class MainMenu {
   public:
@@ -11,7 +11,7 @@ class MainMenu {
   void up();
   void down();
 
-  void render(u8g2_t* u8g2, int x, int y, int width, int height);
+  void render(U8G2* u8g2, int x, int y, int width, int height);
 
   MainMenu()
       : activePartMenu(0)
