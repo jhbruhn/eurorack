@@ -24,4 +24,5 @@ class PartMenu {
   StringListMenuItem item_midi_input;
   MidiNoteMenuItem item_midi_lowest_note;
   MidiNoteMenuItem item_midi_highest_note;
+  StringListMenuItem item_midi_thru_mode;
 };

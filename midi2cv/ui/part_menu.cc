@@ -8,6 +8,7 @@ static const char* kMidiChannelStrings[] = { "omni", "1", "2", "3", "4", "5", "6
   "7", "8", "9", "10", "11", "12", "13",
   "14", "15", "16" };
 static const char* kMidiInputStrings[] = { "omni", "usb", "midi" };
+static const char* kMidiThruStrings[] = {"off", "on", "polychain"};
 
 PartMenu::PartMenu()
     : item_voice_count("voice count", 1, 1, 4, 1)
@@ -17,6 +18,7 @@ PartMenu::PartMenu()
     , item_midi_input("MIDI input", 0, kMidiInputStrings, 3)
     , item_midi_lowest_note("MIDI lowest", 0)
     , item_midi_highest_note("MIDI highest", 127)
+    , item_midi_thru_mode("MIDI thru", 0, kMidiThruStrings, 3)
 {
   this->menu.add_item(&this->item_voice_count);
   this->menu.add_item(&this->item_voice_detail);
@@ -25,6 +27,7 @@ PartMenu::PartMenu()
   this->menu.add_item(&this->item_midi_input);
   this->menu.add_item(&this->item_midi_lowest_note);
   this->menu.add_item(&this->item_midi_highest_note);
+  this->menu.add_item(&this->item_midi_thru_mode);
 }
 
 void PartMenu::up()

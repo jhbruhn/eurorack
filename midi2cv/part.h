@@ -5,18 +5,14 @@
 
 #define TOTAL_COLUMN_COUNT 4
 
-typedef enum { MIDI_THRU_OFF,
-  MIDI_THRU_ON,
-  MIDI_THRU_POLYCHAIN } MIDIThruMode_t;
+typedef enum { MIDI_THRU_OFF = 0,
+  MIDI_THRU_ON = 1,
+  MIDI_THRU_POLYCHAIN = 2 } MIDIThruMode_t;
 
 typedef enum {
   BI_OFF = 0,
   BI_PITCH_UNI,
-  BI_PITCH_BI,
-  BI_SAWTOOTH,
-  BI_SQUARE,
-  BI_SINE,
-  BI_TRIANGLE
+  BI_PITCH_BI
 } BiOutputType_t;
 
 typedef enum {
@@ -44,10 +40,10 @@ typedef enum {
 } PartVoiceCount_t;
 
 typedef enum {
-  VOICE_DETAIL_S,
-  VOICE_DETAIL_M,
-  VOICE_DETAIL_L,
-  VOICE_DETAIL_XL
+  VOICE_DETAIL_S = 0,
+  VOICE_DETAIL_M = 1,
+  VOICE_DETAIL_L = 2,
+  VOICE_DETAIL_XL = 3
 } PartVoiceDetail_t;
 
 class Part {
