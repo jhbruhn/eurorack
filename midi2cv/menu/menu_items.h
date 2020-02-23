@@ -21,6 +21,7 @@ class MenuItem : public AbstractMenuItem {
   char stringRepresentation[24];
 
   protected:
+  MenuItem() {};
   MenuItem(const char* _label, T* _value)
       : label(_label)
       , value(_value) {};
@@ -29,6 +30,8 @@ class MenuItem : public AbstractMenuItem {
 
   void set_value(T value)
   {
+    if (!this->value)
+      return;
     *this->value = value;
     this->to_string(stringRepresentation);
   };
@@ -46,7 +49,9 @@ class MenuItem : public AbstractMenuItem {
 
   char* get_string_representation()
   {
-    if (!stringRepresentation[0])
+    if (!this->value) {
+      sprintf(stringRepresentation, "ERROR");
+    } else if (!stringRepresentation[0])
       this->to_string(stringRepresentation);
     return stringRepresentation;
   }
@@ -60,6 +65,7 @@ class NumberMenuItem : public MenuItem<T> {
   T step;
 
   protected:
+  NumberMenuItem() {};
   NumberMenuItem(const char* _label, T* _value, T _minimumValue, T _maximumValue, T _step)
       : MenuItem<T>(_label, _value)
       , minimumValue(_minimumValue)
@@ -76,14 +82,16 @@ class NumberMenuItem : public MenuItem<T> {
   public:
   void increase()
   {
-    if (*this->get_value_ptr() + step <= maximumValue && *this->get_value_ptr() + step >= minimumValue)
-      this->set_value(*this->get_value_ptr() + step);
+    if (this->get_value_ptr())
+      if (*this->get_value_ptr() + step <= maximumValue && *this->get_value_ptr() + step >= minimumValue)
+        this->set_value(*this->get_value_ptr() + step);
   };
 
   void decrease()
   {
-    if (*this->get_value_ptr() - step >= minimumValue && *this->get_value_ptr() - step <= maximumValue)
-      this->set_value(*this->get_value_ptr() - step);
+    if (this->get_value_ptr())
+      if (*this->get_value_ptr() - step >= minimumValue && *this->get_value_ptr() - step <= maximumValue)
+        this->set_value(*this->get_value_ptr() - step);
   };
 };
 
@@ -98,6 +106,7 @@ class UInt32MenuItem : public NumberMenuItem<uint32_t> {
   public:
   UInt32MenuItem(const char* _label, uint32_t* _value, uint32_t _minimumValue, uint32_t _maximumValue, uint32_t _step)
       : NumberMenuItem(_label, _value, _minimumValue, _maximumValue, _step) {};
+  UInt32MenuItem() {};
 };
 
 class Int32MenuItem : public NumberMenuItem<int32_t> {
@@ -111,6 +120,7 @@ class Int32MenuItem : public NumberMenuItem<int32_t> {
   public:
   Int32MenuItem(const char* _label, int32_t* _value, int32_t _minimumValue, int32_t _maximumValue, int32_t _step)
       : NumberMenuItem(_label, _value, _minimumValue, _maximumValue, _step) {};
+  Int32MenuItem();
 };
 
 class FloatMenuItem : public NumberMenuItem<float> {
@@ -124,6 +134,7 @@ class FloatMenuItem : public NumberMenuItem<float> {
   public:
   FloatMenuItem(const char* _label, float* _value, float _minimumValue, float _maximumValue, float _step)
       : NumberMenuItem(_label, _value, _minimumValue, _maximumValue, _step) {};
+  FloatMenuItem() {};
 };
 
 class BoolMenuItem : public NumberMenuItem<bool> {
@@ -135,8 +146,9 @@ class BoolMenuItem : public NumberMenuItem<bool> {
   protected:
   const char* get_format_string()
   {
-    bool value = *this->get_value_ptr();
-
+    bool value = false;
+    if (this->get_value_ptr())
+      value = *this->get_value_ptr();
     if (value)
       return this->on_string;
     else
@@ -148,6 +160,7 @@ class BoolMenuItem : public NumberMenuItem<bool> {
       : NumberMenuItem(_label, _value, 0, 1, 1)
       , on_string(_on_string)
       , off_string(_off_string) {};
+  BoolMenuItem() {};
 };
 
 class StringListMenuItem : public NumberMenuItem<uint8_t> {
@@ -157,13 +170,17 @@ class StringListMenuItem : public NumberMenuItem<uint8_t> {
   protected:
   const char* get_format_string()
   {
-    return this->string_labels[*this->get_value_ptr()];
+    size_t index = 0;
+    if (this->get_value_ptr())
+      index = *this->get_value_ptr();
+    return this->string_labels[index];
   }
 
   public:
   StringListMenuItem(const char* _label, uint8_t* _value, const char** _stringLabels, size_t _itemCount)
       : NumberMenuItem(_label, _value, 0, _itemCount - 1, 1)
       , string_labels(_stringLabels) {};
+  StringListMenuItem() {};
 };
 
 class MidiNoteMenuItem : public NumberMenuItem<uint8_t> {
@@ -177,7 +194,9 @@ class MidiNoteMenuItem : public NumberMenuItem<uint8_t> {
   public:
   char* get_string_representation()
   {
-    uint8_t currentNote = *this->get_value_ptr();
+    uint8_t currentNote = 0;
+    if (this->get_value_ptr())
+      currentNote = *this->get_value_ptr();
     int note = currentNote % 12;
     int octave = (currentNote / 12) - 1;
 
@@ -202,4 +221,5 @@ class MidiNoteMenuItem : public NumberMenuItem<uint8_t> {
     note_strings[10] = "A#";
     note_strings[11] = "B";
   };
+  MidiNoteMenuItem() {};
 };

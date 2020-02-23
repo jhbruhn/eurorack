@@ -7,17 +7,12 @@
 #include "part.h"
 #include "stmlib/utils/random.h"
 #include <u8g2.h>
-
+#include <array>
 using namespace stmlib;
 
 const uint32_t kEncoderLongPressTime = 600;
 
-// TODO: This is kind of ugly, can we improve this somehow?
-Part parts[4];
-Part* part_pointers[4] = {&parts[0], &parts[1], &parts[2], &parts[3]};
-MainMenu mainMenu(part_pointers);
-
-UI::UI()
+UI::UI(Part** part_pointers) : main_menu(part_pointers)
 {
   this->input_queue.Init();
 }
@@ -53,7 +48,7 @@ void UI::Draw()
 {
   display.u8g2()->clearBuffer();
 
-  mainMenu.render(display.u8g2(), 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
+  main_menu.render(display.u8g2(), 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 
   display.Swap();
 }
@@ -90,18 +85,18 @@ void UI::DoEvents()
 
 void UI::OnClick()
 {
-  mainMenu.enter();
+  main_menu.enter();
 }
 
 void UI::OnLongClick()
 {
-  mainMenu.back();
+  main_menu.back();
 }
 
 void UI::OnIncrement(Event& e)
 {
   if (e.data > 0)
-    mainMenu.down();
+    main_menu.down();
   else
-    mainMenu.up();
+    main_menu.up();
 }

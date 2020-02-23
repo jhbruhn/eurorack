@@ -1,5 +1,6 @@
 #include <stm32f37x_conf.h>
 
+#include "config.h"
 #include "drivers/display.h"
 #include "drivers/encoder.h"
 #include "drivers/gpio.h"
@@ -8,7 +9,6 @@
 #include "part.h"
 #include "stmlib/system/system_clock.h"
 #include "ui.h"
-#include "config.h"
 
 using namespace stmlib;
 
@@ -16,8 +16,9 @@ GPIO gpio;
 Display display;
 Encoder encoder;
 
-UI ui;
-Part part[PART_COUNT];
+Part parts[PART_COUNT];
+Part* part_pointers[PART_COUNT] = { &parts[0], &parts[1], &parts[2], &parts[3] };
+UI ui(part_pointers);
 
 // Default interrupt handlers.
 extern "C" {

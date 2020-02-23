@@ -8,7 +8,7 @@
 class PartMenu {
   public:
   PartMenu(Part* _part);
-
+  PartMenu() {}
   bool enter();
   bool back();
   void up();
