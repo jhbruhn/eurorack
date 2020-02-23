@@ -4,26 +4,16 @@
 #include "stmlib/stmlib.h"
 #include "stmlib/ui/event_queue.h"
 
-typedef enum {
-  MENU_PART_1 = 0,
-  MENU_PART_2,
-  MENU_PART_3,
-  MENU_PART_4,
-  MENU_COUNT
-} Menu_t;
-
 class UI {
   public:
-  UI() {}
+  UI();
   ~UI() {}
 
-  void Init();
   void Poll();
   void Flush();
   void DoEvents();
 
   private:
-  Menu_t current_menu;
   stmlib::EventQueue<16> input_queue;
 
   bool long_press_event_sent_;

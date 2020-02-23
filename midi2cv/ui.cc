@@ -10,16 +10,16 @@
 
 using namespace stmlib;
 
-#define HEADER_HEIGHT 14
 const uint32_t kEncoderLongPressTime = 600;
 
+// TODO: This is kind of ugly, can we improve this somehow?
 Part parts[4];
 Part* part_pointers[4] = {&parts[0], &parts[1], &parts[2], &parts[3]};
 MainMenu mainMenu(part_pointers);
 
-void UI::Init()
+UI::UI()
 {
-  input_queue.Init();
+  this->input_queue.Init();
 }
 
 void UI::Poll()
@@ -104,5 +104,4 @@ void UI::OnIncrement(Event& e)
     mainMenu.down();
   else
     mainMenu.up();
-  //current_menu = (Menu_t) (((uint32_t)current_menu + e.data) % MENU_COUNT);
 }

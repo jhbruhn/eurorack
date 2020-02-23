@@ -116,7 +116,6 @@ void Init(void)
   gpio.Init();
   display.Init();
   encoder.Init();
-  ui.Init();
   InitTimers();
 }
 
