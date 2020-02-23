@@ -3,11 +3,13 @@
 #include "../menu/menu_items.h"
 #include <u8g2.h>
 
+static const char* kVoiceDetailStrings[] = {"S", "M", "L", "XL"};
+
 PartMenu::PartMenu()
     : item_voice_count("voice count", 1, 1, 4, 1)
-    , item_voice_detail("voice detail", 1, 1, 4, 1)
+    , item_voice_detail("voice detail", 0, kVoiceDetailStrings, 4)
     , item_midi_filter_enabled("MIDI filter", 1, "on", "off")
-    , item_midi_channel("MIDI channel", 0, 0, 100, 1)
+    , item_midi_channel("MIDI channel", 0, 0, 16, 1)
     , item_midi_lowest_note("MIDI lowest", 0)
     , item_midi_highest_note("MIDI highest", 127)
 {

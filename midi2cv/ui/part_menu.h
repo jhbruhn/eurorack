@@ -18,7 +18,7 @@ class PartMenu {
   private:
   Menu menu;
   UIntMenuItem item_voice_count;
-  UIntMenuItem item_voice_detail;
+  StringListMenuItem item_voice_detail;
   BoolMenuItem item_midi_filter_enabled;
   UIntMenuItem item_midi_channel;
   MidiNoteMenuItem item_midi_lowest_note;

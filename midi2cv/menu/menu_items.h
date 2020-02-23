@@ -150,6 +150,22 @@ class BoolMenuItem : public NumberMenuItem<bool> {
       , off_string(_off_string) {};
 };
 
+class StringListMenuItem : public NumberMenuItem<uint32_t> {
+  private:
+  const char** string_labels;
+
+  protected:
+  const char* get_format_string()
+  {
+    return this->string_labels[this->get_value()];
+  }
+
+  public:
+  StringListMenuItem(const char* _label, uint32_t _initialValue, const char** _stringLabels, size_t _itemCount)
+      : NumberMenuItem(_label, _initialValue, 0, _itemCount - 1, 1)
+      , string_labels(_stringLabels) {};
+};
+
 class MidiNoteMenuItem : public NumberMenuItem<uint8_t> {
   private:
   char string_buffer[4];
