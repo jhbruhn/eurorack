@@ -55,16 +55,16 @@ void SysTick_Handler()
 
 void TIM2_IRQHandler(void)
 {
+  // this will get called with 8kHz (foof)
   if (TIM_GetITStatus(TIM2, TIM_IT_Update) == RESET) {
     return;
   }
   TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 
-  // this will get called with 8kHz (foof)
-  // which still is a lot (60fps would be enough tbh)
   static uint8_t count = 0;
   count++;
-  if (count % (192 * 2) == 0) {
+  if (count % (8000L / 60) == 0) {
+    // refresh display with 60fps
     ui.Flush();
     count = 0;
   }
@@ -80,7 +80,7 @@ void InitTimers(void)
 {
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
   TIM_TimeBaseInitTypeDef timer_init;
-  timer_init.TIM_Period = F_CPU / (48000 * 4) - 1;
+  timer_init.TIM_Period = F_CPU / (8000 * 1) - 1;
   timer_init.TIM_Prescaler = 0;
   timer_init.TIM_ClockDivision = TIM_CKD_DIV1;
   timer_init.TIM_CounterMode = TIM_CounterMode_Up;
