@@ -24,14 +24,14 @@
 # See http://creativecommons.org/licenses/MIT/ for more information.
 
 # System specifications
-F_CRYSTAL      = 8000000L
-F_CPU          = 72000000L
-SYSCLOCK       = SYSCLK_FREQ_72MHz
-FAMILY         = f37x
-# USB            = enabled
-U8G2           = enabled
+F_CRYSTAL         = 8000000L
+F_CPU             = 72000000L
+SYSCLOCK          = SYSCLK_FREQ_72MHz
+FAMILY            = f37x
+# USB             = enabled
+U8G2              = enabled
 APPLICATION_LARGE = TRUE
-BOOTLOADER     = midi2cv_bootloader
+BOOTLOADER        = midi2cv_bootloader
 
 # Preferred upload command
 UPLOAD_COMMAND  = upload_combo_jtag
@@ -45,8 +45,6 @@ PACKAGES       = midi2cv \
                  stmlib/utils \
                  stmlib/system
 RESOURCES      = midi2cv/resources
-
-TOOLCHAIN_PATH ?= /usr/local/arm-4.8.3/
 
 include stmlib/makefile.inc
 

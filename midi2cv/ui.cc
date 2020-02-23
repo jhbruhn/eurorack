@@ -61,7 +61,7 @@ void UI::Flush()
   display.Flush();
 }
 
-bool UI::DoEvents()
+void UI::DoEvents()
 {
   bool refresh_display = false;
   while (input_queue.available()) {
@@ -84,8 +84,6 @@ bool UI::DoEvents()
     input_queue.Touch();
     Draw();
   }
-
-  return refresh_display;
 }
 
 void UI::OnClick()

@@ -20,7 +20,7 @@ class UI {
   void Init();
   void Poll();
   void Flush();
-  bool DoEvents();
+  void DoEvents();
 
   private:
   Menu_t current_menu;
