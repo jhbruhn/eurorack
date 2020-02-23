@@ -13,8 +13,9 @@ class MainMenu {
 
   void render(U8G2* u8g2, int x, int y, int width, int height);
 
-  MainMenu()
-      : activePartMenu(0)
+  MainMenu(Part** parts)
+      : partMenus({ parts[0], parts[1], parts[2], parts[3] })
+      , activePartMenu(0)
       , selectedPart(0) {};
 
   private:

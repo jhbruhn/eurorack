@@ -2,11 +2,12 @@
 
 #include "../menu/menu.h"
 #include "../menu/menu_items.h"
+#include "../part.h"
 #include <U8g2lib.h>
 
 class PartMenu {
   public:
-  PartMenu();
+  PartMenu(Part* _part);
 
   bool enter();
   bool back();
@@ -16,8 +17,10 @@ class PartMenu {
   void render(U8G2* u8g2, int x, int y, int width, int height);
 
   private:
+  Part* part;
+
   Menu menu;
-  UIntMenuItem item_voice_count;
+  UInt32MenuItem item_voice_count;
   StringListMenuItem item_voice_detail;
   BoolMenuItem item_midi_filter_enabled;
   StringListMenuItem item_midi_channel;

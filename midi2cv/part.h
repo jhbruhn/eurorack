@@ -5,41 +5,49 @@
 
 #define TOTAL_COLUMN_COUNT 4
 
-typedef enum { MIDI_THRU_OFF = 0,
+typedef enum : uint8_t {
+  MIDI_THRU_OFF = 0,
   MIDI_THRU_ON = 1,
-  MIDI_THRU_POLYCHAIN = 2 } MIDIThruMode_t;
+  MIDI_THRU_POLYCHAIN = 2
+} MIDIThruMode_t;
 
-typedef enum {
+typedef enum : uint8_t {
+  MIDI_INPUT_OMNI = 0,
+  MIDI_INPUT_MIDI = 1,
+  MIDI_INPUT_USB = 2
+} MIDIInput_t;
+
+typedef enum : uint32_t {
   BI_OFF = 0,
-  BI_PITCH_UNI,
-  BI_PITCH_BI
+  BI_PITCH_UNI = 1,
+  BI_PITCH_BI = 2
 } BiOutputType_t;
 
-typedef enum {
+typedef enum : uint32_t {
   UNI_OFF = 0,
-  UNI_PITCH,
-  UNI_VELOCITY,
-  UNI_MODULATION,
-  UNI_AFTERTOUCH,
-  UNI_BREATH,
-  UNI_EXP,
-  UNI_GATE
+  UNI_PITCH = 1,
+  UNI_VELOCITY = 2,
+  UNI_MODULATION = 3,
+  UNI_AFTERTOUCH = 4,
+  UNI_BREATH = 5,
+  UNI_EXP = 6,
+  UNI_GATE = 7
 } UniOutputType_t;
 
-typedef enum {
+typedef enum : uint32_t {
   GATE_OFF = 0,
-  GATE_GATE,
-  GATE_TRIGGER
+  GATE_GATE = 2,
+  GATE_TRIGGER = 3
 } GateOutputType_t;
 
-typedef enum {
+typedef enum : uint32_t {
   VOICE_COUNT_1 = 1,
   VOICE_COUNT_2 = 2,
   VOICE_COUNT_3 = 3,
   VOICE_COUNT_4 = 4
 } PartVoiceCount_t;
 
-typedef enum {
+typedef enum : uint32_t {
   VOICE_DETAIL_S = 0,
   VOICE_DETAIL_M = 1,
   VOICE_DETAIL_L = 2,
@@ -68,13 +76,13 @@ class Part {
 
   uint8_t RequiredColumns();
 
-  private:
   PartVoiceCount_t part_voice_count;
   PartVoiceDetail_t part_voice_detail;
   bool midi_filter_channel_enabled;
   uint8_t midi_filter_channel;
   uint8_t midi_filter_lowest_note;
   uint8_t midi_filter_highest_note;
+  MIDIInput_t midi_filter_input;
   MIDIThruMode_t midi_thru_mode;
   BiOutputType_t output_type_row_0[TOTAL_COLUMN_COUNT];
   UniOutputType_t output_type_row_1[TOTAL_COLUMN_COUNT];

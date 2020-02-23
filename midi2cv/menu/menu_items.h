@@ -16,25 +16,25 @@ template <class T>
 class MenuItem : public AbstractMenuItem {
   private:
   const char* label;
-  T value;
+  T* value;
   T step;
   char stringRepresentation[24];
 
   protected:
-  MenuItem(const char* _label, T _initialValue)
+  MenuItem(const char* _label, T* _value)
       : label(_label)
-      , value(_initialValue) {};
+      , value(_value) {};
 
   virtual void to_string(char* buf) = 0;
 
   void set_value(T value)
   {
-    this->value = value;
+    *this->value = value;
     this->to_string(stringRepresentation);
   };
 
   public:
-  T get_value()
+  T* get_value_ptr()
   {
     return value;
   }
@@ -60,8 +60,8 @@ class NumberMenuItem : public MenuItem<T> {
   T step;
 
   protected:
-  NumberMenuItem(const char* _label, T _initialValue, T _minimumValue, T _maximumValue, T _step)
-      : MenuItem<T>(_label, _initialValue)
+  NumberMenuItem(const char* _label, T* _value, T _minimumValue, T _maximumValue, T _step)
+      : MenuItem<T>(_label, _value)
       , minimumValue(_minimumValue)
       , maximumValue(_maximumValue)
       , step(_step) {};
@@ -70,24 +70,24 @@ class NumberMenuItem : public MenuItem<T> {
 
   void to_string(char* buf)
   {
-    sprintf(buf, this->get_format_string(), this->get_value());
+    sprintf(buf, this->get_format_string(), *this->get_value_ptr());
   }
 
   public:
   void increase()
   {
-    if (this->get_value() + step <= maximumValue && this->get_value() + step >= minimumValue)
-      this->set_value(this->get_value() + step);
+    if (*this->get_value_ptr() + step <= maximumValue && *this->get_value_ptr() + step >= minimumValue)
+      this->set_value(*this->get_value_ptr() + step);
   };
 
   void decrease()
   {
-    if (this->get_value() - step >= minimumValue && this->get_value() - step <= maximumValue)
-      this->set_value(this->get_value() - step);
+    if (*this->get_value_ptr() - step >= minimumValue && *this->get_value_ptr() - step <= maximumValue)
+      this->set_value(*this->get_value_ptr() - step);
   };
 };
 
-class UIntMenuItem : public NumberMenuItem<uint32_t> {
+class UInt32MenuItem : public NumberMenuItem<uint32_t> {
   private:
   protected:
   const char* get_format_string()
@@ -96,11 +96,11 @@ class UIntMenuItem : public NumberMenuItem<uint32_t> {
   }
 
   public:
-  UIntMenuItem(const char* _label, uint32_t _initialValue, uint32_t _minimumValue, uint32_t _maximumValue, uint32_t _step)
-      : NumberMenuItem(_label, _initialValue, _minimumValue, _maximumValue, _step) {};
+  UInt32MenuItem(const char* _label, uint32_t* _value, uint32_t _minimumValue, uint32_t _maximumValue, uint32_t _step)
+      : NumberMenuItem(_label, _value, _minimumValue, _maximumValue, _step) {};
 };
 
-class IntMenuItem : public NumberMenuItem<int32_t> {
+class Int32MenuItem : public NumberMenuItem<int32_t> {
   private:
   protected:
   const char* get_format_string()
@@ -109,8 +109,8 @@ class IntMenuItem : public NumberMenuItem<int32_t> {
   }
 
   public:
-  IntMenuItem(const char* _label, int32_t _initialValue, int32_t _minimumValue, int32_t _maximumValue, int32_t _step)
-      : NumberMenuItem(_label, _initialValue, _minimumValue, _maximumValue, _step) {};
+  Int32MenuItem(const char* _label, int32_t* _value, int32_t _minimumValue, int32_t _maximumValue, int32_t _step)
+      : NumberMenuItem(_label, _value, _minimumValue, _maximumValue, _step) {};
 };
 
 class FloatMenuItem : public NumberMenuItem<float> {
@@ -122,8 +122,8 @@ class FloatMenuItem : public NumberMenuItem<float> {
   }
 
   public:
-  FloatMenuItem(const char* _label, float _initialValue, float _minimumValue, float _maximumValue, float _step)
-      : NumberMenuItem(_label, _initialValue, _minimumValue, _maximumValue, _step) {};
+  FloatMenuItem(const char* _label, float* _value, float _minimumValue, float _maximumValue, float _step)
+      : NumberMenuItem(_label, _value, _minimumValue, _maximumValue, _step) {};
 };
 
 class BoolMenuItem : public NumberMenuItem<bool> {
@@ -135,7 +135,7 @@ class BoolMenuItem : public NumberMenuItem<bool> {
   protected:
   const char* get_format_string()
   {
-    bool value = this->get_value();
+    bool value = *this->get_value_ptr();
 
     if (value)
       return this->on_string;
@@ -144,25 +144,25 @@ class BoolMenuItem : public NumberMenuItem<bool> {
   }
 
   public:
-  BoolMenuItem(const char* _label, bool _initialValue, const char* _on_string, const char* _off_string)
-      : NumberMenuItem(_label, _initialValue, 0, 1, 1)
+  BoolMenuItem(const char* _label, bool* _value, const char* _on_string, const char* _off_string)
+      : NumberMenuItem(_label, _value, 0, 1, 1)
       , on_string(_on_string)
       , off_string(_off_string) {};
 };
 
-class StringListMenuItem : public NumberMenuItem<uint32_t> {
+class StringListMenuItem : public NumberMenuItem<uint8_t> {
   private:
   const char** string_labels;
 
   protected:
   const char* get_format_string()
   {
-    return this->string_labels[this->get_value()];
+    return this->string_labels[*this->get_value_ptr()];
   }
 
   public:
-  StringListMenuItem(const char* _label, uint32_t _initialValue, const char** _stringLabels, size_t _itemCount)
-      : NumberMenuItem(_label, _initialValue, 0, _itemCount - 1, 1)
+  StringListMenuItem(const char* _label, uint8_t* _value, const char** _stringLabels, size_t _itemCount)
+      : NumberMenuItem(_label, _value, 0, _itemCount - 1, 1)
       , string_labels(_stringLabels) {};
 };
 
@@ -177,7 +177,7 @@ class MidiNoteMenuItem : public NumberMenuItem<uint8_t> {
   public:
   char* get_string_representation()
   {
-    uint8_t currentNote = this->get_value();
+    uint8_t currentNote = *this->get_value_ptr();
     int note = currentNote % 12;
     int octave = (currentNote / 12) - 1;
 
@@ -186,8 +186,8 @@ class MidiNoteMenuItem : public NumberMenuItem<uint8_t> {
     return this->string_buffer;
   }
 
-  MidiNoteMenuItem(const char* _label, uint8_t _initialValue)
-      : NumberMenuItem(_label, _initialValue, 0, 127, 1)
+  MidiNoteMenuItem(const char* _label, uint8_t* _value)
+      : NumberMenuItem(_label, _value, 0, 127, 1)
   {
     note_strings[0] = "C";
     note_strings[1] = "C#";

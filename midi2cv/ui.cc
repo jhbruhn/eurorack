@@ -13,7 +13,9 @@ using namespace stmlib;
 #define HEADER_HEIGHT 14
 const uint32_t kEncoderLongPressTime = 600;
 
-MainMenu mainMenu;
+Part parts[4];
+Part* part_pointers[4] = {&parts[0], &parts[1], &parts[2], &parts[3]};
+MainMenu mainMenu(part_pointers);
 
 void UI::Init()
 {

@@ -7,18 +7,19 @@ static const char* kVoiceDetailStrings[] = { "S", "M", "L", "XL" };
 static const char* kMidiChannelStrings[] = { "omni", "1", "2", "3", "4", "5", "6",
   "7", "8", "9", "10", "11", "12", "13",
   "14", "15", "16" };
-static const char* kMidiInputStrings[] = { "omni", "usb", "midi" };
-static const char* kMidiThruStrings[] = {"off", "on", "polychain"};
+static const char* kMidiInputStrings[] = { "omni", "midi", "usb" };
+static const char* kMidiThruStrings[] = { "off", "on", "polychain" };
 
-PartMenu::PartMenu()
-    : item_voice_count("voice count", 1, 1, 4, 1)
-    , item_voice_detail("voice detail", 0, kVoiceDetailStrings, 4)
-    , item_midi_filter_enabled("MIDI filter", 1, "on", "off")
-    , item_midi_channel("MIDI channel", 0, kMidiChannelStrings, 17)
-    , item_midi_input("MIDI input", 0, kMidiInputStrings, 3)
-    , item_midi_lowest_note("MIDI lowest", 0)
-    , item_midi_highest_note("MIDI highest", 127)
-    , item_midi_thru_mode("MIDI thru", 0, kMidiThruStrings, 3)
+PartMenu::PartMenu(Part* _part)
+    : part(_part)
+    , item_voice_count("voice count", (uint32_t*)&_part->part_voice_count, 1, 4, 1)
+    , item_voice_detail("voice detail", (uint8_t*)&_part->part_voice_detail, kVoiceDetailStrings, 4)
+    , item_midi_filter_enabled("MIDI filter", &_part->midi_filter_channel_enabled, "on", "off")
+    , item_midi_channel("MIDI channel", (uint8_t*)&_part->midi_filter_channel, kMidiChannelStrings, 17)
+    , item_midi_input("MIDI input", (uint8_t*)&_part->midi_filter_input, kMidiInputStrings, 3)
+    , item_midi_lowest_note("MIDI lowest", (uint8_t*)&_part->midi_filter_lowest_note)
+    , item_midi_highest_note("MIDI highest", (uint8_t*)&_part->midi_filter_highest_note)
+    , item_midi_thru_mode("MIDI thru", (uint8_t*)&_part->midi_thru_mode, kMidiThruStrings, 3)
 {
   this->menu.add_item(&this->item_voice_count);
   this->menu.add_item(&this->item_voice_detail);
