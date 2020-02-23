@@ -20,7 +20,8 @@ class PartMenu {
   UIntMenuItem item_voice_count;
   StringListMenuItem item_voice_detail;
   BoolMenuItem item_midi_filter_enabled;
-  UIntMenuItem item_midi_channel;
+  StringListMenuItem item_midi_channel;
+  StringListMenuItem item_midi_input;
   MidiNoteMenuItem item_midi_lowest_note;
   MidiNoteMenuItem item_midi_highest_note;
 };
