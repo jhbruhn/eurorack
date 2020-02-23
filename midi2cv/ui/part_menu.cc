@@ -6,7 +6,7 @@
 PartMenu::PartMenu()
     : item_voice_count("voice count", 1, 1, 4, 1)
     , item_voice_detail("voice detail", 1, 1, 4, 1)
-    , item_midi_filter_enabled("MIDI filter", 0, "on", "off")
+    , item_midi_filter_enabled("MIDI filter", 1, "on", "off")
     , item_midi_channel("MIDI channel", 0, 0, 100, 1)
     , item_midi_lowest_note("MIDI lowest", 0)
     , item_midi_highest_note("MIDI highest", 127)
@@ -39,6 +39,7 @@ bool PartMenu::back()
 bool PartMenu::enter()
 {
   menu.enter();
+
   return false;
 }
 
