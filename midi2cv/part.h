@@ -63,10 +63,10 @@ struct PartData { // Everything defined here will be stored in flash even in pow
   uint8_t midi_filter_highest_note = 127;
   MIDIInput_t midi_filter_input = MIDI_INPUT_OMNI;
   MIDIThruMode_t midi_thru_mode = MIDI_THRU_OFF;
-  BiOutputType_t output_type_row_0[TOTAL_COLUMN_COUNT];
+  /*BiOutputType_t output_type_row_0[TOTAL_COLUMN_COUNT];
   UniOutputType_t output_type_row_1[TOTAL_COLUMN_COUNT];
   UniOutputType_t output_type_row_2[TOTAL_COLUMN_COUNT];
-  GateOutputType_t output_type_row_3[TOTAL_COLUMN_COUNT];
+  GateOutputType_t output_type_row_3[TOTAL_COLUMN_COUNT];*/
 };
 
 class Part {
@@ -74,10 +74,10 @@ class Part {
   Part()
   {
     for (int i = 0; i < TOTAL_COLUMN_COUNT; i++) {
-      data.output_type_row_0[i] = BI_OFF;
+      /*data.output_type_row_0[i] = BI_OFF;
       data.output_type_row_1[i] = UNI_OFF;
       data.output_type_row_2[i] = UNI_OFF;
-      data.output_type_row_3[i] = GATE_OFF;
+      data.output_type_row_3[i] = GATE_OFF;*/
     }
   }
   void ProcessMidiInput(/* TODO: Inputs */);
