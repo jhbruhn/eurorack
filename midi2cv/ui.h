@@ -5,12 +5,13 @@
 #include "stmlib/ui/event_queue.h"
 
 #include "config.h"
+#include "settings.h"
 #include "ui/main_menu.h"
 #include <array>
 
 class UI {
   public:
-  UI(Part** part_pointers);
+  UI(Part** part_pointers, Settings* settings);
   ~UI() {}
 
   void Poll();
@@ -19,6 +20,8 @@ class UI {
 
   private:
   stmlib::EventQueue<16> input_queue;
+
+  Settings* settings;
 
   bool long_press_event_sent_;
   uint32_t start_stop_press_time_;

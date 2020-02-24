@@ -54,40 +54,37 @@ typedef enum : uint8_t {
   VOICE_DETAIL_XL = 3
 } PartVoiceDetail_t;
 
+struct PartData { // Everything defined here will be stored in flash even in power down
+  PartVoiceCount_t part_voice_count = VOICE_COUNT_1;
+  PartVoiceDetail_t part_voice_detail = VOICE_DETAIL_S;
+  bool midi_filter_channel_enabled = true;
+  uint8_t midi_filter_channel = 1;
+  uint8_t midi_filter_lowest_note = 0;
+  uint8_t midi_filter_highest_note = 127;
+  MIDIInput_t midi_filter_input = MIDI_INPUT_OMNI;
+  MIDIThruMode_t midi_thru_mode = MIDI_THRU_OFF;
+  BiOutputType_t output_type_row_0[TOTAL_COLUMN_COUNT];
+  UniOutputType_t output_type_row_1[TOTAL_COLUMN_COUNT];
+  UniOutputType_t output_type_row_2[TOTAL_COLUMN_COUNT];
+  GateOutputType_t output_type_row_3[TOTAL_COLUMN_COUNT];
+};
+
 class Part {
   public:
   Part()
-      : part_voice_count(VOICE_COUNT_1)
-      , part_voice_detail(VOICE_DETAIL_S)
-      , midi_filter_channel_enabled(true)
-      , midi_filter_channel(1)
-      , midi_filter_lowest_note(0)
-      , midi_filter_highest_note(127)
-      , midi_thru_mode(MIDI_THRU_OFF)
   {
     for (int i = 0; i < TOTAL_COLUMN_COUNT; i++) {
-      output_type_row_0[i] = BI_OFF;
-      output_type_row_1[i] = UNI_OFF;
-      output_type_row_2[i] = UNI_OFF;
-      output_type_row_3[i] = GATE_OFF;
+      data.output_type_row_0[i] = BI_OFF;
+      data.output_type_row_1[i] = UNI_OFF;
+      data.output_type_row_2[i] = UNI_OFF;
+      data.output_type_row_3[i] = GATE_OFF;
     }
   }
   void ProcessMidiInput(/* TODO: Inputs */);
 
   uint8_t RequiredColumns();
 
-  PartVoiceCount_t part_voice_count;
-  PartVoiceDetail_t part_voice_detail;
-  bool midi_filter_channel_enabled;
-  uint8_t midi_filter_channel;
-  uint8_t midi_filter_lowest_note;
-  uint8_t midi_filter_highest_note;
-  MIDIInput_t midi_filter_input;
-  MIDIThruMode_t midi_thru_mode;
-  BiOutputType_t output_type_row_0[TOTAL_COLUMN_COUNT];
-  UniOutputType_t output_type_row_1[TOTAL_COLUMN_COUNT];
-  UniOutputType_t output_type_row_2[TOTAL_COLUMN_COUNT];
-  GateOutputType_t output_type_row_3[TOTAL_COLUMN_COUNT];
+  PartData data;
 };
 
 extern Part parts[];

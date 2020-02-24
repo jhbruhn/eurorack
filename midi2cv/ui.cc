@@ -14,11 +14,12 @@ using namespace stmlib;
 
 const uint32_t kEncoderLongPressTime = 600;
 
-UI::UI(Part** part_pointers)
+UI::UI(Part** part_pointers, Settings* settings)
     : main_menu(part_pointers)
     , parts(part_pointers)
 {
   this->input_queue.Init();
+  this->settings = settings;
 
   LoadState();
 }
@@ -61,22 +62,17 @@ void UI::Draw()
 
 void UI::LoadState()
 {
-  for (size_t i = 0; i < PART_COUNT; i++) {
-    parts[i]->midi_filter_channel = settings.part(i).midi_filter_channel;
-    parts[i]->midi_filter_channel_enabled = settings.part(i).midi_filter_channel_enabled;
-    parts[i]->midi_filter_lowest_note = settings.part(i).midi_filter_lowest_note;
-  }
+  for(size_t i = 0; i < PART_COUNT; i++)
+    this->parts[i]->data = settings->part(i);
 }
 
 void UI::SaveState()
 {
   for (size_t i = 0; i < PART_COUNT; i++) {
-    settings.mutable_part(i)->midi_filter_channel = this->parts[i]->midi_filter_channel;
-    settings.mutable_part(i)->midi_filter_channel_enabled = this->parts[i]->midi_filter_channel_enabled;
-    settings.mutable_part(i)->midi_filter_lowest_note = this->parts[i]->midi_filter_lowest_note;
+    *(settings->mutable_part(i)) = this->parts[i]->data;
   }
 
-  settings.SaveState();
+  settings->SaveState();
 }
 
 void UI::Flush()

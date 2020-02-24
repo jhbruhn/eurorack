@@ -7,23 +7,12 @@
 
 struct PersistentData {
   uint8_t honor;
-  uint8_t padding[15];
+  uint8_t padding[7];
   enum { tag = 0x494C4143 }; // CALI
 };
 
-struct PartState { // 8 bytes, TODO: can these be pointers to the actual values, or can we do some other copying magic?
-  PartVoiceCount_t part_voice_count;
-  PartVoiceDetail_t part_voice_detail;
-  uint8_t midi_filter_channel_enabled;
-  uint8_t midi_filter_channel;
-  uint8_t midi_filter_lowest_note;
-  uint8_t midi_filter_highest_note;
-  MIDIInput_t midi_filter_input;
-  MIDIThruMode_t midi_thru_mode;
-};
-
 struct State {
-  PartState part_states[PART_COUNT]; // 4 * 8 bytes
+  PartData part_datas[PART_COUNT];
   //uint8_t padding[4];
   enum { tag = 0x54415453 }; // STAT
 };
@@ -56,17 +45,22 @@ class Settings {
     return &state_;
   }
 
-  inline const PartState& part(int i) const
+  inline const PartData& part(int i) const
   {
-    return state_.part_states[i];
+    return state_.part_datas[i];
   }
 
-  inline PartState* mutable_part(int i)
+  inline PartData* mutable_part(int i)
   {
-    return &state_.part_states[i];
+    return &state_.part_datas[i];
+  }
+
+  inline bool is_first_start() {
+    return this->first_start;
   }
 
   private:
+  bool first_start;
   PersistentData persistent_data_;
   State state_;
 
@@ -79,5 +73,3 @@ class Settings {
 
   DISALLOW_COPY_AND_ASSIGN(Settings);
 };
-
-extern Settings settings;
