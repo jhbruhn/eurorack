@@ -40,14 +40,14 @@ typedef enum : uint32_t {
   GATE_TRIGGER = 3
 } GateOutputType_t;
 
-typedef enum : uint32_t {
+typedef enum : uint8_t {
   VOICE_COUNT_1 = 1,
   VOICE_COUNT_2 = 2,
   VOICE_COUNT_3 = 3,
   VOICE_COUNT_4 = 4
 } PartVoiceCount_t;
 
-typedef enum : uint32_t {
+typedef enum : uint8_t {
   VOICE_DETAIL_S = 0,
   VOICE_DETAIL_M = 1,
   VOICE_DETAIL_L = 2,

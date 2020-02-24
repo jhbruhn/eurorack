@@ -12,7 +12,7 @@ static const char* kMidiThruStrings[] = { "off", "on", "polychain" };
 
 PartMenu::PartMenu(Part* _part)
     : part(_part)
-    , item_voice_count("voice count", (uint32_t*)&_part->part_voice_count, 1, 4, 1)
+    , item_voice_count("voice count", (uint8_t*)&_part->part_voice_count, 1, 4, 1)
     , item_voice_detail("voice detail", (uint8_t*)&_part->part_voice_detail, kVoiceDetailStrings, 4)
     , item_midi_filter_enabled("MIDI filter", &_part->midi_filter_channel_enabled, "on", "off")
     , item_midi_channel("MIDI channel", (uint8_t*)&_part->midi_filter_channel, kMidiChannelStrings, 17)
@@ -51,7 +51,6 @@ bool PartMenu::back()
 bool PartMenu::enter()
 {
   menu.enter();
-
   return false;
 }
 

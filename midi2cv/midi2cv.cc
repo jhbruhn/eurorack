@@ -7,6 +7,7 @@
 #include "menu/menu.h"
 #include "menu/menu_items.h"
 #include "part.h"
+#include "settings.h"
 #include "stmlib/system/system_clock.h"
 #include "ui.h"
 
@@ -15,6 +16,8 @@ using namespace stmlib;
 GPIO gpio;
 Display display;
 Encoder encoder;
+
+Settings settings;
 
 Part parts[PART_COUNT];
 Part* part_pointers[PART_COUNT] = { &parts[0], &parts[1], &parts[2], &parts[3] };

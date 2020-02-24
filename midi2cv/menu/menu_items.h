@@ -109,6 +109,20 @@ class UInt32MenuItem : public NumberMenuItem<uint32_t> {
   UInt32MenuItem() {};
 };
 
+class UInt8MenuItem : public NumberMenuItem<uint8_t> {
+  private:
+  protected:
+  const char* get_format_string()
+  {
+    return "%u";
+  }
+
+  public:
+  UInt8MenuItem(const char* _label, uint8_t* _value, uint8_t _minimumValue, uint8_t _maximumValue, uint8_t _step)
+      : NumberMenuItem(_label, _value, _minimumValue, _maximumValue, _step) {};
+  UInt8MenuItem() {};
+};
+
 class Int32MenuItem : public NumberMenuItem<int32_t> {
   private:
   protected:

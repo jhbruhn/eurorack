@@ -1,20 +1,26 @@
 #include "ui.h"
-#include "ui/main_menu.h"
 #include "drivers/display.h"
 #include "midi2cv/drivers/encoder.h"
 #include "midi2cv/menu/menu.h"
 #include "midi2cv/menu/menu_items.h"
 #include "part.h"
+#include "settings.h"
 #include "stmlib/utils/random.h"
-#include <u8g2.h>
+#include "ui/main_menu.h"
 #include <array>
+#include <u8g2.h>
+
 using namespace stmlib;
 
 const uint32_t kEncoderLongPressTime = 600;
 
-UI::UI(Part** part_pointers) : main_menu(part_pointers)
+UI::UI(Part** part_pointers)
+    : main_menu(part_pointers)
+    , parts(part_pointers)
 {
   this->input_queue.Init();
+
+  LoadState();
 }
 
 void UI::Poll()
@@ -51,6 +57,26 @@ void UI::Draw()
   main_menu.render(display.u8g2(), 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 
   display.Swap();
+}
+
+void UI::LoadState()
+{
+  for (size_t i = 0; i < PART_COUNT; i++) {
+    parts[i]->midi_filter_channel = settings.part(i).midi_filter_channel;
+    parts[i]->midi_filter_channel_enabled = settings.part(i).midi_filter_channel_enabled;
+    parts[i]->midi_filter_lowest_note = settings.part(i).midi_filter_lowest_note;
+  }
+}
+
+void UI::SaveState()
+{
+  for (size_t i = 0; i < PART_COUNT; i++) {
+    settings.mutable_part(i)->midi_filter_channel = this->parts[i]->midi_filter_channel;
+    settings.mutable_part(i)->midi_filter_channel_enabled = this->parts[i]->midi_filter_channel_enabled;
+    settings.mutable_part(i)->midi_filter_lowest_note = this->parts[i]->midi_filter_lowest_note;
+  }
+
+  settings.SaveState();
 }
 
 void UI::Flush()
@@ -99,4 +125,6 @@ void UI::OnIncrement(Event& e)
     main_menu.down();
   else
     main_menu.up();
+
+  SaveState();
 }

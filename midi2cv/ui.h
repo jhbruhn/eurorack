@@ -26,6 +26,10 @@ class UI {
   uint32_t encoder_press_time_;
 
   MainMenu<PART_COUNT> main_menu;
+  Part** parts;
+
+  void LoadState();
+  void SaveState();
 
   void Draw();
 

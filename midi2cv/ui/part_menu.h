@@ -20,7 +20,7 @@ class PartMenu {
   Part* part;
 
   Menu menu;
-  UInt32MenuItem item_voice_count;
+  UInt8MenuItem item_voice_count;
   StringListMenuItem item_voice_detail;
   BoolMenuItem item_midi_filter_enabled;
   StringListMenuItem item_midi_channel;
