@@ -65,7 +65,7 @@ class Settings {
   State state_;
 
   stmlib::ChunkStorage<
-      0x08006000,
+      0x08004000,
       0x08008000,
       PersistentData,
       State>
