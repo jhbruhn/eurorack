@@ -21,7 +21,7 @@ Settings settings;
 
 Part parts[PART_COUNT];
 Part* part_pointers[PART_COUNT] = { &parts[0], &parts[1], &parts[2], &parts[3] };
-UI ui(part_pointers, &settings);
+UI ui(part_pointers, &display, &settings);
 
 // Default interrupt handlers.
 extern "C" {

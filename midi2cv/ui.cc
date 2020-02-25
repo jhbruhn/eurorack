@@ -14,12 +14,13 @@ using namespace stmlib;
 
 const uint32_t kEncoderLongPressTime = 600;
 
-UI::UI(Part** part_pointers, Settings* settings)
-    : main_menu(part_pointers)
+UI::UI(Part** part_pointers, Display* display, Settings* settings)
+    : settings(settings)
+    , display(display)
+    , main_menu(part_pointers)
     , parts(part_pointers)
 {
   this->input_queue.Init();
-  this->settings = settings;
 
   LoadState();
 }
@@ -53,16 +54,16 @@ void UI::Poll()
 
 void UI::Draw()
 {
-  display.u8g2()->clearBuffer();
+  this->display->u8g2()->clearBuffer();
 
-  main_menu.render(display.u8g2(), 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
+  main_menu.render(this->display->u8g2(), 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
 
-  display.Swap();
+  this->display->Swap();
 }
 
 void UI::LoadState()
 {
-  for(size_t i = 0; i < PART_COUNT; i++)
+  for (size_t i = 0; i < PART_COUNT; i++)
     this->parts[i]->data = settings->part(i);
 }
 
@@ -77,7 +78,7 @@ void UI::SaveState()
 
 void UI::Flush()
 {
-  display.Flush();
+  this->display->Flush();
 }
 
 void UI::DoEvents()

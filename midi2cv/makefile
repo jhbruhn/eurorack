@@ -30,6 +30,7 @@ SYSCLOCK          = SYSCLK_FREQ_72MHz
 FAMILY            = f37x
 # USB             = enabled
 U8G2              = enabled
+PRINTF_FLOATS     = enabled
 APPLICATION_LARGE = TRUE
 BOOTLOADER        = midi2cv_bootloader
 

@@ -7,11 +7,12 @@
 #include "config.h"
 #include "settings.h"
 #include "ui/main_menu.h"
-#include <array>
+
+#include "drivers/display.h"
 
 class UI {
   public:
-  UI(Part** part_pointers, Settings* settings);
+  UI(Part** part_pointers, Display* display, Settings* settings);
   ~UI() {}
 
   void Poll();
@@ -22,6 +23,8 @@ class UI {
   stmlib::EventQueue<16> input_queue;
 
   Settings* settings;
+
+  Display* display;
 
   bool long_press_event_sent_;
   uint32_t start_stop_press_time_;
