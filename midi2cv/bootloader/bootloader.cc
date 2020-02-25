@@ -27,10 +27,14 @@ int main(void)
 
   display.Init();
 
-  display.u8x8()->setFont(u8x8_font_amstrad_cpc_extended_r);
-  display.u8x8()->drawString(0, 0, "Moin");
+  display.u8x8()->setFont(u8x8_font_5x7_f);
+  display.u8x8()->drawString(0, 0, "RolfOS 1.0");
+  system_clock.Delay(200);
+  display.u8x8()->drawString(0, 2, "Display ready");
   system_clock.Delay(500);
-  display.u8x8()->drawString(0, 10, "i bims");
+  display.u8x8()->drawString(0, 3, "Ehre ready");
+  system_clock.Delay(500);
+  display.u8x8()->drawString(0, 5, "let's fetz");
   system_clock.Delay(1000);
 
   Uninitialize();
