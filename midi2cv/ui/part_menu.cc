@@ -31,12 +31,12 @@ PartMenu::PartMenu(Part* _part)
 {
   this->menu.add_item(&this->item_voice_count);
   this->menu.add_item(&this->item_voice_detail);
+  this->menu.add_item(&this->item_midi_filter_enabled);
   this->menu.add_item(&this->item_midi_channel);
   this->menu.add_item(&this->item_midi_input);
   this->menu.add_item(&this->item_midi_lowest_note);
   this->menu.add_item(&this->item_midi_highest_note);
   this->menu.add_item(&this->item_midi_thru_mode);
-  this->menu.add_item(&this->item_midi_filter_enabled);
 }
 
 void PartMenu::up()
