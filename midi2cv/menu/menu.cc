@@ -43,6 +43,8 @@ void Menu::render(U8G2* u8g2_, uint8_t xStart, uint8_t yStart, uint8_t width, ui
 
 void Menu::update_visible_items()
 {
+  AbstractMenuItem* currentlySelectedItem = this->visibleItems[this->selectedVisibleItem];
+
   // set all visibleItems to null
   this->visibleItemCount = 0;
   for (size_t i = 0; i < MAXIMUM_MENU_ITEM_COUNT; i++) {
@@ -55,33 +57,31 @@ void Menu::update_visible_items()
       this->visibleItems[this->visibleItemCount++] = this->items[i];
     }
   }
+
+  // if our visibleitem changed, chances are that the index of the selected item has changed:
+  if (currentlySelectedItem && this->visibleItems[this->selectedVisibleItem] != currentlySelectedItem) {
+    int8_t delta = 0;
+    // the index of our visible item has changed.
+    // go through the list of visible items and find it!
+    for (size_t i = 0; i < this->visibleItemCount; i++) {
+      if (this->visibleItems[i] == currentlySelectedItem) {
+        delta = this->selectedVisibleItem - i;
+        this->selectedVisibleItem = this->currentEditingVisibleItem = i;
+        break;
+      }
+    }
+    this->currentVisibleScrollStart -= delta;
+    CONSTRAIN(this->currentVisibleScrollStart, 0, this->visibleItemCount);
+    CONSTRAIN(this->currentEditingVisibleItem, 0, this->visibleItemCount);
+  }
 }
 
 void Menu::up()
 {
   if (this->currentEditingVisibleItem >= 0) {
-    this->update_visible_items();
-
     AbstractMenuItem* item = this->visibleItems[this->selectedVisibleItem];
-
-    item->decrease();
-
-    this->update_visible_items();
-
-    if (this->visibleItems[this->selectedVisibleItem] != item) {
-      int8_t delta = 0;
-      // the index of our visible item has changed.
-      // go through the list of visible items and find it!
-      for (size_t i = 0; i < this->visibleItemCount; i++) {
-        if (this->visibleItems[i] == item) {
-          delta = this->selectedVisibleItem - i;
-          this->selectedVisibleItem = this->currentEditingVisibleItem = i;
-          break;
-        }
-      }
-      this->currentVisibleScrollStart -= delta;
-      CONSTRAIN(this->currentEditingVisibleItem, 0, this->visibleItemCount);
-    }
+    if (item)
+      item->decrease();
   } else if (this->selectedVisibleItem > 0) {
     uint8_t newItem = this->selectedVisibleItem - 1;
 
@@ -95,35 +95,15 @@ void Menu::up()
       this->currentVisibleScrollStart = 0;
     }
   }
+  this->update_visible_items();
 }
 
 void Menu::down()
 {
-  this->update_visible_items();
   if (this->currentEditingVisibleItem >= 0) {
-    this->update_visible_items();
-
     AbstractMenuItem* item = this->visibleItems[this->selectedVisibleItem];
-
-    item->increase();
-
-    this->update_visible_items();
-
-    if (this->visibleItems[this->selectedVisibleItem] != item) {
-      int8_t delta = 0;
-      // the index of our visible item has changed.
-      // go through the list of visible items and find it!
-      for (size_t i = 0; i < this->visibleItemCount; i++) {
-        if (this->visibleItems[i] == item) {
-          delta = this->selectedVisibleItem - i;
-          this->selectedVisibleItem = this->currentEditingVisibleItem = i;
-          break;
-        }
-      }
-      this->currentVisibleScrollStart -= delta;
-      CONSTRAIN(this->currentEditingVisibleItem, 0, this->visibleItemCount);
-    }
-
+    if (item)
+      item->increase();
   } else {
     uint8_t maxVisibleItems = height / kMenuItemHeight;
     if (this->selectedVisibleItem < this->visibleItemCount - 1) {
