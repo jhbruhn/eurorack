@@ -25,16 +25,6 @@ class Settings {
   void SavePersistentData();
   void SaveState();
 
-  /*inline const ChannelCalibrationData& calibration_data(int channel) const
-  {
-    return persistent_data_.channel_calibration_data[channel];
-  }
-
-  inline ChannelCalibrationData* mutable_calibration_data(int channel)
-  {
-    return &persistent_data_.channel_calibration_data[channel];
-  }*/
-
   inline const State& state() const
   {
     return state_;

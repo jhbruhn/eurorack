@@ -51,25 +51,24 @@ void Menu::update_visible_items()
     this->visibleItems[i] = NULL;
   }
 
+  uint8_t newIndexSelectedItem = 0;
+
   // find out which items are visible and only add these to the list.
   for (size_t i = 0; i < itemCount; i++) {
     if (this->items[i]->visible()) {
+      if(currentlySelectedItem && this->items[i] == currentlySelectedItem) {
+        newIndexSelectedItem = this->visibleItemCount;
+      }
       this->visibleItems[this->visibleItemCount++] = this->items[i];
     }
+
   }
 
   // if our visibleitem changed, chances are that the index of the selected item has changed:
   if (currentlySelectedItem && this->visibleItems[this->selectedVisibleItem] != currentlySelectedItem) {
-    int8_t delta = 0;
-    // the index of our visible item has changed.
-    // go through the list of visible items and find it!
-    for (size_t i = 0; i < this->visibleItemCount; i++) {
-      if (this->visibleItems[i] == currentlySelectedItem) {
-        delta = this->selectedVisibleItem - i;
-        this->selectedVisibleItem = this->currentEditingVisibleItem = i;
-        break;
-      }
-    }
+    int8_t delta = this->selectedVisibleItem - newIndexSelectedItem;
+    this->selectedVisibleItem = this->currentEditingVisibleItem = newIndexSelectedItem;
+
     this->currentVisibleScrollStart -= delta;
     CONSTRAIN(this->currentVisibleScrollStart, 0, this->visibleItemCount);
     CONSTRAIN(this->currentEditingVisibleItem, 0, this->visibleItemCount);
