@@ -15,5 +15,5 @@ class BaseDisplay {
   void Init();
 
   protected:
-  virtual void InitGLib();
+  virtual void InitGLib() = 0;
 };

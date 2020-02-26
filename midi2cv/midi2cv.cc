@@ -11,6 +11,20 @@
 #include "stmlib/system/system_clock.h"
 #include "ui.h"
 
+namespace std {
+void __throw_bad_function_call()
+{
+  while (1)
+    ;
+};
+}
+
+extern "C" void __cxa_pure_virtual()
+{
+  while (1)
+    ;
+}
+
 using namespace stmlib;
 
 GPIO gpio;

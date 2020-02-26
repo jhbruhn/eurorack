@@ -35,5 +35,29 @@ class Menu {
     }
   }
 
+  uint8_t visible_item_count()
+  {
+    uint8_t count = 0;
+
+    for (size_t i = 0; i < itemCount; i++) {
+      if (items[i]->visible())
+        count++;
+    }
+
+    return count;
+  }
+
+  uint8_t visible_item_count_before_selection()
+  {
+    uint8_t count = 0;
+
+    for (size_t i = 0; i <= selectedItem; i++) {
+      if (items[i]->visible())
+        count++;
+    }
+
+    return count;
+  }
+
   void render(U8G2* u8g2_, uint8_t x, uint8_t y, uint8_t width, uint8_t height);
 };
