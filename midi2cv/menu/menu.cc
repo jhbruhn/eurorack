@@ -10,27 +10,18 @@ void Menu::render(U8G2* u8g2_, uint8_t xStart, uint8_t yStart, uint8_t width, ui
 
   uint8_t maxVisibleItems = height / kMenuItemHeight;
 
-  uint8_t itemsToRender = std::min(maxVisibleItems, uint8_t(this->itemCount - currentScrollStart));
+  uint8_t itemsToRender = std::min(maxVisibleItems, uint8_t(this->visibleItemCount - currentVisibleScrollStart));
   u8g2_->setFont(u8g2_font_6x10_tf);
-
-  uint8_t itemIndex = this->currentScrollStart;
 
   for (uint8_t i = 0; i < itemsToRender; i++) {
     uint8_t yPosition = yStart + i * kMenuItemHeight;
 
-    AbstractMenuItem* item;
+    uint8_t itemIndex = this->currentVisibleScrollStart + i;
 
-    while (!(item = this->items[itemIndex])->visible()) {
-      itemIndex++;
-      if (itemIndex >= this->itemCount)
-        break;
-    }
+    AbstractMenuItem* item = this->visibleItems[itemIndex];
 
-    if (itemIndex >= this->itemCount)
-      break;
-
-    bool selected = this->selectedItem == itemIndex;
-    bool editing = this->currentEditingItem == itemIndex;
+    bool selected = this->selectedVisibleItem == itemIndex;
+    bool editing = this->currentEditingVisibleItem == itemIndex;
 
     u8g2_->setDrawColor(selected ? 1 : 0);
 
@@ -50,86 +41,79 @@ void Menu::render(U8G2* u8g2_, uint8_t xStart, uint8_t yStart, uint8_t width, ui
   }
 }
 
+void Menu::update_visible_items()
+{
+  // set all visibleItems to null
+  this->visibleItemCount = 0;
+  for (size_t i = 0; i < MAXIMUM_MENU_ITEM_COUNT; i++) {
+    this->visibleItems[i] = NULL;
+  }
+
+  // find out which items are visible and only add these to the list.
+  for (size_t i = 0; i < itemCount; i++) {
+    if (this->items[i]->visible()) {
+      this->visibleItems[this->visibleItemCount++] = this->items[i];
+    }
+  }
+}
+
 void Menu::up()
 {
-  if (this->currentEditingItem >= 0) {
+  this->update_visible_items();
+  if (this->currentEditingVisibleItem >= 0) {
     // we store the amount of visible items before the counter before
     // changing and then compare afterwards to move the cursor back to
     // its intended position if necessary
-    uint8_t visible_count_before = this->visible_item_count_before_selection();
+    this->visibleItems[this->selectedVisibleItem]->decrease();
 
-    this->items[this->selectedItem]->decrease();
+  } else if (this->selectedVisibleItem > 0) {
+    uint8_t newItem = this->selectedVisibleItem - 1;
 
-    uint8_t visible_count_after = this->visible_item_count_before_selection();
-
-    this->selectedItem += visible_count_after - visible_count_before;
-  } else if (this->selectedItem > 0) {
-    uint8_t newItem = this->selectedItem;
-    int8_t i;
-    for (i = this->selectedItem - 1; i >= 0; i--) {
-      if (this->items[i]->visible()) {
-        newItem = i;
-        break;
-      }
+    if (newItem - this->currentVisibleScrollStart == 0) { // keep scroll start one up
+      this->currentVisibleScrollStart--;
     }
 
-    if (newItem - this->currentScrollStart == i) { // keep scroll start one up
-      this->currentScrollStart--;
-    }
+    this->selectedVisibleItem = newItem;
 
-    this->selectedItem = newItem;
-
-    if (this->selectedItem == 0) {
-      this->currentScrollStart = 0;
+    if (this->selectedVisibleItem == 0) {
+      this->currentVisibleScrollStart = 0;
     }
   }
+  this->update_visible_items();
 }
 
 void Menu::down()
 {
-  if (this->currentEditingItem >= 0) {
-    uint8_t visible_count_before = this->visible_item_count_before_selection();
-
-    this->items[this->selectedItem]->increase();
-
-    uint8_t visible_count_after = this->visible_item_count_before_selection();
-
-    this->selectedItem += visible_count_after - visible_count_before;
+  this->update_visible_items();
+  if (this->currentEditingVisibleItem >= 0) {
+    this->visibleItems[this->selectedVisibleItem]->increase();
   } else {
     uint8_t maxVisibleItems = height / kMenuItemHeight;
-    if (this->selectedItem < this->itemCount - 1) {
-      if (this->items[this->selectedItem + 1]->visible()) {
-        if (this->selectedItem - this->currentScrollStart == maxVisibleItems - 2 && this->itemCount - this->currentScrollStart > maxVisibleItems) {
-          this->currentScrollStart++;
-        }
-
-        this->selectedItem++;
-      } else {
-        for (size_t i = this->selectedItem + 1; i < this->itemCount; i++) {
-          if (this->items[i]->visible()) {
-            this->selectedItem = i;
-            break;
-          }
-        }
+    if (this->selectedVisibleItem < this->visibleItemCount - 1) {
+      if (this->selectedVisibleItem - this->currentVisibleScrollStart == maxVisibleItems - 2 && this->visibleItemCount - this->currentVisibleScrollStart > maxVisibleItems) {
+        this->currentVisibleScrollStart++;
       }
+
+      this->selectedVisibleItem++;
     }
   }
+  this->update_visible_items();
 }
 
 bool Menu::enter()
 {
-  if (this->currentEditingItem >= 0) {
-    this->currentEditingItem = -1;
+  if (this->currentEditingVisibleItem >= 0) {
+    this->currentEditingVisibleItem = -1;
     return true;
   }
-  this->currentEditingItem = this->selectedItem;
+  this->currentEditingVisibleItem = this->selectedVisibleItem;
   return false;
 }
 
 bool Menu::back()
 {
-  if (this->currentEditingItem >= 0) {
-    this->currentEditingItem = -1;
+  if (this->currentEditingVisibleItem >= 0) {
+    this->currentEditingVisibleItem = -1;
     return false;
   }
   return true;
