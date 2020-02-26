@@ -18,9 +18,15 @@ PartMenu::PartMenu(Part* _part)
     , item_midi_channel("MIDI channel", (uint8_t*)&_part->data.midi_filter_channel, kMidiChannelStrings, 17, [_part] {
         return _part->data.midi_filter_channel_enabled;
         })
-    , item_midi_input("MIDI input", (uint8_t*)&_part->data.midi_filter_input, kMidiInputStrings, 3)
-    , item_midi_lowest_note("MIDI lowest", (uint8_t*)&_part->data.midi_filter_lowest_note)
-    , item_midi_highest_note("MIDI highest", (uint8_t*)&_part->data.midi_filter_highest_note)
+    , item_midi_input("MIDI input", (uint8_t*)&_part->data.midi_filter_input, kMidiInputStrings, 3, [_part] {
+        return _part->data.midi_filter_channel_enabled;
+        })
+    , item_midi_lowest_note("MIDI lowest", (uint8_t*)&_part->data.midi_filter_lowest_note, [_part] {
+        return _part->data.midi_filter_channel_enabled;
+        })
+    , item_midi_highest_note("MIDI highest", (uint8_t*)&_part->data.midi_filter_highest_note, [_part] {
+        return _part->data.midi_filter_channel_enabled;
+        })
     , item_midi_thru_mode("MIDI thru", (uint8_t*)&_part->data.midi_thru_mode, kMidiThruStrings, 3)
 {
   this->menu.add_item(&this->item_voice_count);
