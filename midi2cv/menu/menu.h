@@ -15,6 +15,7 @@ class Menu {
   uint8_t selectedVisibleItem;
   uint8_t currentVisibleScrollStart; // index we start rendering the menu from (for scrolling)
   int8_t currentEditingVisibleItem;
+  bool visibility_dirty;
 
   uint8_t width, height;
 
@@ -25,6 +26,7 @@ class Menu {
       : selectedVisibleItem(0)
       , currentVisibleScrollStart(0)
       , currentEditingVisibleItem(-1)
+      , visibility_dirty(true)
       , width(10)
       , height(10) {};
 
@@ -37,7 +39,7 @@ class Menu {
     if (itemCount < MAXIMUM_MENU_ITEM_COUNT) {
       items[itemCount++] = item;
     }
-    this->update_visible_items();
+    this->visibility_dirty = true;
   }
 
   void render(U8G2* u8g2_, uint8_t x, uint8_t y, uint8_t width, uint8_t height);

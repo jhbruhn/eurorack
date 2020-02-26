@@ -5,6 +5,11 @@ const int kMenuItemHeight = 12;
 
 void Menu::render(U8G2* u8g2_, uint8_t xStart, uint8_t yStart, uint8_t width, uint8_t height)
 {
+  if (this->visibility_dirty) {
+    this->update_visible_items();
+    this->visibility_dirty = false;
+  }
+
   this->width = width;
   this->height = height;
 
@@ -56,12 +61,11 @@ void Menu::update_visible_items()
   // find out which items are visible and only add these to the list.
   for (size_t i = 0; i < itemCount; i++) {
     if (this->items[i]->visible()) {
-      if(currentlySelectedItem && this->items[i] == currentlySelectedItem) {
+      if (currentlySelectedItem && this->items[i] == currentlySelectedItem) {
         newIndexSelectedItem = this->visibleItemCount;
       }
       this->visibleItems[this->visibleItemCount++] = this->items[i];
     }
-
   }
 
   // if our visibleitem changed, chances are that the index of the selected item has changed:
@@ -94,7 +98,7 @@ void Menu::up()
       this->currentVisibleScrollStart = 0;
     }
   }
-  this->update_visible_items();
+  this->visibility_dirty = true;
 }
 
 void Menu::down()
@@ -113,7 +117,7 @@ void Menu::down()
       this->selectedVisibleItem++;
     }
   }
-  this->update_visible_items();
+  this->visibility_dirty = true;
 }
 
 bool Menu::enter()
