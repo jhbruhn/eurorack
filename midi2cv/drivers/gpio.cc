@@ -1,11 +1,10 @@
 #include "gpio.h"
 
-#include <gpio.h>
+#include <stm32f37x_conf.h>
+
 
 void GPIO::Init() {
-  gpio_mode_setup(0, 0, 0, 0);
 }
 
-
-void GPIO::Write() {
+void GPIO::Write(GPIO_TypeDef* port, uint16_t pin, bool state) {
 }
