@@ -11,6 +11,7 @@
 #include "pure_adsr/drivers/switches.h"
 #include "pure_adsr/gate_processor.h"
 #include "pure_adsr/io_buffer.h"
+#include "pure_adsr/mini_sequencer.h"
 #include "pure_adsr/multistage_envelope.h"
 
 using namespace avrlib;
@@ -36,6 +37,7 @@ Switch<DigitalInput<Gpio<PortD, 3>>> button_input;
 typedef AdcInputScanner AnalogInputs;
 
 MultistageEnvelope envelope;
+MiniSequencer sequencer;
 
 IOBuffer io_buffer;
 int16_t output_buffer[kBlockSize];
@@ -52,6 +54,7 @@ void Process(IOBuffer::Block* block, size_t size)
     if (read_value != pot_values[i]) { // TODO: apply filtering
       pot_values[i] = read_value;
       envelope.Configure(pot_values, CONTROL_MODE_FULL);
+      sequencer.Configure(pot_values, CONTROL_MODE_FULL);
     }
   }
 
@@ -61,6 +64,8 @@ void Process(IOBuffer::Block* block, size_t size)
     case MODE_ADSR:
       envelope.Process(block->input[i], output_buffer, size);
       break;
+    case MODE_SEQ:
+      sequencer.Process(block->input[i], output_buffer, size);
     default:
       break;
     }
@@ -89,11 +94,14 @@ void Init()
 
   io_buffer.Init();
   envelope.Init();
+  sequencer.Init();
 
   uint16_t pots[4];
   for (size_t i = 0; i < 4; i++)
     pots[4 - (i + 1)] = AnalogInputs::Read8(i) << 8;
   envelope.Configure(pots, CONTROL_MODE_FULL);
+  sequencer.Configure(pots, CONTROL_MODE_FULL);
+
   Timer<2>::Start();
 }
 
@@ -120,7 +128,7 @@ TIMER_0_TICK
     mode = MODE_SEQ;
     break;
   case 1:
-    mode = MODE_THREE;
+    mode = MODE_LFO;
     break;
   case 2:
     mode = MODE_ADSR;
@@ -135,7 +143,10 @@ TIMER_2_TICK
   --clock_divider_midi;
   if (!clock_divider_midi) {
     uint32_t gate_inputs = gate_input.Read();
-    gate_inputs |= button_input.pressed();
+
+    if (mode == MODE_ADSR || mode == MODE_SEQ)
+      gate_inputs |= button_input.pressed();
+
     IOBuffer::Slice slice = io_buffer.NextSlice(1);
     for (size_t i = 0; i < kNumChannels; ++i) {
       gate_flags = ExtractGateFlags(
