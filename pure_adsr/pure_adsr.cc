@@ -13,6 +13,7 @@
 #include "pure_adsr/io_buffer.h"
 #include "pure_adsr/mini_sequencer.h"
 #include "pure_adsr/multistage_envelope.h"
+#include "pure_adsr/tides.h"
 
 using namespace avrlib;
 using namespace pure_adsr;
@@ -20,7 +21,7 @@ using namespace pure_adsr;
 typedef enum {
   MODE_ADSR,
   MODE_SEQ,
-  MODE_LFO
+  MODE_TIDES
 } Mode;
 
 typedef SpiMaster<Gpio<PortB, 2>, MSB_FIRST, 2> dac1Spi;
@@ -38,6 +39,7 @@ typedef AdcInputScanner AnalogInputs;
 
 MultistageEnvelope envelope;
 MiniSequencer sequencer;
+Tides tides;
 
 IOBuffer io_buffer;
 int16_t output_buffer[kBlockSize];
@@ -55,6 +57,7 @@ void Process(IOBuffer::Block* block, size_t size)
       pot_values[i] = read_value;
       envelope.Configure(pot_values, CONTROL_MODE_FULL);
       sequencer.Configure(pot_values, CONTROL_MODE_FULL);
+      tides.Configure(pot_values, CONTROL_MODE_FULL);
     }
   }
 
@@ -66,7 +69,9 @@ void Process(IOBuffer::Block* block, size_t size)
       break;
     case MODE_SEQ:
       sequencer.Process(block->input[i], output_buffer, size);
-    default:
+      break;
+    case MODE_TIDES:
+      tides.Process(block->input[i], output_buffer, size);
       break;
     }
 
@@ -101,6 +106,7 @@ void Init()
     pots[4 - (i + 1)] = AnalogInputs::Read8(i) << 8;
   envelope.Configure(pots, CONTROL_MODE_FULL);
   sequencer.Configure(pots, CONTROL_MODE_FULL);
+  tides.Configure(pots, CONTROL_MODE_FULL);
 
   Timer<2>::Start();
 }
@@ -128,7 +134,7 @@ TIMER_0_TICK
     mode = MODE_SEQ;
     break;
   case 1:
-    mode = MODE_LFO;
+    mode = MODE_TIDES;
     break;
   case 2:
     mode = MODE_ADSR;

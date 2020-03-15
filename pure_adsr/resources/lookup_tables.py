@@ -61,6 +61,20 @@ lookup_tables_32.append(
     ('env_increments', values)
 )
 
+
+max_time = 60.0  # seconds
+min_time = 0.05
+gamma = 0.175
+min_increment = excursion / (max_time * sample_rate)
+max_increment = excursion / (min_time * sample_rate)
+
+rates = numpy.linspace(numpy.power(max_increment, -gamma),
+                       numpy.power(min_increment, -gamma), num_values)
+
+values = numpy.power(rates, -1/gamma).astype(int)
+lookup_tables_32.append(
+  ('env_increments_slow', values)
+)
 """----------------------------------------------------------------------------
 Envelope curves
 -----------------------------------------------------------------------------"""
@@ -69,7 +83,6 @@ env_linear = numpy.arange(0, 257.0) / 256.0
 env_linear[-1] = env_linear[-2]
 env_quartic = env_linear ** 3.32
 env_expo = 1.0 - numpy.exp(-4 * env_linear)
-
 lookup_tables.append(('env_linear', env_linear / env_linear.max() * 65535.0))
 lookup_tables.append(('env_expo', env_expo / env_expo.max() * 65535.0))
 lookup_tables.append(
