@@ -82,15 +82,6 @@ void Tides::Process(
 
     value_ = a + ((b - a) * (t >> 1) >> 15);
 
-    int32_t wf_balance = smoothness_ >> 1;
-    int32_t wf_gain = 2048 + \
-        (static_cast<int32_t>(smoothness_ >> 1) * (65535 - 2048) >> 15);
-    int32_t original = value_;
-    int32_t m = pgm_read_word(lut_res_unipolar_fold + ((original * wf_gain + (1U << 31)) >> 22));
-    int32_t n = pgm_read_word(lut_res_unipolar_fold + ((original * wf_gain + (1U << 31)) >> 22) + 1);
-    int32_t folded = m + ((n - m) * static_cast<int32_t>(((original * wf_gain) >> 6) & 0xffff) >> 16);
-    value_ = original + ((folded - original) * wf_balance >> 15);
-    value_ = value_ << 1;
     phase_ += phase_increment_;
     *out++ = value_;
   }

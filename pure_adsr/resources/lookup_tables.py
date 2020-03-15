@@ -32,8 +32,7 @@ import numpy
 
 SAMPLE_RATE = 20000000.0 / 510 / 16#/ 4  # hz
 
-WAVESHAPER_SIZE = 1024
-
+WAVETABLE_SIZE = 1024
 """----------------------------------------------------------------------------
 LFO and envelope increments.
 ----------------------------------------------------------------------------"""
@@ -65,7 +64,7 @@ lookup_tables_32.append(
 
 # Tides envelopes
 max_time = 60.0 * 2  # seconds
-min_time = 2
+min_time = .5
 gamma = 0.175
 min_increment = excursion / (max_time * sample_rate)
 max_increment = excursion / (min_time * sample_rate)
@@ -90,13 +89,3 @@ lookup_tables.append(('env_expo', env_expo / env_expo.max() * 65535.0))
 lookup_tables.append(
     ('env_quartic', env_quartic / env_quartic.max() * 65535.0))
 
-raised_cosine = 0.5 - numpy.cos(env_linear * numpy.pi) / 2
-lookup_tables.append(('raised_cosine', raised_cosine * 65535.0))
-
-x = numpy.arange(0, WAVESHAPER_SIZE + 1) / float(WAVESHAPER_SIZE)
-x[-1] = x[-2]
-sine = numpy.sin(8 * numpy.pi * x)
-window = numpy.exp(-x * x * 4) ** 2
-unipolar_fold = (0.5 * sine + 2 * x) * window + numpy.arctan(4 * x) * (1 - window)
-unipolar_fold /= numpy.abs(unipolar_fold).max()
-lookup_tables.append(('unipolar_fold', numpy.round(32767 * unipolar_fold)))
