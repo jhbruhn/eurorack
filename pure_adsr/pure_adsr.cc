@@ -48,16 +48,18 @@ const size_t kNumPots = 4;
 uint16_t pot_values[kNumPots];
 
 Mode mode;
+bool mode_changed = false;
 
 void Process(IOBuffer::Block* block, size_t size)
 {
   for (size_t i = 0; i < kNumPots; i++) {
     uint16_t read_value = AnalogInputs::Read(kNumPots - 1 - i) << 6;
-    if (read_value != pot_values[i]) { // TODO: apply filtering
+    if (read_value != pot_values[i] || mode_changed) { // TODO: apply filtering
       pot_values[i] = read_value;
       envelope.Configure(pot_values, CONTROL_MODE_FULL);
       sequencer.Configure(pot_values, CONTROL_MODE_FULL);
       tides.Configure(pot_values, CONTROL_MODE_FULL);
+      mode_changed = false;
     }
   }
 
@@ -128,6 +130,7 @@ TIMER_0_TICK
 {
   TickSystemClock();
   button_input.Debounce();
+  Mode prev_mode = mode;
   uint8_t mode_value = switchIn1.Read() << 1 | switchIn0.Read();
   switch (mode_value) {
   case 0:
@@ -140,6 +143,8 @@ TIMER_0_TICK
     mode = MODE_ADSR;
     break;
   }
+  if (prev_mode != mode)
+    mode_changed = true;
 }
 
 TIMER_2_TICK
@@ -150,8 +155,7 @@ TIMER_2_TICK
   if (!clock_divider_midi) {
     uint32_t gate_inputs = gate_input.Read();
 
-    if (mode == MODE_ADSR || mode == MODE_SEQ)
-      gate_inputs |= button_input.pressed();
+    gate_inputs |= button_input.pressed();
 
     IOBuffer::Slice slice = io_buffer.NextSlice(1);
     for (size_t i = 0; i < kNumChannels; ++i) {

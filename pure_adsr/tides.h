@@ -47,8 +47,8 @@ class Tides {
 
   void Configure(uint16_t* parameter, ControlMode control_mode)
   {
-    set_ar_loop(parameter[0], parameter[1]);
-
+    set_ad_loop(parameter[0], parameter[1]);
+    smoothness_ = parameter[3];
     uint8_t waveform_mode = quant.Process(parameter[2] / 65536.0f, 5);
 
     switch (waveform_mode) {
@@ -338,7 +338,7 @@ class Tides {
   uint16_t sustain_point_;
   uint16_t loop_start_;
   uint16_t loop_end_;
-
+  uint16_t smoothness_;
   bool hard_reset_;
   HysteresisQuantizer quant;
   DISALLOW_COPY_AND_ASSIGN(Tides);

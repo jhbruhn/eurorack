@@ -43,6 +43,7 @@ extern const prog_uint16_t lut_res_env_linear[] PROGMEM;
 extern const prog_uint16_t lut_res_env_expo[] PROGMEM;
 extern const prog_uint16_t lut_res_env_quartic[] PROGMEM;
 extern const prog_uint16_t lut_res_raised_cosine[] PROGMEM;
+extern const prog_uint16_t lut_res_unipolar_fold[] PROGMEM;
 extern const prog_uint32_t lut_res_env_increments[] PROGMEM;
 extern const prog_uint32_t lut_res_env_increments_slow[] PROGMEM;
 #define STR_RES_DUMMY 0  // dummy
@@ -54,6 +55,8 @@ extern const prog_uint32_t lut_res_env_increments_slow[] PROGMEM;
 #define LUT_RES_ENV_QUARTIC_SIZE 257
 #define LUT_RES_RAISED_COSINE 3
 #define LUT_RES_RAISED_COSINE_SIZE 257
+#define LUT_RES_UNIPOLAR_FOLD 4
+#define LUT_RES_UNIPOLAR_FOLD_SIZE 1025
 #define LUT_RES_ENV_INCREMENTS 0
 #define LUT_RES_ENV_INCREMENTS_SIZE 257
 #define LUT_RES_ENV_INCREMENTS_SLOW 1
