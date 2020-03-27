@@ -1,43 +1,47 @@
-# Copyright 2012 Emilie Gillet.
+
+# Copyright 2013 Emilie Gillet.
 #
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# Author: Emilie Gillet (emilie.o.gillet@gmail.com)
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+#
+# See http://creativecommons.org/licenses/MIT/ for more information.
 
-VERSION        = 0.1
-MCU_NAME       = 328
+# System specifications
+F_CRYSTAL         = 8000000L
+F_CPU             = 72000000L
+SYSCLOCK          = SYSCLK_FREQ_72MHz
+FAMILY            = f0xx
+# USB             = enabled
+#APPLICATION       = true
+#BOOTLOADER        = midi2cv_bootloader
+
+# Preferred upload command
+UPLOAD_COMMAND  = upload_jtag
+
+# Packages to build
 TARGET         = stereo_mix
-PACKAGES       = avrlib avrlib/devices stereo_mix
+PACKAGES       = stereo_mix \
+                 stereo_mix/drivers \
+                 stmlib/utils \
+                 stmlib/system
 RESOURCES      = stereo_mix/resources
-PROGRAMMER     = atmelice_isp
 
-LFUSE          = ef
-HFUSE          = d8
-EFUSE          = 05
-LOCK           = ff
+include stmlib/makefile.inc
 
-include avrlib/makefile.mk
-
-include $(DEP_FILE)
-
-# Rule for building the firmware update file
-wav:  $(TARGET_BIN)
-	python avr_audio_bootloader/fsk/encoder.py \
-		-s 40000 -b 16 -n 8 -z 4 -p 128 -g 128 -k 10 \
-		$(TARGET_BIN)
-
-bootstrap_all:
-		make -f stereo_mix/makefile
-		make -f stereo_mix/bootloader/makefile
-		make -f stereo_mix/bootloader/makefile fuses
-		$(AVRDUDE) -B 1 $(AVRDUDE_COM_OPTS) $(AVRDUDE_ISP_OPTS) \
-			-U flash:w:build/stereo_mix/stereo_mix.hex:i \
-			-U flash:w:build/stereo_mix_bootloader/stereo_mix_bootloader.hex:i \
-			-U lock:w:0xff:m
