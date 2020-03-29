@@ -28,16 +28,9 @@ for reader in [reader_t, reader_b]:
     for row in reader:
         row = list(filter(None, row[0].split(' ')))
         rotation = int(row[3])
-        # special behaviour for SOIC8:
-        print(len(row))
-        if len(row) >= 6:
-            print(row[5])
+        if layer == 'Bottom':
+            rotation = (360 - rotation + 180) % 360
 
-            if "SOIC8" in row[5]:
-                if rotation == 180:
-                    rotation = 0
-                elif rotation == 0:
-                    rotation = 180
         writer.writerow({'Designator': row[0], 'Mid X': row[1],
                          'Mid Y': row[2], 'Layer': layer, 'Rotation': rotation})
 
