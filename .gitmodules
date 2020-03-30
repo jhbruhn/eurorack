@@ -4,3 +4,6 @@
 [submodule "avrlib"]
 	path = avrlib
 	url = https://github.com/jhbruhn/avril.git
+[submodule "jlcpcb-eagle"]
+	path = jlcpcb-eagle
+	url = git@github.com:jhbruhn/jlcpcb-eagle.git
