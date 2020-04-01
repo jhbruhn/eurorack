@@ -1,8 +1,8 @@
 import numpy as np
 lookup_tables_u16 = []
 
-ADC_RESOLUTION = 1024
-OUTPUT_RESOLUTION = 4096
+ADC_RESOLUTION = 4096
+OUTPUT_RESOLUTION = 2 ** 16 - 1
 
 # linear to exponential conversion
 

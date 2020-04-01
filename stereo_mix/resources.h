@@ -48,11 +48,11 @@ extern const uint16_t lut_linear_to_exp[];
 extern const uint16_t lut_left_sin_pan[];
 extern const uint16_t lut_right_cos_pan[];
 #define LUT_LINEAR_TO_EXP 0
-#define LUT_LINEAR_TO_EXP_SIZE 1024
+#define LUT_LINEAR_TO_EXP_SIZE 4096
 #define LUT_LEFT_SIN_PAN 1
-#define LUT_LEFT_SIN_PAN_SIZE 1024
+#define LUT_LEFT_SIN_PAN_SIZE 4096
 #define LUT_RIGHT_COS_PAN 2
-#define LUT_RIGHT_COS_PAN_SIZE 1024
+#define LUT_RIGHT_COS_PAN_SIZE 4096
 
 }  // namespace stereo_mix
 
