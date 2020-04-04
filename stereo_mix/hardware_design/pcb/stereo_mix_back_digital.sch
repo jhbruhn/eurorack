@@ -19654,7 +19654,7 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <busses>
 </busses>
 <nets>
-<net name="GND" class="1">
+<net name="GND" class="0">
 <segment>
 <pinref part="GND10" gate="1" pin="GND"/>
 <wire x1="76.2" y1="210.82" x2="76.2" y2="208.28" width="0.1524" layer="91"/>
@@ -21393,7 +21393,7 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <busses>
 </busses>
 <nets>
-<net name="GND" class="1">
+<net name="GND" class="0">
 <segment>
 <pinref part="R81" gate="G$1" pin="1"/>
 <pinref part="GND18" gate="1" pin="GND"/>
@@ -22090,7 +22090,7 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <busses>
 </busses>
 <nets>
-<net name="GND" class="1">
+<net name="GND" class="0">
 <segment>
 <pinref part="U21" gate="G$1" pin="VSS_2"/>
 <wire x1="5.08" y1="-22.86" x2="2.54" y2="-22.86" width="0.1524" layer="91"/>
@@ -22931,7 +22931,7 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <busses>
 </busses>
 <nets>
-<net name="GND" class="1">
+<net name="GND" class="0">
 <segment>
 <wire x1="-15.24" y1="68.58" x2="-17.78" y2="68.58" width="0.1524" layer="91"/>
 <pinref part="GND51" gate="1" pin="GND"/>
@@ -23181,7 +23181,7 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <busses>
 </busses>
 <nets>
-<net name="GND" class="1">
+<net name="GND" class="0">
 <segment>
 <pinref part="C36" gate="G$1" pin="GND"/>
 <pinref part="GND63" gate="1" pin="GND"/>
