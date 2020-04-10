@@ -1,81 +1,92 @@
 #include "stereo_mix/drivers/adc.h"
+#include "stm32f030x8.h"
+#include "stm32f0xx_hal_dma.h"
+#include "stm32f0xx_hal_dma_ex.h"
 
-#include <stm32f0xx.h>
+#include <stm32f0xx_hal.h>
+
+extern "C" {
+void DMA_TransferComplete(DMA_HandleTypeDef* dma); // declared in stereo_mix.cc
+}
 
 namespace stereo_mix {
 
 void Adc::Init()
 {
-  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
-  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
-  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+  __HAL_RCC_DMA1_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_ADC1_CLK_ENABLE();
 
-  ADC_InitTypeDef adc_init;
   GPIO_InitTypeDef gpio_init;
 
-  gpio_init.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1;
-  gpio_init.GPIO_Pin |= GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5;
-  gpio_init.GPIO_Pin |= GPIO_Pin_6 | GPIO_Pin_7;
-  gpio_init.GPIO_PuPd = GPIO_PuPd_NOPULL;
-  gpio_init.GPIO_Mode = GPIO_Mode_AN;
-  GPIO_Init(GPIOA, &gpio_init);
+  gpio_init.Pin = GPIO_PIN_0 | GPIO_PIN_1;
+  gpio_init.Pin |= GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5;
+  gpio_init.Pin |= GPIO_PIN_6 | GPIO_PIN_7;
+  gpio_init.Mode = GPIO_MODE_ANALOG;
+  HAL_GPIO_Init(GPIOA, &gpio_init);
 
-  gpio_init.GPIO_Pin = GPIO_Pin_0;
-  gpio_init.GPIO_PuPd = GPIO_PuPd_NOPULL;
-  gpio_init.GPIO_Mode = GPIO_Mode_AN;
-  GPIO_Init(GPIOB, &gpio_init);
+  gpio_init.Pin = GPIO_PIN_0;
+  gpio_init.Mode = GPIO_MODE_ANALOG;
+  HAL_GPIO_Init(GPIOB, &gpio_init);
 
   // Configure the address lines for the MUX.
-  gpio_init.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14;
-  gpio_init.GPIO_Mode = GPIO_Mode_OUT;
-  gpio_init.GPIO_OType = GPIO_OType_PP;
-  gpio_init.GPIO_Speed = GPIO_Speed_2MHz;
-  gpio_init.GPIO_PuPd = GPIO_PuPd_NOPULL;
-  GPIO_Init(GPIOB, &gpio_init);
-  GPIO_ResetBits(GPIOB, GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14);
+  gpio_init.Pin = GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14;
+  gpio_init.Mode = GPIO_MODE_OUTPUT_PP;
+  gpio_init.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &gpio_init);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14, GPIO_PIN_RESET);
   this->mux_index_ = 0;
 
-  adc_init.ADC_Resolution = ADC_Resolution_12b;
-  adc_init.ADC_ContinuousConvMode = ENABLE;
-  adc_init.ADC_DataAlign = ADC_DataAlign_Left;
-  adc_init.ADC_ScanDirection = ADC_ScanDirection_Upward;
-  ADC_Init(ADC1, &adc_init);
+  adc.Init.Resolution = ADC_RESOLUTION_12B;
+  adc.Init.ContinuousConvMode = ENABLE;
+  adc.Init.DiscontinuousConvMode = DISABLE;
+  adc.Init.DataAlign = ADC_DATAALIGN_LEFT;
+  adc.Init.ScanConvMode = ADC_SCAN_ENABLE;
+  adc.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  adc.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
+  adc.Init.DMAContinuousRequests = DISABLE;
+  adc.Instance = ADC1;
+  HAL_ADC_Init(&adc);
+  HAL_NVIC_SetPriority(ADC1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(ADC1_IRQn);
 
-  ADC_ClockModeConfig(ADC1, ADC_ClockMode_SynClkDiv2);
-  ADC_ChannelConfig(ADC1, ADC_Channel_0, ADC_SampleTime_239_5Cycles);
-  ADC_ChannelConfig(ADC1, ADC_Channel_1, ADC_SampleTime_239_5Cycles);
-  ADC_ChannelConfig(ADC1, ADC_Channel_2, ADC_SampleTime_239_5Cycles);
-  ADC_ChannelConfig(ADC1, ADC_Channel_3, ADC_SampleTime_239_5Cycles);
-  ADC_ChannelConfig(ADC1, ADC_Channel_4, ADC_SampleTime_239_5Cycles);
-  ADC_ChannelConfig(ADC1, ADC_Channel_5, ADC_SampleTime_239_5Cycles);
-  ADC_ChannelConfig(ADC1, ADC_Channel_6, ADC_SampleTime_239_5Cycles);
-  ADC_ChannelConfig(ADC1, ADC_Channel_7, ADC_SampleTime_239_5Cycles);
-  ADC_ChannelConfig(ADC1, ADC_Channel_8, ADC_SampleTime_239_5Cycles);
+  ADC_ChannelConfTypeDef sConfig;
+  sConfig.Channel = ADC_CHANNEL_0;
+  sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
+  sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
+  HAL_ADC_ConfigChannel(&adc, &sConfig);
+  sConfig.Channel = ADC_CHANNEL_1;
+  HAL_ADC_ConfigChannel(&adc, &sConfig);
+  sConfig.Channel = ADC_CHANNEL_2;
+  HAL_ADC_ConfigChannel(&adc, &sConfig);
+  sConfig.Channel = ADC_CHANNEL_3;
+  HAL_ADC_ConfigChannel(&adc, &sConfig);
+  sConfig.Channel = ADC_CHANNEL_4;
+  HAL_ADC_ConfigChannel(&adc, &sConfig);
+  sConfig.Channel = ADC_CHANNEL_5;
+  HAL_ADC_ConfigChannel(&adc, &sConfig);
+  sConfig.Channel = ADC_CHANNEL_6;
+  HAL_ADC_ConfigChannel(&adc, &sConfig);
+  sConfig.Channel = ADC_CHANNEL_7;
+  HAL_ADC_ConfigChannel(&adc, &sConfig);
+  sConfig.Channel = ADC_CHANNEL_8;
+  HAL_ADC_ConfigChannel(&adc, &sConfig);
 
-  ADC_Cmd(ADC1, ENABLE);
-  ADC_DMACmd(ADC1, ENABLE);
 
-  DMA_InitTypeDef dma_init;
-  DMA_StructInit(&dma_init);
-  dma_init.DMA_DIR = DMA_DIR_PeripheralSRC;
-  dma_init.DMA_PeripheralBaseAddr = (uint32_t)&ADC1->DR;
-  dma_init.DMA_MemoryBaseAddr = (uint32_t)&values_[0];
-  dma_init.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
-  dma_init.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
-  dma_init.DMA_BufferSize = ADC_CHANNEL_NUM_DIRECT;
-  dma_init.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-  dma_init.DMA_MemoryInc = DMA_MemoryInc_Enable;
-  dma_init.DMA_Mode = DMA_Mode_Circular;
-  dma_init.DMA_Priority = DMA_Priority_High;
-  dma_init.DMA_M2M = DMA_M2M_Disable;
-  DMA_Init(DMA1_Channel1, &dma_init);
+  dma.Init.Direction = DMA_PERIPH_TO_MEMORY;
+  dma.Init.PeriphInc = DMA_PINC_DISABLE;
+  dma.Init.MemInc = DMA_MINC_ENABLE;
+  dma.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+  dma.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+  dma.Init.Mode = DMA_CIRCULAR;
+  dma.Init.Priority = DMA_PRIORITY_LOW;
+  dma.Instance = DMA1_Channel1;
+  HAL_DMA_Init(&dma);
+  __HAL_LINKDMA(&adc, DMA_Handle, dma);
 
-  NVIC_EnableIRQ(DMA1_Channel1_IRQn);
-  NVIC_SetPriority(DMA1_Channel1_IRQn, 0);
-  DMA_ITConfig(DMA1_Channel1, DMA_IT_TC, ENABLE);
-  DMA_Cmd(DMA1_Channel1, ENABLE);
-  ADC_DMARequestModeConfig(ADC1, ADC_DMAMode_OneShot);
+  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
 
   /*NVIC_InitTypeDef NVIC_InitStructure;
   NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel1_IRQn;
@@ -83,16 +94,15 @@ void Adc::Init()
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
 */
-  ADC_StartOfConversion(ADC1);
+  HAL_ADC_Start_DMA(&adc, (uint32_t*)values_, ADC_CHANNEL_NUM_DIRECT);
 }
 
 void Adc::DeInit()
 {
-  ADC_Cmd(ADC1, DISABLE);
-  ADC_DeInit(ADC1);
+  HAL_ADC_DeInit(&adc);
 }
 
-void Adc::OnDMAFinish()
+void Adc::OnDMATransferComplete()
 {
   this->values_[ADC_CHANNEL_FIRST_MUXED + this->mux_index_] = this->values_[ADC_CHANNEL_MUX];
 
@@ -100,10 +110,10 @@ void Adc::OnDMAFinish()
   uint8_t address = this->mux_index_;
 
   // Write the mux address.
-  GPIO_WriteBit(GPIOB, GPIO_Pin_12, static_cast<BitAction>(address & 1));
-  GPIO_WriteBit(GPIOB, GPIO_Pin_13, static_cast<BitAction>(address & 2));
-  GPIO_WriteBit(GPIOB, GPIO_Pin_14, static_cast<BitAction>(address & 4));
-  ADC_StartOfConversion(ADC1);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, static_cast<GPIO_PinState>(address & 1));
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, static_cast<GPIO_PinState>(address & 2));
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, static_cast<GPIO_PinState>(address & 4));
+  HAL_ADC_Start_DMA(&adc, (uint32_t*)values_, ADC_CHANNEL_NUM_DIRECT);
 }
 
 } // namespace rings

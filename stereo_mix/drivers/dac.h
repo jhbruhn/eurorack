@@ -1,9 +1,10 @@
 #pragma once
 
 #include "stmlib/stmlib.h"
-#include <stm32f0xx.h>
+#include <stm32f0xx_hal.h>
 
 namespace stereo_mix {
+
 
 class Dac { // MCP4xx2 dac implementation
   public:
@@ -12,52 +13,43 @@ class Dac { // MCP4xx2 dac implementation
     ssGpioPort = ssGpioPort_;
     ssGpioPin = ssGpioPin_;
     // init SS/CS/RST GPIO
-    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
-    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA, ENABLE);
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
 
     GPIO_InitTypeDef gpio_init;
-    GPIO_StructInit(&gpio_init);
-    gpio_init.GPIO_Mode = GPIO_Mode_OUT;
-    gpio_init.GPIO_OType = GPIO_OType_PP;
-    gpio_init.GPIO_Speed = GPIO_Speed_50MHz;
-    gpio_init.GPIO_PuPd = GPIO_PuPd_NOPULL;
-    gpio_init.GPIO_Pin = ssGpioPin;
-    GPIO_Init(ssGpioPort, &gpio_init);
+    gpio_init.Mode = GPIO_MODE_OUTPUT_PP;
+    gpio_init.Speed = GPIO_SPEED_FREQ_HIGH;
+    gpio_init.Pull = GPIO_NOPULL;
+    gpio_init.Pin = ssGpioPin;
+    HAL_GPIO_Init(ssGpioPort, &gpio_init);
 
-    GPIO_SetBits(ssGpioPort, ssGpioPin);
+    HAL_GPIO_WritePin(ssGpioPort, ssGpioPin, GPIO_PIN_SET);
 
     // init AF GPIO
-    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1 | RCC_APB2Periph_SYSCFG, ENABLE);
 
-    GPIO_StructInit(&gpio_init);
-    gpio_init.GPIO_Mode = GPIO_Mode_AF;
-    gpio_init.GPIO_OType = GPIO_OType_PP;
-    gpio_init.GPIO_Speed = GPIO_Speed_50MHz;
-    gpio_init.GPIO_PuPd = GPIO_PuPd_NOPULL;
-    gpio_init.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5;
-    GPIO_Init(GPIOB, &gpio_init);
-    GPIO_PinAFConfig(GPIOB, GPIO_PinSource3, GPIO_AF_0);
-    GPIO_PinAFConfig(GPIOB, GPIO_PinSource4, GPIO_AF_0);
-    GPIO_PinAFConfig(GPIOB, GPIO_PinSource5, GPIO_AF_0);
+    gpio_init.Mode = GPIO_MODE_AF_PP;
+    gpio_init.Speed = GPIO_SPEED_FREQ_HIGH;
+    gpio_init.Pull = GPIO_NOPULL;
+    gpio_init.Pin = GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5;
+    gpio_init.Alternate = GPIO_AF0_SPI1;
+    HAL_GPIO_Init(GPIOB, &gpio_init);
 
     // init SPI
-    SPI_I2S_DeInit(SPI1);
+    __HAL_RCC_SPI1_CLK_ENABLE();
+//    HAL_SPI_DeInit(&spi);
 
     // Initialize SPI TODO: check which config we need
-    SPI_InitTypeDef spi_init;
-    SPI_StructInit(&spi_init);
-    spi_init.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
-    spi_init.SPI_Mode = SPI_Mode_Master;
-    spi_init.SPI_DataSize = SPI_DataSize_16b;
-    spi_init.SPI_CPOL = SPI_CPOL_High;
-    spi_init.SPI_CPHA = SPI_CPHA_1Edge;
-    spi_init.SPI_NSS = SPI_NSS_Soft;
-    spi_init.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
-    spi_init.SPI_FirstBit = SPI_FirstBit_MSB;
-    spi_init.SPI_CRCPolynomial = 7;
-    SPI_Init(SPI1, &spi_init);
-    SPI_Cmd(SPI1, ENABLE);
+    spi.Init.Direction = SPI_DIRECTION_2LINES;
+    spi.Init.Mode = SPI_MODE_MASTER;
+    spi.Init.DataSize = SPI_DATASIZE_16BIT;
+    spi.Init.CLKPolarity = SPI_POLARITY_HIGH;
+    spi.Init.CLKPhase = SPI_PHASE_1EDGE;
+    spi.Init.NSS = SPI_NSS_SOFT;
+    spi.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
+    spi.Init.FirstBit = SPI_FIRSTBIT_MSB;
+    spi.Init.CRCPolynomial = 7;
+    spi.Instance = SPI1;
+    HAL_SPI_Init(&spi);
   };
 
   void Write16(uint8_t channel, uint16_t value, uint8_t gain, uint8_t buffered)
@@ -78,16 +70,13 @@ class Dac { // MCP4xx2 dac implementation
     value |= gain << 13;     // set gain
     value |= 1 << 12;        // shutdown always set to 1
 
-    GPIO_ResetBits(ssGpioPort, ssGpioPin);
-    SPI_I2S_SendData16(SPI1, value);
+    HAL_GPIO_WritePin(ssGpioPort, ssGpioPin, GPIO_PIN_RESET);
+    HAL_SPI_Transmit(&spi, (uint8_t*) &value, 1, 1000);
     //SPI_I2S_SendData16(SPI1, value); // MSB first, specified in config
-    while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET) {
+    while (HAL_SPI_GetState(&spi) == HAL_SPI_STATE_BUSY) {
       asm("nop");
     }
-    while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY) == SET) {
-      asm("nop");
-    }
-    GPIO_SetBits(ssGpioPort, ssGpioPin);
+    HAL_GPIO_WritePin(ssGpioPort, ssGpioPin, GPIO_PIN_SET);
   };
 
   void Write16(uint8_t channel, uint16_t value)
@@ -96,6 +85,7 @@ class Dac { // MCP4xx2 dac implementation
   };
 
   private:
+  SPI_HandleTypeDef spi;
   GPIO_TypeDef* ssGpioPort;
   uint16_t ssGpioPin;
 };

@@ -1,6 +1,9 @@
 #include "drivers/adc.h"
 #include "drivers/dac.h"
 #include "resources.h"
+#include "stm32f030x8.h"
+#include "stm32f0xx_hal_adc.h"
+#include <stm32f0xx_hal.h>
 
 using namespace stereo_mix;
 
@@ -10,6 +13,11 @@ Adc adc;
 // Default interrupt handlers.
 extern "C" {
 void NMI_Handler() {}
+void Error_Handler()
+{
+  while (1)
+    ;
+}
 void HardFault_Handler()
 {
   while (1)
@@ -37,42 +45,80 @@ void PendSV_Handler() {}
 // called every 1ms
 void SysTick_Handler()
 {
+  HAL_IncTick();
 }
 
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
+
+  /** Initializes the CPU, AHB and APB busses clocks
+   */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI14 | RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSI14State = RCC_HSI14_ON;
+  RCC_OscInitStruct.HSI14CalibrationValue = 16;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL6;
+  RCC_OscInitStruct.PLL.PREDIV = RCC_PREDIV_DIV1;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
+    Error_Handler();
+  }
+  /** Initializes the CPU, AHB and APB busses clocks
+   */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+      | RCC_CLOCKTYPE_PCLK1;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK) {
+    Error_Handler();
+  }
+}
 void DMA1_Channel1_IRQHandler(void)
 {
-  if (DMA_GetITStatus(DMA1_IT_TC1) == SET) /* Test if transfer completed on DMA channel 1 */
-  {
-    adc.OnDMAFinish();
-    DMA_ClearITPendingBit(DMA1_IT_TC1);
-  }
+  HAL_DMA_IRQHandler(&adc.dma);
+}
+void ADC1_IRQHandler(void)
+{
+  HAL_ADC_IRQHandler(&adc.adc);
+}
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+  adc.OnDMATransferComplete();
 }
 }
 
 int main(void)
 {
-  SystemInit();
+  HAL_Init();
+  SystemClock_Config();
+  __HAL_RCC_SYSCFG_CLK_ENABLE();
+  __HAL_RCC_PWR_CLK_ENABLE();
 
-
-  dacs[0].Init(GPIOB, GPIO_Pin_8);
-  dacs[1].Init(GPIOB, GPIO_Pin_9);
-  dacs[2].Init(GPIOB, GPIO_Pin_10);
-  dacs[3].Init(GPIOB, GPIO_Pin_11);
-  dacs[4].Init(GPIOA, GPIO_Pin_8);
-  dacs[5].Init(GPIOA, GPIO_Pin_9);
-  dacs[6].Init(GPIOA, GPIO_Pin_10);
-  dacs[7].Init(GPIOA, GPIO_Pin_11);
+  dacs[0].Init(GPIOB, GPIO_PIN_8);
+  dacs[1].Init(GPIOB, GPIO_PIN_9);
+  dacs[2].Init(GPIOB, GPIO_PIN_10);
+  dacs[3].Init(GPIOB, GPIO_PIN_11);
+  dacs[4].Init(GPIOA, GPIO_PIN_8);
+  dacs[5].Init(GPIOA, GPIO_PIN_9);
+  dacs[6].Init(GPIOA, GPIO_PIN_10);
+  dacs[7].Init(GPIOA, GPIO_PIN_11);
 
   adc.Init();
   while (true) {
-    for(int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
       uint32_t value_l;
       uint32_t value_r;
 
       uint16_t pan_pot = adc.value(ADC_CHANNEL_POT_PAN_1 + i) >> (16 - 12); // adc is only 12 bit anyways
       uint16_t vol_pot = adc.value(ADC_CHANNEL_POT_VOL_1 + i) >> (16 - 12);
-      int16_t pan_cv = (adc.value(ADC_CHANNEL_CV_PAN_1 - i) - 32768) >> (16 - 12);
-      uint16_t vol_cv = adc.value(ADC_CHANNEL_CV_VOL_1 - i) >> (16 - 12);
+      int16_t pan_cv = (adc.value(ADC_CHANNEL_CV_PAN_1 + i) - 32768) >> (16 - 12);
+      uint16_t vol_cv = adc.value(ADC_CHANNEL_CV_VOL_1 + i) >> (16 - 12);
       int32_t pan = pan_pot + pan_cv;
       int32_t vol = vol_pot + vol_cv;
 
