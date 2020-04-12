@@ -73,7 +73,6 @@ void Adc::Init()
   sConfig.Channel = ADC_CHANNEL_8;
   HAL_ADC_ConfigChannel(&adc, &sConfig);
 
-
   dma.Init.Direction = DMA_PERIPH_TO_MEMORY;
   dma.Init.PeriphInc = DMA_PINC_DISABLE;
   dma.Init.MemInc = DMA_MINC_ENABLE;
@@ -88,13 +87,7 @@ void Adc::Init()
   HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
   HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
 
-  /*NVIC_InitTypeDef NVIC_InitStructure;
-  NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel1_IRQn;
-  NVIC_InitStructure.NVIC_IRQChannelPriority = 0;
-  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-  NVIC_Init(&NVIC_InitStructure);
-*/
-  HAL_ADC_Start_DMA(&adc, (uint32_t*)values_, ADC_CHANNEL_NUM_DIRECT);
+  HAL_ADC_Start_DMA(&adc, (uint32_t*)values_, ADC_CHANNEL_LAST);
 }
 
 void Adc::DeInit()
@@ -104,16 +97,16 @@ void Adc::DeInit()
 
 void Adc::OnDMATransferComplete()
 {
-  this->values_[ADC_CHANNEL_FIRST_MUXED + this->mux_index_] = this->values_[ADC_CHANNEL_MUX];
+  this->values_[ADC_GROUP_POT + this->mux_index_] = this->values_[ADC_CHANNEL_MUX];
 
-  this->mux_index_ = (this->mux_index_ + 1) % ADC_CHANNEL_NUM_MUXED;
+  this->mux_index_ = (this->mux_index_ + 1) % (ADC_CHANNEL_LAST - 1);
   uint8_t address = this->mux_index_;
 
   // Write the mux address.
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, static_cast<GPIO_PinState>(address & 1));
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, static_cast<GPIO_PinState>(address & 2));
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, static_cast<GPIO_PinState>(address & 4));
-  HAL_ADC_Start_DMA(&adc, (uint32_t*)values_, ADC_CHANNEL_NUM_DIRECT);
+  HAL_ADC_Start_DMA(&adc, (uint32_t*)values_, ADC_CHANNEL_LAST);
 }
 
 } // namespace rings

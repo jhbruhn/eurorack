@@ -115,8 +115,8 @@ int main(void)
       uint32_t value_l;
       uint32_t value_r;
 
-      uint16_t pan_pot = adc.value(ADC_CHANNEL_POT_PAN_1 + i) >> (16 - 12); // adc is only 12 bit anyways
-      uint16_t vol_pot = adc.value(ADC_CHANNEL_POT_VOL_1 + i) >> (16 - 12);
+      uint16_t pan_pot = adc.value(ADC_GROUP_POT + i) >> (16 - 12); // adc is only 12 bit anyways
+      uint16_t vol_pot = adc.value(ADC_GROUP_CV + i) >> (16 - 12);
       int16_t pan_cv = (adc.value(ADC_CHANNEL_CV_PAN_1 + i) - 32768) >> (16 - 12);
       uint16_t vol_cv = adc.value(ADC_CHANNEL_CV_VOL_1 + i) >> (16 - 12);
       int32_t pan = pan_pot + pan_cv;
