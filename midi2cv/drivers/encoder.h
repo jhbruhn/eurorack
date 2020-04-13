@@ -26,10 +26,10 @@
 //
 // Driver for rotary encoder.
 
-#ifndef YARNS_DRIVERS_ENCODER_H_
-#define YARNS_DRIVERS_ENCODER_H_
+#pragma once
 
-#include <stm32f37x_conf.h>
+#include <stm32f3xx_hal_conf.h>
+#include "stm32f3xx_hal_gpio.h"
 #include "stmlib/stmlib.h"
 
 class Encoder {
@@ -53,7 +53,8 @@ class Encoder {
   }
 
   inline bool pressed_immediate() const {
-    return !GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_15);
+    return !HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15);
+    //return !GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_15);
   }
 
   inline int32_t increment() const {
@@ -79,4 +80,3 @@ class Encoder {
 
 extern Encoder encoder;
 
-#endif  // YARNS_DRIVERS_ENCODER_H_

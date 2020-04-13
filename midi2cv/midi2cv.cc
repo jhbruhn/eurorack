@@ -1,13 +1,15 @@
-#include <stm32f37x_conf.h>
+#include <stm32f3xx_hal.h>
 
 #include "config.h"
 #include "drivers/display.h"
 #include "drivers/encoder.h"
-#include "drivers/gpio.h"
+#include "drivers/peripherals.h"
 #include "menu/menu.h"
 #include "menu/menu_items.h"
 #include "part.h"
 #include "settings.h"
+#include "stm32f3xx_hal_cortex.h"
+#include "stm32f3xx_hal_tim.h"
 #include "stmlib/system/system_clock.h"
 #include "ui.h"
 
@@ -27,7 +29,6 @@ extern "C" void __cxa_pure_virtual()
 
 using namespace stmlib;
 
-GPIO gpio;
 Display display;
 Encoder encoder;
 
@@ -60,29 +61,70 @@ void UsageFault_Handler()
   while (1)
     ;
 }
+void Error_Handler()
+{
+  while (1)
+    ;
+}
 void SVC_Handler() {}
 void DebugMon_Handler() {}
 void PendSV_Handler() {}
 
-// called every 1ms
-void SysTick_Handler()
+void SystemClock_Config(void)
 {
+  RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
+
+  /** Initializes the CPU, AHB and APB busses clocks
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI | RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK) {
+    Error_Handler();
+  }
+  /** Initializes the CPU, AHB and APB busses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+      | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK) {
+    Error_Handler();
+  }
+}
+
+// called every 1ms
+void SysTick_Handler(void)
+{
+  HAL_IncTick();
   ui.Poll();
   system_clock.Tick();
 }
 
-void TIM2_IRQHandler(void)
+void TIM2_IRQHandler()
 {
-  // this will get called with 8kHz (foof)
-  if (TIM_GetITStatus(TIM2, TIM_IT_Update) == RESET) {
+  HAL_TIM_IRQHandler(&htim2);
+}
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+{
+  if (htim != &htim2) {
     return;
   }
-  TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 
-  static uint8_t count = 0;
+  static uint16_t count = 0;
   count++;
-  if (count % (8000L / 60) == 0) {
-    // refresh display with 60fps
+  if (count % (8000L / 24) == 0) {
+    // refresh display with 24fps
     ui.Flush();
     count = 0;
   }
@@ -96,42 +138,30 @@ void TIM2_IRQHandler(void)
 
 void InitTimers(void)
 {
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-  TIM_TimeBaseInitTypeDef timer_init;
-  timer_init.TIM_Period = F_CPU / (8000 * 1) - 1;
-  timer_init.TIM_Prescaler = 0;
-  timer_init.TIM_ClockDivision = TIM_CKD_DIV1;
-  timer_init.TIM_CounterMode = TIM_CounterMode_Up;
-  timer_init.TIM_RepetitionCounter = 0;
+  __HAL_RCC_TIM2_CLK_ENABLE();
+  htim2.Init.Period = F_CPU / (8000 * 1) - 1;
+  htim2.Init.Prescaler = 0;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.RepetitionCounter = 0;
   //TIM_InternalClockConfig(TIM2);
-  TIM_TimeBaseInit(TIM2, &timer_init);
-  TIM_Cmd(TIM2, ENABLE);
+  HAL_TIM_Base_Init(&htim2);
+  HAL_TIM_Base_Start_IT(&htim2);
 
-  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); // 2.2 priority split.
-
-  // DAC interrupt is given highest priority
-  NVIC_InitTypeDef timer_interrupt;
-  timer_interrupt.NVIC_IRQChannel = TIM2_IRQn;
-  timer_interrupt.NVIC_IRQChannelPreemptionPriority = 0;
-  timer_interrupt.NVIC_IRQChannelSubPriority = 1;
-  timer_interrupt.NVIC_IRQChannelCmd = ENABLE;
-  NVIC_Init(&timer_interrupt);
-  TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_2); // 2.2 priority split.
+  HAL_NVIC_SetPriority(TIM2_IRQn, 0, 1);
+  HAL_NVIC_EnableIRQ(TIM2_IRQn);
 }
 
 void Init(void)
 {
-  SystemInit();
-  NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x8000);
-  IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
-  IWDG_SetPrescaler(IWDG_Prescaler_16);
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
+  //NVIC_SetVectorTable(NVIC_VectTab_FLASH, 0x8000);
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_16;
+  //HAL_IWDG_Init(&hiwdg);
 
   system_clock.Init();
-  SysTick_Config(F_CPU / 1000);
 
   //IWDG_Enable();
-  gpio.Init();
   display.Init();
   encoder.Init();
   InitTimers();
@@ -139,6 +169,13 @@ void Init(void)
 
 int main(void)
 {
+  SystemInit();
+  SCB->VTOR = 0x8000;
+  HAL_DeInit();
+  HAL_Init();
+  __HAL_RCC_SYSCFG_CLK_ENABLE();
+  __HAL_RCC_PWR_CLK_ENABLE();
+  SystemClock_Config();
   Init();
 
   while (1) {
@@ -147,6 +184,6 @@ int main(void)
     // do we want to call the watchdog here? it's the only part thats getting interrupted after all
     // (next to the interrupts themselves potentially interrupting each other)
     ui.DoEvents();
-    IWDG_ReloadCounter();
+    HAL_IWDG_Refresh(&hiwdg);
   }
 }

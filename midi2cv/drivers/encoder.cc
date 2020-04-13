@@ -27,30 +27,27 @@
 // Driver for rotary encoder.
 
 #include "midi2cv/drivers/encoder.h"
+#include "stm32f3xx_hal_gpio.h"
 
-
-void Encoder::Init() {
-  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC, ENABLE);
-
+void Encoder::Init()
+{
+  __HAL_RCC_GPIOC_CLK_ENABLE();
 
   GPIO_InitTypeDef gpio_init;
 
-  gpio_init.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
-  gpio_init.GPIO_Speed = GPIO_Speed_10MHz;
-  gpio_init.GPIO_Mode = GPIO_Mode_IN;
-  gpio_init.GPIO_PuPd = GPIO_PuPd_UP;
-  GPIO_Init(GPIOC, &gpio_init);
+  gpio_init.Pin = GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
+  gpio_init.Speed = GPIO_SPEED_FREQ_MEDIUM;
+  gpio_init.Mode = GPIO_MODE_INPUT;
+  gpio_init.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOC, &gpio_init);
 
   switch_state_ = 0xff;
   quadrature_decoding_state_[0] = quadrature_decoding_state_[1] = 0xff;
 }
 
-void Encoder::Debounce() {
-  switch_state_ = (switch_state_ << 1) | \
-      GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_15);
-  quadrature_decoding_state_[0] = (quadrature_decoding_state_[0] << 1) | \
-      GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13);
-  quadrature_decoding_state_[1] = (quadrature_decoding_state_[1] << 1) | \
-      GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_14);
+void Encoder::Debounce()
+{
+  switch_state_ = (switch_state_ << 1) | HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_15);
+  quadrature_decoding_state_[0] = (quadrature_decoding_state_[0] << 1) | HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13);
+  quadrature_decoding_state_[1] = (quadrature_decoding_state_[1] << 1) | HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_14);
 }
-

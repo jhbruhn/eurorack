@@ -26,7 +26,7 @@
 F_CRYSTAL      = 8000000L
 F_CPU          = 72000000L
 SYSCLOCK       = SYSCLK_FREQ_72MHz
-FAMILY         = f37x
+FAMILY         = f3xx
 MEMORY_MODE    = flash
 U8G2	= enabled
 # USB            = enabled

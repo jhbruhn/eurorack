@@ -4,7 +4,7 @@
 #include "stmlib/stmlib.h"
 #include "base_display.h"
 #include <U8g2lib.h>
-#include <stm32f37x_conf.h>
+#include <stm32f3xx_hal_conf.h>
 
 #define DISPLAY_WIDTH 128
 #define DISPLAY_HEIGHT 64

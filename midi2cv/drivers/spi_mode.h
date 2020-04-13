@@ -1,13 +1,16 @@
 #ifndef MIDI2CV_DRIVERS_SPI_MODE_H
 #define MIDI2CV_DRIVERS_SPI_MODE_H
 
-#include <stm32f37x_conf.h>
+#include <stm32f3xx_hal.h>
 
-#define SPI_MODE_DISPLAY 1
-#define SPI_MODE_DAC0 2
-#define SPI_MODE_DAC1 3
-#define SPI_MODE_USB 4
+enum SPIMode {
+  SPI_MODE_UNINITIALIZED,
+  SPI_MODE_DISPLAY,
+  SPI_MODE_DAC0,
+  SPI_MODE_DAC1,
+  SPI_MODE_USB
+};
 
-void InitSPI(uint8_t mode);
+void InitSPI(SPIMode mode);
 
 #endif

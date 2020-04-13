@@ -3,7 +3,7 @@
 
 
 #include "stmlib/stmlib.h"
-#include <stm32f37x_conf.h>
+#include <stm32f3xx_hal_conf.h>
 
 #define PORT_RST_OLED GPIOB
 #define PIN_RST_OLED GPIO_Pin_0

@@ -3,7 +3,6 @@
 #include "spi_mode.h"
 #include "stmlib/system/system_clock.h"
 #include <U8g2lib.h>
-#include <stm32f37x_conf.h>
 #include <u8g2.h>
 
 using namespace stmlib;
@@ -11,7 +10,6 @@ using namespace stmlib;
 static uint8_t* default_buf;
 static uint8_t second_buf[1024];
 static uint8_t* output_buf;
-
 
 class U8G2_SH1106_128x64_NONAME_F_SPI : public U8G2 {
   public:
