@@ -1,13 +1,15 @@
 #include "drivers/adc.h"
 #include "drivers/dac.h"
+#include "drivers/peripherals.h"
 #include "resources.h"
-#include "stm32f030x8.h"
-#include "stm32f0xx_hal_adc.h"
 #include <stm32f0xx_hal.h>
 
 using namespace stereo_mix;
 
-Dac dacs[8];
+Dac dacs[8] = {
+  { GPIOB, GPIO_PIN_8 }, { GPIOB, GPIO_PIN_9 }, { GPIOB, GPIO_PIN_10 }, { GPIOB, GPIO_PIN_11 },
+  { GPIOA, GPIO_PIN_8 }, { GPIOA, GPIO_PIN_9 }, { GPIOA, GPIO_PIN_10 }, { GPIOA, GPIO_PIN_11 }
+};
 Adc adc;
 
 // Default interrupt handlers.
@@ -80,11 +82,11 @@ void SystemClock_Config(void)
 }
 void DMA1_Channel1_IRQHandler(void)
 {
-  HAL_DMA_IRQHandler(&adc.dma);
+  HAL_DMA_IRQHandler(&hdma1_channel1);
 }
 void ADC1_IRQHandler(void)
 {
-  HAL_ADC_IRQHandler(&adc.adc);
+  HAL_ADC_IRQHandler(&hadc1);
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
@@ -100,16 +102,6 @@ int main(void)
   __HAL_RCC_SYSCFG_CLK_ENABLE();
   __HAL_RCC_PWR_CLK_ENABLE();
 
-  dacs[0].Init(GPIOB, GPIO_PIN_8);
-  dacs[1].Init(GPIOB, GPIO_PIN_9);
-  dacs[2].Init(GPIOB, GPIO_PIN_10);
-  dacs[3].Init(GPIOB, GPIO_PIN_11);
-  dacs[4].Init(GPIOA, GPIO_PIN_8);
-  dacs[5].Init(GPIOA, GPIO_PIN_9);
-  dacs[6].Init(GPIOA, GPIO_PIN_10);
-  dacs[7].Init(GPIOA, GPIO_PIN_11);
-
-  adc.Init();
   while (true) {
     for (int i = 0; i < 4; i++) {
       uint32_t value_l;

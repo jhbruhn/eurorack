@@ -30,11 +30,9 @@ enum AdcGroup {
 
 class Adc {
   public:
-  Adc() {}
-  ~Adc() {}
+  Adc();
+  ~Adc();
 
-  void Init();
-  void DeInit();
   void OnDMATransferComplete();
   inline const uint16_t* values() { return &values_[0]; }
   inline int32_t value(int32_t channel) const
@@ -45,8 +43,6 @@ class Adc {
   {
     return static_cast<float>(values_[index]) / 65536.0f;
   }
-  DMA_HandleTypeDef dma;
-  ADC_HandleTypeDef adc;
 
   private:
   uint16_t values_[ADC_CHANNEL_COUNT];

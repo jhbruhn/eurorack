@@ -1,14 +1,17 @@
 #pragma once
 
+#include "peripherals.h"
+#include "stm32f030x8.h"
 #include "stmlib/stmlib.h"
 #include <stm32f0xx_hal.h>
 
 namespace stereo_mix {
 
-
 class Dac { // MCP4xx2 dac implementation
   public:
-  void Init(GPIO_TypeDef* ssGpioPort_, uint16_t ssGpioPin_)
+  Dac(GPIO_TypeDef* ssGpioPort_, uint16_t ssGpioPin_)
+      : ssGpioPort(ssGpioPort_)
+      , ssGpioPin(ssGpioPin_)
   {
     ssGpioPort = ssGpioPort_;
     ssGpioPin = ssGpioPin_;
@@ -36,20 +39,19 @@ class Dac { // MCP4xx2 dac implementation
 
     // init SPI
     __HAL_RCC_SPI1_CLK_ENABLE();
-//    HAL_SPI_DeInit(&spi);
+    //    HAL_SPI_DeInit(&spi);
 
     // Initialize SPI TODO: check which config we need
-    spi.Init.Direction = SPI_DIRECTION_2LINES;
-    spi.Init.Mode = SPI_MODE_MASTER;
-    spi.Init.DataSize = SPI_DATASIZE_16BIT;
-    spi.Init.CLKPolarity = SPI_POLARITY_HIGH;
-    spi.Init.CLKPhase = SPI_PHASE_1EDGE;
-    spi.Init.NSS = SPI_NSS_SOFT;
-    spi.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
-    spi.Init.FirstBit = SPI_FIRSTBIT_MSB;
-    spi.Init.CRCPolynomial = 7;
-    spi.Instance = SPI1;
-    HAL_SPI_Init(&spi);
+    hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+    hspi1.Init.Mode = SPI_MODE_MASTER;
+    hspi1.Init.DataSize = SPI_DATASIZE_16BIT;
+    hspi1.Init.CLKPolarity = SPI_POLARITY_HIGH;
+    hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+    hspi1.Init.NSS = SPI_NSS_SOFT;
+    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
+    hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+    hspi1.Init.CRCPolynomial = 7;
+    HAL_SPI_Init(&hspi1);
   };
 
   void Write16(uint8_t channel, uint16_t value, uint8_t gain, uint8_t buffered)
@@ -71,9 +73,9 @@ class Dac { // MCP4xx2 dac implementation
     value |= 1 << 12;        // shutdown always set to 1
 
     HAL_GPIO_WritePin(ssGpioPort, ssGpioPin, GPIO_PIN_RESET);
-    HAL_SPI_Transmit(&spi, (uint8_t*) &value, 1, 1000);
+    HAL_SPI_Transmit(&hspi1, (uint8_t*)&value, 1, 1000);
     //SPI_I2S_SendData16(SPI1, value); // MSB first, specified in config
-    while (HAL_SPI_GetState(&spi) == HAL_SPI_STATE_BUSY) {
+    while (HAL_SPI_GetState(&hspi1) & HAL_SPI_STATE_BUSY) {
       asm("nop");
     }
     HAL_GPIO_WritePin(ssGpioPort, ssGpioPin, GPIO_PIN_SET);
@@ -85,7 +87,6 @@ class Dac { // MCP4xx2 dac implementation
   };
 
   private:
-  SPI_HandleTypeDef spi;
   GPIO_TypeDef* ssGpioPort;
   uint16_t ssGpioPin;
 };
