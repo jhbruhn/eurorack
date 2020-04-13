@@ -80,14 +80,6 @@ void SystemClock_Config(void)
     Error_Handler();
   }
 }
-void DMA1_Channel1_IRQHandler(void)
-{
-  HAL_DMA_IRQHandler(&hdma1_channel1);
-}
-void ADC1_IRQHandler(void)
-{
-  HAL_ADC_IRQHandler(&hadc1);
-}
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {

@@ -110,11 +110,6 @@ void SysTick_Handler(void)
   system_clock.Tick();
 }
 
-void TIM2_IRQHandler()
-{
-  HAL_TIM_IRQHandler(&htim2);
-}
-
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 {
   if (htim != &htim2) {
