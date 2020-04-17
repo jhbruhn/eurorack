@@ -30,6 +30,7 @@ FAMILY         = f3xx
 MEMORY_MODE    = flash
 U8G2	= enabled
 # USB            = enabled
+OPTIMIZE       = TRUE
 
 # Preferred upload command
 UPLOAD_COMMAND  = upload_jtag

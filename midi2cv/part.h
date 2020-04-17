@@ -1,7 +1,12 @@
-#ifndef MIDI2CV_PART_H
-#define MIDI2CV_PART_H
+#pragma once
 
-#include <inttypes.h>
+#include "stmlib/algorithms/voice_allocator.h"
+#include "stmlib/stmlib.h"
+#include "voice.h"
+
+using namespace stmlib;
+
+const int kMaximumPolyphony = 4;
 
 #define TOTAL_COLUMN_COUNT 4
 
@@ -80,13 +85,26 @@ class Part {
       data.output_type_row_3[i] = GATE_OFF;*/
     }
   }
-  void ProcessMidiInput(/* TODO: Inputs */);
 
-  uint8_t RequiredColumns();
+  bool NoteOn(uint8_t channel, uint8_t note, uint8_t velocity);
+  bool NoteOff(uint8_t channel, uint8_t note, uint8_t velocity);
+  bool Aftertouch(uint8_t channel, uint8_t note, uint8_t velocity);
+  bool Aftertouch(uint8_t channel, uint8_t velocity);
+  bool ControlChange(uint8_t channel, uint8_t controller, uint8_t value);
+  bool ProgramChange(uint8_t channel, uint8_t program);
+  bool PitchBend(uint8_t channel, uint16_t pitch_bend);
 
+  uint8_t required_columns();
+
+  inline PartData* mutable_part_data() { return &data; }
+  inline PartData part_data() { return data; }
+  void Refresh(); // called whenever the settings change (for example voice count etc)
+
+  private:
+  bool is_message_handled(uint8_t channel, uint8_t note); // TODO: add origin
   PartData data;
+  VoiceAllocator<kMaximumPolyphony> voiceAllocator;
+  Voice voices[kMaximumPolyphony];
 };
 
 extern Part parts[];
-
-#endif

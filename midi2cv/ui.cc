@@ -64,13 +64,13 @@ void UI::Draw()
 void UI::LoadState()
 {
   for (size_t i = 0; i < PART_COUNT; i++)
-    this->parts[i]->data = settings->part(i);
+    *this->parts[i]->mutable_part_data() = settings->part(i);
 }
 
 void UI::SaveState()
 {
   for (size_t i = 0; i < PART_COUNT; i++) {
-    *(settings->mutable_part(i)) = this->parts[i]->data;
+    *(settings->mutable_part(i)) = this->parts[i]->part_data();
   }
 
   settings->SaveState();
