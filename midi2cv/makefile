@@ -33,6 +33,7 @@ U8G2              = enabled
 PRINTF_FLOATS     = enabled
 APPLICATION_LARGE = TRUE
 BOOTLOADER        = midi2cv_bootloader
+#OPTIMIZE          = TRUE
 
 # Preferred upload command
 UPLOAD_COMMAND  = upload_combo_jtag

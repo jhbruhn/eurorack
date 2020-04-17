@@ -118,8 +118,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 
   static uint16_t count = 0;
   count++;
-  if (count % (8000L / 24) == 0) {
-    // refresh display with 24fps
+  if (count % (8000L / 20) == 0) {
+    // refresh display with 20fps
     ui.Flush();
     count = 0;
   }
@@ -164,9 +164,9 @@ void Init(void)
 
 int main(void)
 {
+  HAL_DeInit();
   SystemInit();
   SCB->VTOR = 0x8000;
-  HAL_DeInit();
   HAL_Init();
   __HAL_RCC_SYSCFG_CLK_ENABLE();
   __HAL_RCC_PWR_CLK_ENABLE();

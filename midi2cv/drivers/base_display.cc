@@ -21,8 +21,7 @@ uint8_t u8x8_byte_4wire_stm32_spi(u8x8_t* u8x8, uint8_t msg, uint8_t arg_int,
   uint8_t* data = (uint8_t*)arg_ptr;
   switch (msg) {
   case U8X8_MSG_BYTE_SEND:
-
-    HAL_SPI_Transmit(&hspi2, data, arg_int, 0);
+    HAL_SPI_Transmit(&hspi2, data, arg_int, HAL_MAX_DELAY);
     break;
   case U8X8_MSG_BYTE_INIT:
     break;
