@@ -12,8 +12,8 @@ enum VoltageRange {
 enum Register {
   REGISTER_DAC = 0,
   REGISTER_OUTPUT_RANGE = 1,
-  REGISTER_CONTROL = 2,
-  REGISTER_POWER_CONTROL = 3
+  REGISTER_CONTROL = 3,
+  REGISTER_POWER_CONTROL = 2
 };
 
 class AD57X4 {
@@ -34,6 +34,8 @@ class AD57X4 {
   private:
   uint8_t dacPower = 0;
   VoltageRange dacRange[4];
+  bool dacBipolar[4];
+  void WriteDac(uint8_t dac, VoltageRange range, uint16_t value, bool bipolar);
   void EnableAndSetRange(uint8_t dac, VoltageRange range, bool bipolar);
   void Write(Register reg, uint8_t address, uint16_t data);
   DISALLOW_COPY_AND_ASSIGN(AD57X4);

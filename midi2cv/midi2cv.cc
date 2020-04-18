@@ -112,7 +112,7 @@ void SysTick_Handler(void)
   system_clock.Tick();
 }
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) // called with 1kHz (OPTIMIZE!) the display should get its own spi bus
 {
   if (htim != &htim2) {
     return;
@@ -120,11 +120,18 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 
   static uint16_t count = 0;
   count++;
-  if (count % (8000L / 20) == 0) {
+  if (count % (1000L / 20) == 0) {
     // refresh display with 20fps
     ui.Flush();
     count = 0;
   }
+
+  static float v = 0;
+  dac1.WriteVoltage(0, v+= 0.1f);
+  dac1.WriteVoltage(1, v*3);
+  dac1.WriteVoltage(2, v*5);
+  dac1.WriteVoltage(3, v*10);
+  if(v > 1) v = -1;
 
   // write audiodac1
   // write audiodac2
@@ -136,7 +143,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 void InitTimers(void)
 {
   __HAL_RCC_TIM2_CLK_ENABLE();
-  htim2.Init.Period = F_CPU / (8000 * 1) - 1;
+  htim2.Init.Period = F_CPU / (1000 * 1) - 1;
   htim2.Init.Prescaler = 0;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -161,6 +168,7 @@ void Init(void)
   //IWDG_Enable();
   display.Init();
   encoder.Init();
+  dac1.Init();
   InitTimers();
 }
 
