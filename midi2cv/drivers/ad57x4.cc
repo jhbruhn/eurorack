@@ -1,8 +1,8 @@
 #include "ad57x4.h"
 #include "peripherals.h"
 #include "spi_mode.h"
-#include "stm32f3xx_hal_gpio.h"
 #include <stm32f3xx_hal.h>
+#include <math.h>
 
 static const uint32_t kPinEnable = GPIO_PIN_5;
 
@@ -16,6 +16,29 @@ void AD57X4::Init()
   HAL_GPIO_Init(GPIOB, &init);
 
   HAL_GPIO_WritePin(GPIOB, kPinEnable, GPIO_PIN_SET);
+}
+
+void AD57X4::WriteVoltage(uint8_t dac, float voltage) {
+  VoltageRange range = VOLTAGE_RANGE_FIVE_VOLTS;
+  if(fabs(voltage) > 5) range = VOLTAGE_RANGE_TEN_VOLTS;
+  if(fabs(voltage) > 10) range = VOLTAGE_RANGE_TEN_EIGHT_VOLTS;
+
+  float multiplier = 2.0f;
+  if(range == VOLTAGE_RANGE_TEN_VOLTS) multiplier = 4.0f;
+  if(range == VOLTAGE_RANGE_TEN_EIGHT_VOLTS) multiplier = 4.32f;
+  float refin = 2.5f;
+
+  if(voltage < 0) {
+    // convert to signed value
+    int16_t value = (voltage / (multiplier * refin)) * (65535.0f);
+
+    this->WriteDacBipolar(dac, range, value);
+  } else {
+    // convert to unsigned value
+    uint16_t value = (voltage / (multiplier * refin)) * (65535.0f);
+
+    this->WriteDacUnipolar(dac, range, value);
+  }
 }
 
 void AD57X4::EnableAndSetRange(uint8_t dac, VoltageRange range, bool bipolar)
