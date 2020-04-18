@@ -222,7 +222,7 @@ class StringListMenuItem : public NumberMenuItem<uint8_t> {
 
 class MidiNoteMenuItem : public NumberMenuItem<uint8_t> {
   private:
-  char string_buffer[4];
+  char string_buffer[5];
   const char* note_strings[12];
 
   protected:
