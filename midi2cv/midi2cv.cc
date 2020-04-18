@@ -4,6 +4,7 @@
 #include "drivers/display.h"
 #include "drivers/encoder.h"
 #include "drivers/peripherals.h"
+#include "drivers/ad57x4.h"
 #include "menu/menu.h"
 #include "menu/menu_items.h"
 #include "part.h"
@@ -30,6 +31,7 @@ extern "C" void __cxa_pure_virtual()
 using namespace stmlib;
 
 Display display;
+AD57X4 dac1;
 Encoder encoder;
 
 Settings settings;

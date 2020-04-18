@@ -6,6 +6,7 @@
 SPIMode currentMode = SPI_MODE_UNINITIALIZED;
 
 void InitSPIDisplay(void);
+void InitSPIAD5754(void);
 
 void InitSPI(SPIMode mode)
 {
@@ -26,8 +27,10 @@ void InitSPI(SPIMode mode)
     case SPI_MODE_DISPLAY:
       InitSPIDisplay();
       break;
-    case SPI_MODE_DAC0:
     case SPI_MODE_DAC1:
+      InitSPIAD5754();
+      break;
+    case SPI_MODE_DAC0:
     case SPI_MODE_USB:
     case SPI_MODE_UNINITIALIZED:
 
@@ -35,6 +38,21 @@ void InitSPI(SPIMode mode)
     }
     currentMode = mode;
   }
+}
+
+void InitSPIAD5754(void)
+{ // the same as the display(?)
+  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi2.Init.Mode = SPI_MODE_MASTER;
+  hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi2.Init.NSS = SPI_NSS_SOFT;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi2.Init.CRCPolynomial = 7;
+  hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  HAL_SPI_Init(&hspi2);
 }
 
 void InitSPIDisplay(void)
