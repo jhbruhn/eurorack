@@ -1,7 +1,9 @@
 #include "drivers/adc.h"
 #include "drivers/dac.h"
+#include "drivers/leds.h"
 #include "drivers/peripherals.h"
 #include "resources.h"
+#include "stm32f0xx_hal_rcc.h"
 #include <stm32f0xx_hal.h>
 
 using namespace stereo_mix;
@@ -11,10 +13,11 @@ Dac dacs[8] = {
   { GPIOA, GPIO_PIN_8 }, { GPIOA, GPIO_PIN_9 }, { GPIOA, GPIO_PIN_10 }, { GPIOA, GPIO_PIN_11 }
 };
 Adc adc;
+Leds leds;
 
 // Default interrupt handlers.
 extern "C" {
-void NMI_Handler() {}
+void NMI_Handler() { }
 void Error_Handler()
 {
   while (1)
@@ -40,9 +43,9 @@ void UsageFault_Handler()
   while (1)
     ;
 }
-void SVC_Handler() {}
-void DebugMon_Handler() {}
-void PendSV_Handler() {}
+void SVC_Handler() { }
+void DebugMon_Handler() { }
+void PendSV_Handler() { }
 
 // called every 1ms
 void SysTick_Handler()
@@ -85,6 +88,27 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
   adc.OnDMATransferComplete();
 }
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) // called with 1kHz (OPTIMIZE!) the display should get its own spi bus
+{
+  if (htim != &htim3) {
+    return;
+  }
+  leds.Write();
+}
+}
+
+void Init(void)
+{
+  HAL_NVIC_SetPriority(TIM3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(TIM3_IRQn);
+  __HAL_RCC_TIM3_CLK_ENABLE();
+  htim3.Init.Prescaler = 24;
+  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim3.Init.Period = 128; // 8kHz
+  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim3.Init.RepetitionCounter = 0;
+  HAL_TIM_Base_Init(&htim3);
+  HAL_TIM_Base_Start_IT(&htim3);
 }
 
 int main(void)
@@ -93,6 +117,10 @@ int main(void)
   SystemClock_Config();
   __HAL_RCC_SYSCFG_CLK_ENABLE();
   __HAL_RCC_PWR_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOF_CLK_ENABLE();
+
+  Init();
 
   while (true) {
     for (int i = 0; i < 4; i++) {
@@ -108,7 +136,7 @@ int main(void)
 
       CONSTRAIN(pan, 0, (1 << 12) - 1);
       CONSTRAIN(vol, 0, (1 << 12) - 1);
-
+      leds.set_intensity(i, vol >> 4);
       value_l = (lut_left_sin_pan[pan] * lut_linear_to_exp[vol]) >> 16;
       value_r = (lut_right_cos_pan[pan] * lut_linear_to_exp[vol]) >> 16;
 
