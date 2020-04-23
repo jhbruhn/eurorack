@@ -73,11 +73,11 @@ class Dac { // MCP4xx2 dac implementation
     value |= 1 << 12;        // shutdown always set to 1
 
     HAL_GPIO_WritePin(ssGpioPort, ssGpioPin, GPIO_PIN_RESET);
-    HAL_SPI_Transmit(&hspi1, (uint8_t*)&value, 1, 1000);
+    HAL_SPI_Transmit(&hspi1, (uint8_t*)&value, 1, HAL_MAX_DELAY);
     //SPI_I2S_SendData16(SPI1, value); // MSB first, specified in config
-    while (HAL_SPI_GetState(&hspi1) & HAL_SPI_STATE_BUSY) {
+    /*while (HAL_SPI_GetState(&hspi1) & HAL_SPI_STATE_BUSY) {
       asm("nop");
-    }
+    }*/
     HAL_GPIO_WritePin(ssGpioPort, ssGpioPin, GPIO_PIN_SET);
   };
 
