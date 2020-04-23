@@ -104,7 +104,7 @@ void Init(void)
   __HAL_RCC_TIM3_CLK_ENABLE();
   htim3.Init.Prescaler = 24;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 128; // 8kHz
+  htim3.Init.Period = 128;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.RepetitionCounter = 0;
   HAL_TIM_Base_Init(&htim3);
