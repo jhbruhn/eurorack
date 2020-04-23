@@ -44,15 +44,20 @@ typedef uint8_t ResourceId;
 
 extern const uint16_t* lookup_table_u16_table[];
 
+extern const uint8_t* lookup_table_u8_table[];
+
 extern const uint16_t lut_linear_to_exp[];
 extern const uint16_t lut_left_sin_pan[];
 extern const uint16_t lut_right_cos_pan[];
+extern const uint8_t lut_led_gamma[];
 #define LUT_LINEAR_TO_EXP 0
 #define LUT_LINEAR_TO_EXP_SIZE 4096
 #define LUT_LEFT_SIN_PAN 1
 #define LUT_LEFT_SIN_PAN_SIZE 4096
 #define LUT_RIGHT_COS_PAN 2
 #define LUT_RIGHT_COS_PAN_SIZE 4096
+#define LUT_LED_GAMMA 0
+#define LUT_LED_GAMMA_SIZE 256
 
 }  // namespace stereo_mix
 

@@ -74,4 +74,6 @@ create_specialized_manager = True
 resources = [
   (lookup_tables.lookup_tables_u16,
    'lookup_table_u16', 'LUT', 'uint16_t', int, False),
+  (lookup_tables.lookup_tables_u8,
+   'lookup_table_u8', 'LUT', 'uint8_t', int, False),
 ]

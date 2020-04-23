@@ -1,7 +1,10 @@
 #pragma once
 
+#include "../resources.h"
 #include "stm32f0xx_hal_gpio.h"
 #include <stm32f0xx_hal.h>
+
+using namespace stereo_mix;
 
 const uint8_t kNumChannels = 4;
 
@@ -26,7 +29,7 @@ class Leds {
     pwm_counter += 2;
 
     for (size_t i = 0; i < kNumChannels; i++) {
-      if (intensities[0] && intensities[i] >= pwm_counter) {
+      if (intensities[0] && lut_led_gamma[intensities[i]] >= pwm_counter) {
         HAL_GPIO_WritePin(kGpioPorts[i], kGpioPins[i], GPIO_PIN_SET);
       } else {
         HAL_GPIO_WritePin(kGpioPorts[i], kGpioPins[i], GPIO_PIN_RESET);
