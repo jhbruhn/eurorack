@@ -26,7 +26,8 @@ class Leds {
   }
   void Write()
   {
-    pwm_counter += 2;
+    pwm_counter++;
+    pwm_counter &= 0x1ff; // equals to if(pwm_counter > 512) pwm_counter = 0;
 
     for (size_t i = 0; i < kNumChannels; i++) {
       if (intensities[0] && lut_led_gamma[intensities[i]] >= pwm_counter) {
@@ -44,6 +45,6 @@ class Leds {
   }
 
   private:
-  uint8_t pwm_counter;
+  uint16_t pwm_counter;
   uint8_t intensities[kNumChannels];
 };

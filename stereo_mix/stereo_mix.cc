@@ -102,7 +102,7 @@ void Init(void)
   HAL_NVIC_SetPriority(TIM3_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(TIM3_IRQn);
   __HAL_RCC_TIM3_CLK_ENABLE();
-  htim3.Init.Prescaler = 24;
+  htim3.Init.Prescaler = 14;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim3.Init.Period = 128;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
