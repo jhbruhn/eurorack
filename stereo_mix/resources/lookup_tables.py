@@ -28,9 +28,9 @@ lookup_tables_u16.append(('left_sin_pan', l_pan))
 lookup_tables_u16.append(('right_cos_pan', r_pan))
 
 # led gamma correction
-gamma = 2.8
+gamma = 2.4
 max_in = 255
-max_out = 512
+max_out = 511
 input_vals = np.linspace(0, max_in, num=max_in + 1)
 gamma_correction = ((input_vals / max_in) ** gamma) * max_out + 0.5
 lookup_tables_u16.append(('led_gamma', np.floor(gamma_correction)))
