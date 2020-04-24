@@ -2,11 +2,13 @@
 #include "drivers/dac.h"
 #include "drivers/leds.h"
 #include "drivers/peripherals.h"
+#include "drivers/switches.h"
 #include "resources.h"
-#include "stm32f0xx_hal_rcc.h"
+#include "stmlib/ui/event_queue.h"
 #include <stm32f0xx_hal.h>
 
 using namespace stereo_mix;
+using namespace stmlib;
 
 Dac dacs[8] = {
   { GPIOB, GPIO_PIN_8 }, { GPIOB, GPIO_PIN_9 }, { GPIOB, GPIO_PIN_10 }, { GPIOB, GPIO_PIN_11 },
@@ -14,6 +16,14 @@ Dac dacs[8] = {
 };
 Adc adc;
 Leds leds;
+Switches switches;
+
+const int32_t kLongPressDuration = 2000;
+EventQueue<> queue;
+uint32_t press_time[SWITCH_COUNT];
+bool ignore_release[SWITCH_COUNT];
+
+bool mute[4];
 
 // Default interrupt handlers.
 extern "C" {
@@ -51,6 +61,32 @@ void PendSV_Handler() { }
 void SysTick_Handler()
 {
   HAL_IncTick();
+
+  system_clock.Tick();
+
+  switches.Debounce();
+
+  for (size_t i = 0; i < SWITCH_COUNT; i++) {
+    if (switches.just_pressed(Switch(i))) {
+      queue.AddEvent(CONTROL_SWITCH, i, 0);
+      press_time[i] = HAL_GetTick();
+      ignore_release[i] = false;
+    }
+    if (switches.pressed(Switch(i)) && !ignore_release[i]) {
+      int32_t pressed_time = HAL_GetTick() - press_time[i];
+      if (pressed_time > kLongPressDuration) {
+        queue.AddEvent(CONTROL_SWITCH, i, pressed_time);
+        ignore_release[i] = true;
+      }
+    }
+    if (switches.released(Switch(i)) && !ignore_release[i]) {
+      queue.AddEvent(
+          CONTROL_SWITCH,
+          i,
+          system_clock.milliseconds() - press_time[i] + 1);
+      ignore_release[i] = true;
+    }
+  }
 }
 
 void SystemClock_Config(void)
@@ -109,6 +145,53 @@ void Init(void)
   htim3.Init.RepetitionCounter = 0;
   HAL_TIM_Base_Init(&htim3);
   HAL_TIM_Base_Start_IT(&htim3);
+  system_clock.Init();
+  queue.Init();
+}
+
+void WriteOutputs(void)
+{
+  for (int i = 0; i < 4; i++) {
+    uint32_t value_l;
+    uint32_t value_r;
+
+    uint16_t pan_pot = adc.value(ADC_GROUP_POT + ADC_CHANNEL_PAN_1 + i) >> (16 - 12); // adc is only 12 bit anyways
+    uint16_t vol_pot = adc.value(ADC_GROUP_POT + ADC_CHANNEL_VOL_1 + i) >> (16 - 12);
+    int16_t pan_cv = (adc.value(ADC_GROUP_CV + ADC_CHANNEL_PAN_1 + i) - 32768) >> (16 - 12);
+    uint16_t vol_cv = adc.value(ADC_GROUP_CV + ADC_CHANNEL_VOL_1 + i) >> (16 - 12);
+    int32_t pan = pan_pot + pan_cv;
+    int32_t vol = vol_pot + vol_cv;
+
+    if (mute[i])
+      vol = 0;
+
+    CONSTRAIN(pan, 0, (1 << 12) - 1);
+    CONSTRAIN(vol, 0, (1 << 12) - 1);
+    leds.set_intensity(i, vol >> 4);
+    value_l = (lut_left_sin_pan[pan] * lut_linear_to_exp[vol]) >> 16;
+    value_r = (lut_right_cos_pan[pan] * lut_linear_to_exp[vol]) >> 16;
+
+    dacs[i].Write16(0, value_r);
+    dacs[i + 4].Write16(0, value_r);
+    dacs[i].Write16(1, value_l);
+    dacs[i + 4].Write16(1, value_l);
+  }
+}
+
+void HandleEvent(void)
+{
+  while (queue.available()) {
+    Event ev = queue.PullEvent();
+    switch (ev.control_type) {
+    case CONTROL_SWITCH:
+      if (ev.data != 0) { // switch released
+        mute[ev.control_id] = !mute[ev.control_id];
+      }
+      break;
+    default:
+      break;
+    }
+  }
 }
 
 int main(void)
@@ -123,27 +206,9 @@ int main(void)
   Init();
 
   while (true) {
-    for (int i = 0; i < 4; i++) {
-      uint32_t value_l;
-      uint32_t value_r;
 
-      uint16_t pan_pot = adc.value(ADC_GROUP_POT + ADC_CHANNEL_PAN_1 + i) >> (16 - 12); // adc is only 12 bit anyways
-      uint16_t vol_pot = adc.value(ADC_GROUP_POT + ADC_CHANNEL_VOL_1 + i) >> (16 - 12);
-      int16_t pan_cv = (adc.value(ADC_GROUP_CV + ADC_CHANNEL_PAN_1 + i) - 32768) >> (16 - 12);
-      uint16_t vol_cv = adc.value(ADC_GROUP_CV + ADC_CHANNEL_VOL_1 + i) >> (16 - 12);
-      int32_t pan = pan_pot + pan_cv;
-      int32_t vol = vol_pot + vol_cv;
+    HandleEvent();
 
-      CONSTRAIN(pan, 0, (1 << 12) - 1);
-      CONSTRAIN(vol, 0, (1 << 12) - 1);
-      leds.set_intensity(i, vol >> 4);
-      value_l = (lut_left_sin_pan[pan] * lut_linear_to_exp[vol]) >> 16;
-      value_r = (lut_right_cos_pan[pan] * lut_linear_to_exp[vol]) >> 16;
-
-      dacs[i].Write16(0, value_r);
-      dacs[i + 4].Write16(0, value_r);
-      dacs[i].Write16(1, value_l);
-      dacs[i + 4].Write16(1, value_l);
-    }
+    WriteOutputs();
   }
 }
