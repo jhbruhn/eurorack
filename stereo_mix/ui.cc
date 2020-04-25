@@ -3,6 +3,7 @@
 #include <stm32f0xx_hal.h>
 
 const int kLongPressDuration = 2000;
+const int kShowChangedValueMilliseconds = 1000;
 
 void UI::Poll()
 {
@@ -11,7 +12,8 @@ void UI::Poll()
       queue.AddEvent(CONTROL_SWITCH, i, 0);
       press_time[i] = HAL_GetTick();
       ignore_release[i] = false;
-      potControllers[0].Lock();
+      for (size_t j = 0; j < kNumChannels * 2; j++)
+        potControllers[j].Lock();
     }
     if (switches->pressed(Switch(i)) && !ignore_release[i]) {
       bool suppress_release_hidden_parameters = false;
@@ -36,12 +38,20 @@ void UI::Poll()
             system_clock.milliseconds() - press_time[i] + 1);
         ignore_release[i] = true;
       }
-      potControllers[0].Unlock();
+      for (size_t j = 0; j < kNumChannels * 2; j++)
+        potControllers[j].Unlock();
     }
   }
 
   for (size_t i = 0; i < kNumChannels * 2; i++) {
     potControllers[i].ProcessControlRate(adc->value(ADC_GROUP_POT + i));
+  }
+
+  for (size_t i = 0; i < kNumChannels * 2; i++) {
+    if (abs(previous_pot_values[i] - adc->value(ADC_GROUP_POT + i)) > 1966) {
+      previous_pot_values[i] = adc->value(ADC_GROUP_POT + i);
+      queue.AddEvent(CONTROL_POT, i, previous_pot_values[i]);
+    }
   }
 }
 
@@ -49,24 +59,62 @@ void UI::OnSwitchPressed(const Event& e)
 {
 }
 
+void UI::OnPotChanged(const Event& e)
+{
+  if (e.control_id >= kNumChannels) {
+    // a pan pot was touched!
+    last_pan_pot_touch[e.control_id - kNumChannels] = system_clock.milliseconds();
+  } else {
+    // a vol pot was touched!
+    last_vol_pot_touch[e.control_id] = system_clock.milliseconds();
+  }
+}
+
 void UI::OnSwitchReleased(const Event& e)
 {
   mute[e.control_id] = !mute[e.control_id];
+  for(size_t i = 0; i < kNumChannels; i++) {
+    last_pan_pot_touch[i] = last_vol_pot_touch[i] = 0;
+  }
 }
 
-void UI::DoEvents()
+void UI::TaskProcessPotControllers()
 {
-  for (size_t i = 0; i < kNumChannels * 2; i++) {
+  for (size_t i = 0; i < kNumChannels; i++) {
     potControllers[i].ProcessUIRate();
+    potControllers[i + kNumChannels].ProcessUIRate();
+  }
+}
 
+void UI::TaskDrawLeds()
+{
+  for (size_t i = 0; i < kNumChannels; i++) {
     if (potControllers[i].editing_hidden_parameter()) {
       leds->set_intensity(i, abs(volume_att_pots[i] - 32767) >> 7);
       leds->set_blinking(i, volume_att_pots[i] - 32767 < 0);
+    } else if (potControllers[i + kNumChannels].editing_hidden_parameter()) {
+      leds->set_intensity(i, abs(pan_att_pots[i] - 32767) >> 7);
+      leds->set_blinking(i, pan_att_pots[i] - 32767 < 0);
     } else {
-      leds->set_intensity(i, mute[i] ? 0 : volume_pots[i] >> 8);
-      leds->set_blinking(i, false);
+      if (system_clock.milliseconds() - last_vol_pot_touch[i] < kShowChangedValueMilliseconds) {
+        // show volume
+        leds->set_intensity(i, volume_pots[i] >> 8);
+        leds->set_blinking(i, false);
+      } else if(system_clock.milliseconds() - last_pan_pot_touch[i] < kShowChangedValueMilliseconds) {
+        // show panning
+        leds->set_intensity(i, abs(pan_pots[i] - 32767) >> 7);
+        leds->set_blinking(i, pan_pots[i] - 32767 < 0);
+      } else {
+        // show volume if not muted
+        leds->set_intensity(i, mute[i] ? 0 : volume_pots[i] >> 8);
+        leds->set_blinking(i, false);
+      }
     }
   }
+}
+
+void UI::TaskProcessEvents()
+{
   while (queue.available()) {
     Event ev = queue.PullEvent();
     switch (ev.control_type) {
@@ -77,8 +125,29 @@ void UI::DoEvents()
         OnSwitchPressed(ev);
       }
       break;
+    case CONTROL_POT:
+      OnPotChanged(ev);
     default:
       break;
     }
   }
+}
+
+void UI::DoEvents()
+{
+  switch (ui_task) {
+  case 1:
+    TaskProcessEvents();
+    break;
+  case 2:
+    TaskDrawLeds();
+    break;
+  case 3:
+    TaskProcessPotControllers();
+    break;
+  default:
+    ui_task = 0;
+    break;
+  }
+  ui_task++;
 }

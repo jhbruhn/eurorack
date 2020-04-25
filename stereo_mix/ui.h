@@ -32,6 +32,13 @@ class UI {
   private:
   void OnSwitchPressed(const Event&);
   void OnSwitchReleased(const Event&);
+  void OnPotChanged(const Event&);
+
+  void TaskProcessEvents(void);
+  void TaskDrawLeds(void);
+  void TaskProcessPotControllers(void);
+
+  uint8_t ui_task = 0;
 
   EventQueue<> queue;
   uint32_t press_time[SWITCH_COUNT];
@@ -40,11 +47,16 @@ class UI {
   Switches* switches;
   Leds* leds;
 
+  uint16_t previous_pot_values[kNumChannels * 2];
+
   uint16_t volume_pots[kNumChannels];
   uint16_t pan_pots[kNumChannels];
   uint16_t volume_att_pots[kNumChannels];
   uint16_t pan_att_pots[kNumChannels];
   bool mute[kNumChannels];
+
+  uint32_t last_pan_pot_touch[kNumChannels];
+  uint32_t last_vol_pot_touch[kNumChannels];
 
   PotController potControllers[kNumChannels * 2]; // todo: count
 };
