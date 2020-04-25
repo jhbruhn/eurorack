@@ -13,11 +13,12 @@ class Dac { // MCP4xx2 dac implementation
       : ssGpioPort(ssGpioPort_)
       , ssGpioPin(ssGpioPin_)
   {
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    __HAL_RCC_SPI1_CLK_ENABLE();
+
     ssGpioPort = ssGpioPort_;
     ssGpioPin = ssGpioPin_;
     // init SS/CS/RST GPIO
-    __HAL_RCC_GPIOA_CLK_ENABLE();
-    __HAL_RCC_GPIOB_CLK_ENABLE();
 
     GPIO_InitTypeDef gpio_init;
     gpio_init.Mode = GPIO_MODE_OUTPUT_PP;
@@ -38,10 +39,6 @@ class Dac { // MCP4xx2 dac implementation
     HAL_GPIO_Init(GPIOB, &gpio_init);
 
     // init SPI
-    __HAL_RCC_SPI1_CLK_ENABLE();
-    //    HAL_SPI_DeInit(&spi);
-
-    // Initialize SPI TODO: check which config we need
     hspi1.Init.Direction = SPI_DIRECTION_2LINES;
     hspi1.Init.Mode = SPI_MODE_MASTER;
     hspi1.Init.DataSize = SPI_DATASIZE_16BIT;

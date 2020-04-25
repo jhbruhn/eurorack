@@ -22,18 +22,23 @@ class Leds {
       gpioInit.Pull = GPIO_NOPULL;
       gpioInit.Speed = GPIO_SPEED_FREQ_MEDIUM;
       HAL_GPIO_Init(kGpioPorts[i], &gpioInit);
+
+      intensities[i] = 0;
+      blinking[i] = false;
     }
   }
   void Write()
   {
     pwm_counter++;
     pwm_counter &= 0x1ff; // equals to if(pwm_counter > 512) pwm_counter = 0;
-
+    blink_counter++;
+    blink_counter &= 0x7FFF;
     for (size_t i = 0; i < kNumChannels; i++) {
-      if (intensities[0] && lut_led_gamma[intensities[i]] >= pwm_counter) {
-        HAL_GPIO_WritePin(kGpioPorts[i], kGpioPins[i], GPIO_PIN_SET);
+      bool in_blink_phase = blink_counter < 16383 || !blinking[i];
+      if (intensities[0] && lut_led_gamma[intensities[i]] >= pwm_counter && in_blink_phase) {
+        kGpioPorts[i]->BSRR |= kGpioPins[i];
       } else {
-        HAL_GPIO_WritePin(kGpioPorts[i], kGpioPins[i], GPIO_PIN_RESET);
+        kGpioPorts[i]->BRR |= kGpioPins[i];
       }
     }
   }
@@ -43,8 +48,16 @@ class Leds {
       return;
     intensities[channel] = intensity;
   }
+  void set_blinking(uint8_t channel, bool blink)
+  {
+    if (channel >= kNumChannels)
+      return;
+    blinking[channel] = blink;
+  }
 
   private:
   uint16_t pwm_counter;
+  uint16_t blink_counter;
   uint8_t intensities[kNumChannels];
+  bool blinking[kNumChannels];
 };

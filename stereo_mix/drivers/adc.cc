@@ -2,10 +2,6 @@
 #include "peripherals.h"
 #include <stm32f0xx_hal.h>
 
-extern "C" {
-void DMA_TransferComplete(DMA_HandleTypeDef* dma); // declared in stereo_mix.cc
-}
-
 namespace stereo_mix {
 
 Adc::Adc()

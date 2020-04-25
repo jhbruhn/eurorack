@@ -35,7 +35,21 @@ class Adc {
 
   void OnDMATransferComplete();
   inline const uint16_t* values() { return &values_[0]; }
-  inline int32_t value(int32_t channel) const
+
+  inline int16_t cv_value(AdcChannel channel)
+  {
+#ifdef NEW_HARDWARE
+    return this->values_[ADC_GROUP_CV + channel] - 32768;
+#else
+    if (channel >= ADC_CHANNEL_PAN_1) {
+      return this->values_[ADC_GROUP_CV + channel] - 32768;
+    } else {
+      return this->values_[ADC_GROUP_CV + channel] >> 1;
+    }
+#endif
+  }
+
+  inline uint16_t value(int32_t channel) const
   {
     return static_cast<int32_t>(values_[channel]);
   }
