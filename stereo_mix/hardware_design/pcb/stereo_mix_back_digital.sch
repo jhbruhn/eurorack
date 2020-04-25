@@ -18924,14 +18924,14 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <part name="GND81" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="C47" library="jhbruhn-cdr" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="22uF"/>
 <part name="C48" library="jhbruhn-cdr" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="22uF"/>
-<part name="C49" library="jhbruhn-cdr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:19328992/1" value="10uF"/>
-<part name="C50" library="jhbruhn-cdr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:19328992/1" value="10uF"/>
-<part name="C51" library="jhbruhn-cr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:23626/2" value="10uF"/>
-<part name="C52" library="jhbruhn-cr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:23626/2" value="10uF"/>
-<part name="C53" library="jhbruhn-cdr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:19328992/1" value="10uF"/>
-<part name="C54" library="jhbruhn-cdr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:19328992/1" value="10uF"/>
-<part name="C55" library="jhbruhn-cdr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:19328992/1" value="10uF"/>
-<part name="C56" library="jhbruhn-cdr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:19328992/1" value="10uF"/>
+<part name="C49" library="jhbruhn-cdr" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="10uF"/>
+<part name="C50" library="jhbruhn-cdr" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="10uF"/>
+<part name="C51" library="jhbruhn-cdr" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="10uF"/>
+<part name="C52" library="jhbruhn-cdr" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="10uF"/>
+<part name="C53" library="jhbruhn-cdr" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="10uF"/>
+<part name="C54" library="jhbruhn-cdr" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="10uF"/>
+<part name="C55" library="jhbruhn-cdr" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="10uF"/>
+<part name="C56" library="jhbruhn-cdr" deviceset="C-EU" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="10uF"/>
 <part name="R91" library="jhbruhn-cdr" deviceset="R-EU_" device="R0402" package3d_urn="urn:adsk.eagle:package:23547/3" value="100R"/>
 <part name="R92" library="jhbruhn-cdr" deviceset="R-EU_" device="R0402" package3d_urn="urn:adsk.eagle:package:23547/3" value="100R"/>
 <part name="R93" library="jhbruhn-cdr" deviceset="R-EU_" device="R0402" package3d_urn="urn:adsk.eagle:package:23547/3" value="100R"/>
@@ -18952,6 +18952,26 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <part name="C66" library="jhbruhn-cdr" deviceset="CPOL-EU" device="A/3216-18R" package3d_urn="urn:adsk.eagle:package:23410/2" value="10uF"/>
 <part name="R95" library="jhbruhn-cdr" deviceset="R-EU_" device="R0402" package3d_urn="urn:adsk.eagle:package:23547/3" value="1k"/>
 <part name="R96" library="jhbruhn-cdr" deviceset="R-EU_" device="R0402" package3d_urn="urn:adsk.eagle:package:23547/3" value="1k"/>
+<part name="R86" library="jhbruhn-cdr" deviceset="R-EU_" device="R0402" package3d_urn="urn:adsk.eagle:package:23547/3" value="47k"/>
+<part name="R87" library="jhbruhn-cdr" deviceset="R-EU_" device="R0402" package3d_urn="urn:adsk.eagle:package:23547/3" value="47k"/>
+<part name="GND45" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="GND49" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="C67" library="jhbruhn-cdr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:19328992/1" value="1uF"/>
+<part name="C68" library="jhbruhn-cdr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:19328992/1" value="1uF"/>
+<part name="GND94" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="GND95" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="C69" library="jhbruhn-cdr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:19328992/1" value="1uF"/>
+<part name="GND96" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="C70" library="jhbruhn-cdr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:19328992/1" value="1uF"/>
+<part name="GND97" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="C71" library="jhbruhn-cdr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:19328992/1" value="1uF"/>
+<part name="C72" library="jhbruhn-cdr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:19328992/1" value="1uF"/>
+<part name="C73" library="jhbruhn-cdr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:19328992/1" value="1uF"/>
+<part name="C74" library="jhbruhn-cdr" deviceset="C-EU" device="C0402" package3d_urn="urn:adsk.eagle:package:19328992/1" value="1uF"/>
+<part name="GND98" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="GND99" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="GND100" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="GND101" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -19650,6 +19670,62 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <attribute name="NAME" x="291.084" y="43.561" size="1.778" layer="95"/>
 <attribute name="VALUE" x="291.084" y="38.481" size="1.778" layer="96"/>
 </instance>
+<instance part="C67" gate="G$1" x="83.82" y="149.86" smashed="yes">
+<attribute name="NAME" x="85.344" y="150.241" size="1.778" layer="95"/>
+<attribute name="VALUE" x="85.344" y="145.161" size="1.778" layer="96"/>
+</instance>
+<instance part="C68" gate="G$1" x="83.82" y="132.08" smashed="yes">
+<attribute name="NAME" x="85.344" y="132.461" size="1.778" layer="95"/>
+<attribute name="VALUE" x="85.344" y="127.381" size="1.778" layer="96"/>
+</instance>
+<instance part="GND94" gate="1" x="83.82" y="142.24" smashed="yes">
+<attribute name="VALUE" x="81.28" y="139.7" size="1.778" layer="96"/>
+</instance>
+<instance part="GND95" gate="1" x="83.82" y="124.46" smashed="yes">
+<attribute name="VALUE" x="81.28" y="121.92" size="1.778" layer="96"/>
+</instance>
+<instance part="C69" gate="G$1" x="81.28" y="261.62" smashed="yes">
+<attribute name="NAME" x="82.804" y="262.001" size="1.778" layer="95"/>
+<attribute name="VALUE" x="82.804" y="256.921" size="1.778" layer="96"/>
+</instance>
+<instance part="GND96" gate="1" x="81.28" y="254" smashed="yes">
+<attribute name="VALUE" x="78.74" y="251.46" size="1.778" layer="96"/>
+</instance>
+<instance part="C70" gate="G$1" x="81.28" y="241.3" smashed="yes">
+<attribute name="NAME" x="82.804" y="241.681" size="1.778" layer="95"/>
+<attribute name="VALUE" x="82.804" y="236.601" size="1.778" layer="96"/>
+</instance>
+<instance part="GND97" gate="1" x="81.28" y="233.68" smashed="yes">
+<attribute name="VALUE" x="78.74" y="231.14" size="1.778" layer="96"/>
+</instance>
+<instance part="C71" gate="G$1" x="279.4" y="259.08" smashed="yes">
+<attribute name="NAME" x="280.924" y="259.461" size="1.778" layer="95"/>
+<attribute name="VALUE" x="280.924" y="254.381" size="1.778" layer="96"/>
+</instance>
+<instance part="C72" gate="G$1" x="279.4" y="238.76" smashed="yes">
+<attribute name="NAME" x="280.924" y="239.141" size="1.778" layer="95"/>
+<attribute name="VALUE" x="280.924" y="234.061" size="1.778" layer="96"/>
+</instance>
+<instance part="C73" gate="G$1" x="284.48" y="149.86" smashed="yes">
+<attribute name="NAME" x="286.004" y="150.241" size="1.778" layer="95"/>
+<attribute name="VALUE" x="286.004" y="145.161" size="1.778" layer="96"/>
+</instance>
+<instance part="C74" gate="G$1" x="284.48" y="132.08" smashed="yes">
+<attribute name="NAME" x="286.004" y="132.461" size="1.778" layer="95"/>
+<attribute name="VALUE" x="286.004" y="127.381" size="1.778" layer="96"/>
+</instance>
+<instance part="GND98" gate="1" x="284.48" y="124.46" smashed="yes">
+<attribute name="VALUE" x="281.94" y="121.92" size="1.778" layer="96"/>
+</instance>
+<instance part="GND99" gate="1" x="284.48" y="142.24" smashed="yes">
+<attribute name="VALUE" x="281.94" y="139.7" size="1.778" layer="96"/>
+</instance>
+<instance part="GND100" gate="1" x="279.4" y="251.46" smashed="yes">
+<attribute name="VALUE" x="276.86" y="248.92" size="1.778" layer="96"/>
+</instance>
+<instance part="GND101" gate="1" x="279.4" y="231.14" smashed="yes">
+<attribute name="VALUE" x="276.86" y="228.6" size="1.778" layer="96"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -19958,6 +20034,38 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <pinref part="C52" gate="G$1" pin="2"/>
 <wire x1="340.36" y1="139.7" x2="330.2" y2="139.7" width="0.1524" layer="91"/>
 <junction x="330.2" y="139.7"/>
+</segment>
+<segment>
+<pinref part="C67" gate="G$1" pin="2"/>
+<pinref part="GND94" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C68" gate="G$1" pin="2"/>
+<pinref part="GND95" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C69" gate="G$1" pin="2"/>
+<pinref part="GND96" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C70" gate="G$1" pin="2"/>
+<pinref part="GND97" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C74" gate="G$1" pin="2"/>
+<pinref part="GND98" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C73" gate="G$1" pin="2"/>
+<pinref part="GND99" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C71" gate="G$1" pin="2"/>
+<pinref part="GND100" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C72" gate="G$1" pin="2"/>
+<pinref part="GND101" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="+12V" class="1">
@@ -20773,9 +20881,12 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 </net>
 <net name="BIAS_DAC3_L" class="0">
 <segment>
-<wire x1="261.62" y1="251.46" x2="279.4" y2="251.46" width="0.1524" layer="91"/>
+<wire x1="261.62" y1="251.46" x2="271.78" y2="251.46" width="0.1524" layer="91"/>
 <label x="261.62" y="251.46" size="1.778" layer="95"/>
 <pinref part="U9" gate="A" pin="VOUTA"/>
+<wire x1="271.78" y1="251.46" x2="271.78" y2="261.62" width="0.1524" layer="91"/>
+<pinref part="C71" gate="G$1" pin="1"/>
+<wire x1="271.78" y1="261.62" x2="279.4" y2="261.62" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <wire x1="347.98" y1="236.22" x2="347.98" y2="223.52" width="0.1524" layer="91"/>
@@ -20785,9 +20896,12 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 </net>
 <net name="BIAS_DAC1_L" class="0">
 <segment>
-<wire x1="63.5" y1="254" x2="81.28" y2="254" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="254" x2="73.66" y2="254" width="0.1524" layer="91"/>
 <label x="63.5" y="254" size="1.778" layer="95"/>
 <pinref part="U1" gate="A" pin="VOUTA"/>
+<wire x1="73.66" y1="254" x2="73.66" y2="264.16" width="0.1524" layer="91"/>
+<pinref part="C69" gate="G$1" pin="1"/>
+<wire x1="73.66" y1="264.16" x2="81.28" y2="264.16" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R16" gate="G$1" pin="1"/>
@@ -20800,6 +20914,7 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <wire x1="81.28" y1="243.84" x2="63.5" y2="243.84" width="0.1524" layer="91"/>
 <label x="63.5" y="243.84" size="1.778" layer="95"/>
 <pinref part="U1" gate="A" pin="VOUTB"/>
+<pinref part="C70" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="R15" gate="G$1" pin="1"/>
@@ -20809,9 +20924,12 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 </net>
 <net name="BIAS_DAC2_L" class="0">
 <segment>
-<wire x1="83.82" y1="144.78" x2="66.04" y2="144.78" width="0.1524" layer="91"/>
 <label x="66.04" y="144.78" size="1.778" layer="95"/>
 <pinref part="U2" gate="A" pin="VOUTA"/>
+<wire x1="76.2" y1="144.78" x2="66.04" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="76.2" y1="144.78" x2="76.2" y2="152.4" width="0.1524" layer="91"/>
+<wire x1="76.2" y1="152.4" x2="83.82" y2="152.4" width="0.1524" layer="91"/>
+<pinref part="C67" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <wire x1="149.86" y1="124.46" x2="149.86" y2="111.76" width="0.1524" layer="91"/>
@@ -20824,6 +20942,7 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <wire x1="66.04" y1="134.62" x2="83.82" y2="134.62" width="0.1524" layer="91"/>
 <label x="66.04" y="134.62" size="1.778" layer="95"/>
 <pinref part="U2" gate="A" pin="VOUTB"/>
+<pinref part="C68" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <wire x1="147.32" y1="93.98" x2="147.32" y2="76.2" width="0.1524" layer="91"/>
@@ -20836,6 +20955,7 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <wire x1="261.62" y1="241.3" x2="279.4" y2="241.3" width="0.1524" layer="91"/>
 <label x="261.62" y="241.3" size="1.778" layer="95"/>
 <pinref part="U9" gate="A" pin="VOUTB"/>
+<pinref part="C72" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="R47" gate="G$1" pin="1"/>
@@ -20845,9 +20965,12 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 </net>
 <net name="BIAS_DAC4_L" class="0">
 <segment>
-<wire x1="266.7" y1="144.78" x2="284.48" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="266.7" y1="144.78" x2="276.86" y2="144.78" width="0.1524" layer="91"/>
 <label x="266.7" y="144.78" size="1.778" layer="95"/>
 <pinref part="U10" gate="A" pin="VOUTA"/>
+<pinref part="C73" gate="G$1" pin="1"/>
+<wire x1="276.86" y1="144.78" x2="276.86" y2="152.4" width="0.1524" layer="91"/>
+<wire x1="276.86" y1="152.4" x2="284.48" y2="152.4" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R52" gate="G$1" pin="1"/>
@@ -20860,6 +20983,7 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <wire x1="266.7" y1="134.62" x2="284.48" y2="134.62" width="0.1524" layer="91"/>
 <label x="266.7" y="134.62" size="1.778" layer="95"/>
 <pinref part="U10" gate="A" pin="VOUTB"/>
+<pinref part="C74" gate="G$1" pin="1"/>
 </segment>
 <segment>
 <pinref part="R50" gate="G$1" pin="1"/>
@@ -22927,6 +23051,20 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <attribute name="NAME" x="31.75" y="42.1386" size="1.778" layer="95"/>
 <attribute name="VALUE" x="31.75" y="37.338" size="1.778" layer="96"/>
 </instance>
+<instance part="R86" gate="G$1" x="27.94" y="63.5" smashed="yes" rot="R90">
+<attribute name="NAME" x="26.4414" y="59.69" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="31.242" y="59.69" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="R87" gate="G$1" x="27.94" y="33.02" smashed="yes" rot="R90">
+<attribute name="NAME" x="26.4414" y="29.21" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="31.242" y="29.21" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="GND45" gate="1" x="27.94" y="22.86" smashed="yes">
+<attribute name="VALUE" x="25.4" y="20.32" size="1.778" layer="96"/>
+</instance>
+<instance part="GND49" gate="1" x="27.94" y="53.34" smashed="yes">
+<attribute name="VALUE" x="25.4" y="50.8" size="1.778" layer="96"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -22961,6 +23099,16 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <segment>
 <pinref part="J18" gate="G$1" pin="1"/>
 <pinref part="GND64" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="R87" gate="G$1" pin="1"/>
+<pinref part="GND45" gate="1" pin="GND"/>
+<wire x1="27.94" y1="27.94" x2="27.94" y2="25.4" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R86" gate="G$1" pin="1"/>
+<pinref part="GND49" gate="1" pin="GND"/>
+<wire x1="27.94" y1="58.42" x2="27.94" y2="55.88" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SUM_L" class="0">
@@ -23068,6 +23216,9 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <pinref part="R95" gate="G$1" pin="1"/>
 <pinref part="C65" gate="G$1" pin="-"/>
 <wire x1="30.48" y1="71.12" x2="27.94" y2="71.12" width="0.1524" layer="91"/>
+<pinref part="R86" gate="G$1" pin="2"/>
+<wire x1="27.94" y1="68.58" x2="27.94" y2="71.12" width="0.1524" layer="91"/>
+<junction x="27.94" y="71.12"/>
 </segment>
 </net>
 <net name="N$57" class="0">
@@ -23075,6 +23226,9 @@ Source: http://www.st.com/stonline/products/literature/ds/7194/ld1117axx.pdf</de
 <pinref part="R96" gate="G$1" pin="1"/>
 <pinref part="C66" gate="G$1" pin="-"/>
 <wire x1="30.48" y1="40.64" x2="27.94" y2="40.64" width="0.1524" layer="91"/>
+<pinref part="R87" gate="G$1" pin="2"/>
+<wire x1="27.94" y1="38.1" x2="27.94" y2="40.64" width="0.1524" layer="91"/>
+<junction x="27.94" y="40.64"/>
 </segment>
 </net>
 <net name="N$56" class="0">
