@@ -136,7 +136,7 @@ class PotController {
             int32_t delta = value_ - previous_value_;
 
             int32_t skew_ratio = delta > 0
-              ? (65600 - stored_value_) / (65535 - previous_value_)
+              ? (65600 - stored_value_) / (65600 - previous_value_)
               : (66 + stored_value_) / (66 + previous_value_);
             CONSTRAIN(skew_ratio, 6553, 655350);
 
