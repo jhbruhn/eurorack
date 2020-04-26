@@ -51,7 +51,7 @@ class Adc {
 
   inline uint16_t value(int32_t channel) const
   {
-    return static_cast<int32_t>(values_[channel]);
+    return static_cast<uint16_t>(values_[channel]);
   }
   inline float float_value(int32_t index) const
   {

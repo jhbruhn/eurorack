@@ -48,7 +48,12 @@ void UI::Poll()
   }
 
   for (size_t i = 0; i < kNumChannels * 2; i++) {
-    if (abs(previous_pot_values[i] - adc->value(ADC_GROUP_POT + i)) > 1966) {
+    if (i >= kNumChannels) {
+      processors[i - kNumChannels].set_pan_offset(adc->value(ADC_GROUP_POT + i) - 32767L);
+    } else {
+      processors[i].set_volume_offset(adc->value(ADC_GROUP_POT + i));
+    }
+    if (abs(previous_pot_values[i] - adc->value(ADC_GROUP_POT + i)) > 1900) {
       previous_pot_values[i] = adc->value(ADC_GROUP_POT + i);
       queue.AddEvent(CONTROL_POT, i, previous_pot_values[i]);
     }
@@ -73,7 +78,9 @@ void UI::OnPotChanged(const Event& e)
 void UI::OnSwitchReleased(const Event& e)
 {
   mute[e.control_id] = !mute[e.control_id];
-  for(size_t i = 0; i < kNumChannels; i++) {
+  processors[e.control_id].set_muted(mute[e.control_id]);
+
+  for (size_t i = 0; i < kNumChannels; i++) {
     last_pan_pot_touch[i] = last_vol_pot_touch[i] = 0;
   }
 }
@@ -100,7 +107,7 @@ void UI::TaskDrawLeds()
         // show volume
         leds->set_intensity(i, volume_pots[i] >> 8);
         leds->set_blinking(i, false);
-      } else if(system_clock.milliseconds() - last_pan_pot_touch[i] < kShowChangedValueMilliseconds) {
+      } else if (system_clock.milliseconds() - last_pan_pot_touch[i] < kShowChangedValueMilliseconds) {
         // show panning
         leds->set_intensity(i, abs(pan_pots[i] - 32767) >> 7);
         leds->set_blinking(i, pan_pots[i] - 32767 < 0);

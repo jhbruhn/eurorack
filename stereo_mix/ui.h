@@ -4,6 +4,7 @@
 #include "drivers/leds.h"
 #include "drivers/switches.h"
 #include "pot_controller.h"
+#include "processor.h"
 #include "stmlib/ui/event_queue.h"
 
 using namespace stmlib;
@@ -12,10 +13,11 @@ extern const uint8_t kNumChannels; // TODO
 
 class UI {
   public:
-  UI(Adc* adc_, Switches* switches_, Leds* leds_)
+  UI(Adc* adc_, Switches* switches_, Leds* leds_, Processor* processors_)
       : adc(adc_)
       , switches(switches_)
       , leds(leds_)
+      , processors(processors_)
   {
     queue.Init();
 
@@ -46,6 +48,8 @@ class UI {
   Adc* adc;
   Switches* switches;
   Leds* leds;
+
+  Processor* processors;
 
   uint16_t previous_pot_values[kNumChannels * 2];
 

@@ -3,6 +3,7 @@
 #include "drivers/leds.h"
 #include "drivers/peripherals.h"
 #include "drivers/switches.h"
+#include "processor.h"
 #include "resources.h"
 #include "stmlib/ui/event_queue.h"
 #include "ui.h"
@@ -19,7 +20,8 @@ Dac dacs[8] = {
 Adc adc;
 Leds leds;
 Switches switches;
-UI ui(&adc, &switches, &leds);
+Processor processors[kNumChannels];
+UI ui(&adc, &switches, &leds, processors);
 
 bool mute[4];
 
@@ -136,30 +138,16 @@ void Init(void)
 
 void WriteOutputs(void)
 {
-  for (int i = 0; i < 4; i++) {
-    uint32_t value_l;
-    uint32_t value_r;
-
-    uint16_t pan_pot = adc.value(ADC_GROUP_POT + ADC_CHANNEL_PAN_1 + i) >> (16 - 12); // adc is only 12 bit anyways
-    uint16_t vol_pot = adc.value(ADC_GROUP_POT + ADC_CHANNEL_VOL_1 + i) >> (16 - 12);
-    int16_t pan_cv = adc.cv_value(AdcChannel(ADC_CHANNEL_PAN_1 + i)) >> (16 - 12);
-    int16_t vol_cv = adc.cv_value(AdcChannel(ADC_CHANNEL_VOL_1 + i)) >> (16 - 12);
-    int32_t pan = pan_pot + pan_cv;
-    int32_t vol = vol_pot + vol_cv;
-
-    if (mute[i])
-      vol = 0;
-
-    CONSTRAIN(pan, 0, (1 << 12) - 1);
-    CONSTRAIN(vol, 0, (1 << 12) - 1);
-    // leds.set_intensity(i, vol >> 4);
-    value_l = (lut_left_sin_pan[pan] * lut_linear_to_exp[vol]) >> 16;
-    value_r = (lut_right_cos_pan[pan] * lut_linear_to_exp[vol]) >> 16;
-
-    dacs[i].Write16(0, value_r);
-    dacs[i + 4].Write16(0, value_r);
-    dacs[i].Write16(1, value_l);
-    dacs[i + 4].Write16(1, value_l);
+  for (int i = 0; i < kNumChannels; i++) {
+    uint16_t out[2];
+    int16_t cvs[2];
+    cvs[0] = 0;
+    cvs[1] = 0;
+    processors[i].Process(cvs, out);
+    dacs[i].Write16(0, out[0]);
+    dacs[i + 4].Write16(0, out[0]);
+    dacs[i].Write16(1, out[1]);
+    dacs[i + 4].Write16(1, out[1]);
   }
 }
 

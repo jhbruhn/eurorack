@@ -13,6 +13,7 @@ class Dac { // MCP4xx2 dac implementation
       : ssGpioPort(ssGpioPort_)
       , ssGpioPin(ssGpioPin_)
   {
+    __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_SPI1_CLK_ENABLE();
 
