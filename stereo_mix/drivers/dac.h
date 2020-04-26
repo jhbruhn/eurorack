@@ -1,9 +1,9 @@
 #pragma once
 
 #include "peripherals.h"
-#include "stm32f030x8.h"
 #include "stmlib/stmlib.h"
 #include <stm32f0xx_hal.h>
+#include <stm32f0xx_ll_spi.h>
 
 namespace stereo_mix {
 
@@ -16,6 +16,9 @@ class Dac { // MCP4xx2 dac implementation
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_SPI1_CLK_ENABLE();
+
+    HAL_NVIC_SetPriority(SPI1_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(SPI1_IRQn);
 
     ssGpioPort = ssGpioPort_;
     ssGpioPin = ssGpioPin_;
@@ -46,10 +49,11 @@ class Dac { // MCP4xx2 dac implementation
     hspi1.Init.CLKPolarity = SPI_POLARITY_HIGH;
     hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
     hspi1.Init.NSS = SPI_NSS_SOFT;
-    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
+    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
     hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
     hspi1.Init.CRCPolynomial = 7;
     HAL_SPI_Init(&hspi1);
+    SPI1->CR1 |= SPI_CR1_SPE; // this is required only once
   };
 
   void Write16(uint8_t channel, uint16_t value, uint8_t gain, uint8_t buffered)
@@ -70,13 +74,11 @@ class Dac { // MCP4xx2 dac implementation
     value |= gain << 13;     // set gain
     value |= 1 << 12;        // shutdown always set to 1
 
-    HAL_GPIO_WritePin(ssGpioPort, ssGpioPin, GPIO_PIN_RESET);
-    HAL_SPI_Transmit(&hspi1, (uint8_t*)&value, 1, HAL_MAX_DELAY);
-    //SPI_I2S_SendData16(SPI1, value); // MSB first, specified in config
-    /*while (HAL_SPI_GetState(&hspi1) & HAL_SPI_STATE_BUSY) {
-      asm("nop");
-    }*/
-    HAL_GPIO_WritePin(ssGpioPort, ssGpioPin, GPIO_PIN_SET);
+    ssGpioPort->BRR |= ssGpioPin;
+    SPI1->DR = value;
+    while ((SPI1->SR & (SPI_SR_TXE | SPI_SR_BSY)) != SPI_SR_TXE)
+      ;
+    ssGpioPort->BSRR |= ssGpioPin;
   };
 
   void Write16(uint8_t channel, uint16_t value)

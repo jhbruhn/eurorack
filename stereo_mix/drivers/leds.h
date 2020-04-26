@@ -35,7 +35,12 @@ class Leds {
     pwm_counter &= 0x1ff; // equals to if(pwm_counter > 512) pwm_counter = 0;
     blink_counter++;
     if(blink_counter > 0x2000) blink_counter = 0;
+#ifdef DEBUG_PIN
+    for (size_t i = 0; i < kNumChannels - 1; i++) {
+#else
     for (size_t i = 0; i < kNumChannels; i++) {
+
+#endif
       bool in_blink_phase = blink_counter > (0x2000 / 2) || !blinking[i];
       if (intensities[0] && lut_led_gamma[intensities[i]] >= pwm_counter && in_blink_phase) {
         kGpioPorts[i]->BSRR |= kGpioPins[i];

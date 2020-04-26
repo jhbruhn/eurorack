@@ -1,3 +1,7 @@
+
+#define ENABLE_DEBUG_PIN
+#include "drivers/debug_pin.h"
+
 #include "drivers/adc.h"
 #include "drivers/dac.h"
 #include "drivers/leds.h"
@@ -142,9 +146,9 @@ void Init(void)
 
   HAL_NVIC_SetPriority(TIM6_IRQn, 1, 0);
   HAL_NVIC_EnableIRQ(TIM6_IRQn);
-  htim6.Init.Prescaler = 192;
+  htim6.Init.Prescaler = 64;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 512;
+  htim6.Init.Period = 128; //256; //512;
   htim6.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim6.Init.RepetitionCounter = 0;
   HAL_TIM_Base_Init(&htim6);
@@ -155,6 +159,7 @@ void Init(void)
 
 void WriteOutputs(void)
 {
+  DEBUG_ON
   for (int i = 0; i < kNumChannels; i++) {
     uint16_t out[2];
     int16_t cvs[2];
@@ -166,6 +171,7 @@ void WriteOutputs(void)
     dacs[i].Write16(1, out[1]);
     dacs[i + 4].Write16(1, out[1]);
   }
+  DEBUG_OFF
 }
 
 int main(void)
@@ -176,9 +182,6 @@ int main(void)
   Init();
 
   while (true) {
-
     ui.DoEvents();
-
-//    WriteOutputs();
   }
 }
