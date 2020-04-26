@@ -113,7 +113,7 @@ void UI::TaskDrawLeds()
         leds->set_blinking(i, pan_pots[i] - 32767 < 0);
       } else {
         // show volume if not muted
-        leds->set_intensity(i, mute[i] ? 0 : volume_pots[i] >> 8);
+        leds->set_intensity(i, processors[i].previous_volume() >> (4));
         leds->set_blinking(i, false);
       }
     }

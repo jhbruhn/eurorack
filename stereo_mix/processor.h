@@ -22,9 +22,13 @@ class Processor {
     mute = m;
   }
 
+  uint16_t previous_volume() {
+    return previous_vol;
+  }
+
   private:
   uint16_t volume_offset = 0;
   int16_t pan_offset = 0;
-  int32_t previous_vol;
+  uint16_t previous_vol;
   bool mute = false;
 };

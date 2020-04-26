@@ -31,7 +31,7 @@ FAMILY            = f0xx
 # USB             = enabled
 #APPLICATION       = true
 #BOOTLOADER        = midi2cv_bootloader
-
+OPTIMIZE          = TRUE
 # Preferred upload command
 UPLOAD_COMMAND  = upload_jtag
 

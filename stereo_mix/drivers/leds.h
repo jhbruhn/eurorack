@@ -9,12 +9,14 @@ using namespace stereo_mix;
 const uint8_t kNumChannels = 4;
 
 static const uint16_t kGpioPins[] = { GPIO_PIN_7, GPIO_PIN_15, GPIO_PIN_13, GPIO_PIN_14 };
-static GPIO_TypeDef* kGpioPorts[] = { GPIOB, GPIOB, GPIOF, GPIOF };
+static GPIO_TypeDef* kGpioPorts[] = { GPIOB, GPIOB, GPIOC, GPIOC };
 
 class Leds {
   public:
   Leds()
   {
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    __HAL_RCC_GPIOC_CLK_ENABLE();
     GPIO_InitTypeDef gpioInit;
     for (size_t i = 0; i < kNumChannels; i++) {
       gpioInit.Mode = GPIO_MODE_OUTPUT_PP;
