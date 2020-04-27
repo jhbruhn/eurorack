@@ -3,7 +3,7 @@
 #include "drivers/debug_pin.h"
 
 #include "drivers/adc.h"
-#include "drivers/dac.h"
+#include "drivers/dacs.h"
 #include "drivers/leds.h"
 #include "drivers/peripherals.h"
 #include "drivers/switches.h"
@@ -16,10 +16,7 @@
 using namespace stereo_mix;
 using namespace stmlib;
 
-Dac dacs[8] = {
-  { GPIOB, GPIO_PIN_8 }, { GPIOB, GPIO_PIN_9 }, { GPIOB, GPIO_PIN_10 }, { GPIOB, GPIO_PIN_11 },
-  { GPIOA, GPIO_PIN_8 }, { GPIOA, GPIO_PIN_9 }, { GPIOA, GPIO_PIN_10 }, { GPIOA, GPIO_PIN_11 }
-};
+Dacs dacs;
 
 Adc adc;
 Leds leds;
@@ -148,7 +145,7 @@ void Init(void)
   HAL_NVIC_EnableIRQ(TIM6_IRQn);
   htim6.Init.Prescaler = 64;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 128; //256; //512;
+  htim6.Init.Period = 96; //128; //256; //512;
   htim6.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim6.Init.RepetitionCounter = 0;
   HAL_TIM_Base_Init(&htim6);
@@ -159,19 +156,21 @@ void Init(void)
 
 void WriteOutputs(void)
 {
-  DEBUG_ON
+  uint16_t out[kNumChannels][2];
+    DEBUG_ON
   for (int i = 0; i < kNumChannels; i++) {
-    uint16_t out[2];
     int16_t cvs[2];
     cvs[0] = 65535 - adc.cv_value(AdcChannel(ADC_CHANNEL_PAN_1 + i));
     cvs[1] = adc.cv_value(AdcChannel(ADC_CHANNEL_VOL_1 + i));
-    processors[i].Process(cvs, out);
-    dacs[i].Write16(0, out[0]);
-    dacs[i + 4].Write16(0, out[0]);
-    dacs[i].Write16(1, out[1]);
-    dacs[i + 4].Write16(1, out[1]);
+    processors[i].Process(cvs, out[i]);
   }
-  DEBUG_OFF
+  for (int i = 0; i < kNumChannels; i++) {
+    dacs.Write16(i, 0, out[i][0]);
+    //dacs.Write16(0, out[i][0]);
+    dacs.Write16(i, 1, out[i][1]);
+    //dacs[i + 4].Write16(1, out[i][1]);
+  }
+    DEBUG_OFF
 }
 
 int main(void)
