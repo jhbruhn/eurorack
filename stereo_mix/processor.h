@@ -22,13 +22,18 @@ class Processor {
     mute = m;
   }
 
-  uint16_t previous_volume() {
-    return previous_vol;
+  uint16_t linear_volume() {
+    return linear_vol;
   }
 
   private:
   uint16_t volume_offset = 0;
   int16_t pan_offset = 0;
   uint16_t previous_vol;
+  uint16_t linear_vol;
+
+  uint16_t log_exp_mix_cv  = 32767; // -> linear
+  uint16_t log_exp_mix_pot = 0;
+
   bool mute = false;
 };

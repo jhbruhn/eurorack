@@ -145,7 +145,7 @@ void Init(void)
   HAL_NVIC_EnableIRQ(TIM6_IRQn);
   htim6.Init.Prescaler = 64;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 96; //128; //256; //512;
+  htim6.Init.Period = 96; // 512 without optimize
   htim6.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim6.Init.RepetitionCounter = 0;
   HAL_TIM_Base_Init(&htim6);
