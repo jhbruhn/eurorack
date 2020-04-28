@@ -32,7 +32,7 @@ FAMILY            = f0xx
 #APPLICATION       = true
 #BOOTLOADER        = midi2cv_bootloader
 OPTIMIZE          = TRUE
-OPTIMIZE_FLAG     = 1
+OPTIMIZE_FLAG     = 2
 # Preferred upload command
 UPLOAD_COMMAND  = upload_jtag
 

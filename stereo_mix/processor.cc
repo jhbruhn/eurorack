@@ -18,6 +18,8 @@ void Processor::Process(int16_t cvs[], uint16_t* outs)
   int16_t pan_cv = cvs[0] >> (16 - 12);
   int16_t vol_cv = cvs[1] >> (16 - 12);
   int32_t pan = pan_pot + pan_cv;
+
+  // calculate value for ui
   int32_t lin = volume_offset + (cvs[1] * 2);
   CONSTRAIN(lin, 0, 65535);
   lin *= !mute;
@@ -27,18 +29,18 @@ void Processor::Process(int16_t cvs[], uint16_t* outs)
   uint16_t vol_pot_log = 65535 - lut_linear_to_exp[LUT_LINEAR_TO_EXP_SIZE - 1 - vol_pot];
 
   vol_pot = Mix(vol_pot_exp, vol_pot_log, log_exp_mix_pot);
+  vol_pot = vol_pot_exp;
+  int32_t vol = vol_pot;
 
-  uint16_t vol_cv_absu16 = abs(vol_cv) << 1;
+  uint16_t vol_cv_absu16 = abs(vol_cv);
   uint16_t vol_cv_exp = lut_linear_to_exp[vol_cv_absu16];
   uint16_t vol_cv_log = 65535 - lut_linear_to_exp[LUT_LINEAR_TO_EXP_SIZE - 1 - vol_cv_absu16];
   uint16_t vol_cv_pre = Mix(vol_cv_exp, vol_cv_log, log_exp_mix_cv);
-  int32_t vol = vol_pot;
   vol += vol_cv > 0 ? vol_cv_pre : -vol_cv_pre;
-
   vol *= !mute;
 
-  CONSTRAIN(pan, 0, (1 << 16) - 1);
-  CONSTRAIN(vol, 0, (1 << 16) - 1);
+  CONSTRAIN(pan, 0, 4095);
+  CONSTRAIN(vol, 0, 65535);
 
   previous_vol = vol;
 
