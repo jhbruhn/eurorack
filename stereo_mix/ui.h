@@ -21,6 +21,8 @@ class UI {
   {
     queue.Init();
 
+  };
+  void Init() {
     for (size_t i = 0; i < kNumChannels; i++) {
       uint16_t* volume_hidden_params[kNumChannels] = {&volume_att_pots[i], &volume_att_pots[i], &volume_att_pots[i], &volume_att_pots[i]};
       potControllers[i].Init(&volume_pots[i], volume_hidden_params);
@@ -29,7 +31,8 @@ class UI {
 
       volume_att_pots[i] = pan_att_pots[i] = 65535;
     }
-  };
+
+  }
   void Poll();
   void DoEvents();
 

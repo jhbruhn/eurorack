@@ -55,7 +55,7 @@ class PotController {
   PotController() { }
   ~PotController() { }
 
-  inline void Init(
+  void Init(
       uint16_t* main_parameter,
       uint16_t* hidden_parameters[hidden_parameter_count]) // this pot controller always works on values between 0 and 65535
   {

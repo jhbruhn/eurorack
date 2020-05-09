@@ -48,10 +48,9 @@ void UI::Poll()
   }
 
   for (size_t i = 0; i < kNumChannels * 2; i++) {
-    if (i >= kNumChannels) {
-      processors[i - kNumChannels].set_pan_offset(adc->value(ADC_GROUP_POT + i) - 32767L);
-    } else {
-      processors[i].set_volume_offset(adc->value(ADC_GROUP_POT + i));
+    if (i < kNumChannels) {
+      processors[i].set_pan_offset(pan_pots[i] - 32767);
+      processors[i].set_volume_offset(volume_pots[i]);
     }
     if (abs(previous_pot_values[i] - adc->value(ADC_GROUP_POT + i)) > 1900) {
       previous_pot_values[i] = adc->value(ADC_GROUP_POT + i);
