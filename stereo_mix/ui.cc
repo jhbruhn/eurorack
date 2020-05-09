@@ -13,7 +13,7 @@ void UI::Poll()
       press_time[i] = HAL_GetTick();
       ignore_release[i] = false;
       for (size_t j = 0; j < kNumChannels * 2; j++)
-        potControllers[j].Lock();
+        potControllers[j].Lock(i);
     }
     if (switches->pressed(Switch(i)) && !ignore_release[i]) {
       bool suppress_release_hidden_parameters = false;

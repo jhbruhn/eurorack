@@ -39,9 +39,8 @@
 
 #pragma once
 
-#include "stmlib/stmlib.h"
 #include "stmlib/dsp/dsp.h"
-
+#include "stmlib/stmlib.h"
 
 enum PotState {
   POT_STATE_TRACKING,
@@ -50,42 +49,51 @@ enum PotState {
   POT_STATE_CATCHING_UP
 };
 
+template<size_t hidden_parameter_count>
 class PotController {
- public:
+  public:
   PotController() { }
   ~PotController() { }
 
   inline void Init(
       uint16_t* main_parameter,
-      uint16_t* hidden_parameter // this pot controller always works on values between 0 and 65535
-      ) {
+      uint16_t* hidden_parameters[hidden_parameter_count]) // this pot controller always works on values between 0 and 65535
+  {
     state_ = POT_STATE_TRACKING;
     was_catching_up_ = false;
 
     main_parameter_ = main_parameter;
-    hidden_parameter_ = hidden_parameter;
+    current_hidden_parameter_ = 0;
+
+    for(size_t i = 0; i < hidden_parameter_count; i++)
+      hidden_parameters_[i] = hidden_parameters[i];
 
     value_ = 0;
     stored_value_ = 0;
     previous_value_ = 0;
   }
 
-  inline void Lock() {
+  inline void Lock(uint8_t selected_parameter)
+  {
+    if (selected_parameter > hidden_parameter_count)
+      return;
     if (state_ == POT_STATE_LOCKING || state_ == POT_STATE_HIDDEN_PARAMETER) {
       return;
     }
-    if (hidden_parameter_) {
+    if (hidden_parameters_[selected_parameter]) {
+      current_hidden_parameter_ = selected_parameter;
       was_catching_up_ = state_ == POT_STATE_CATCHING_UP;
       state_ = POT_STATE_LOCKING;
     }
   }
 
-
-  inline bool editing_hidden_parameter() const {
+  inline bool editing_hidden_parameter() const
+  {
     return state_ == POT_STATE_HIDDEN_PARAMETER;
   }
 
-  inline void Unlock() {
+  inline void Unlock()
+  {
     if (state_ == POT_STATE_HIDDEN_PARAMETER || was_catching_up_) {
       state_ = POT_STATE_CATCHING_UP;
     } else {
@@ -93,11 +101,13 @@ class PotController {
     }
   }
 
-  inline void Realign() {
+  inline void Realign()
+  {
     state_ = POT_STATE_TRACKING;
   }
 
-  inline void ProcessControlRate(uint16_t adc_value) {
+  inline void ProcessControlRate(uint16_t adc_value)
+  {
     value_ += (adc_value - value_) >> 6;
     CONSTRAIN(value_, 0, 65535);
     // approximately this:
@@ -108,63 +118,60 @@ class PotController {
     }
   }
 
-  inline void ProcessUIRate() {
+  inline void ProcessUIRate()
+  {
     switch (state_) {
-      case POT_STATE_TRACKING:
-        previous_value_ = value_;
-        break;
+    case POT_STATE_TRACKING:
+      previous_value_ = value_;
+      break;
 
-      case POT_STATE_LOCKING:
-        if (abs(value_ - previous_value_) > 1966) {
-          stored_value_ = previous_value_;
-          CONSTRAIN(value_, 0, 65535);
-          *hidden_parameter_ = value_;
-          state_ = POT_STATE_HIDDEN_PARAMETER;
-          previous_value_ = value_;
-        }
-        break;
-
-      case POT_STATE_HIDDEN_PARAMETER:
+    case POT_STATE_LOCKING:
+      if (abs(value_ - previous_value_) > 1966) {
+        stored_value_ = previous_value_;
         CONSTRAIN(value_, 0, 65535);
-        *hidden_parameter_ = value_;
+        *hidden_parameters_[current_hidden_parameter_] = value_;
+        state_ = POT_STATE_HIDDEN_PARAMETER;
         previous_value_ = value_;
-        break;
+      }
+      break;
 
-      case POT_STATE_CATCHING_UP:
-        {
-          if (abs(value_ - previous_value_) > 327) {
-            int32_t delta = value_ - previous_value_;
+    case POT_STATE_HIDDEN_PARAMETER:
+      CONSTRAIN(value_, 0, 65535);
+      *hidden_parameters_[current_hidden_parameter_] = value_;
+      previous_value_ = value_;
+      break;
 
-            int32_t skew_ratio = delta > 0
-              ? (65600 - stored_value_) / (65600 - previous_value_)
-              : (66 + stored_value_) / (66 + previous_value_);
-            CONSTRAIN(skew_ratio, 6553, 655350);
+    case POT_STATE_CATCHING_UP: {
+      if (abs(value_ - previous_value_) > 327) {
+        int32_t delta = value_ - previous_value_;
 
-            stored_value_ += (skew_ratio * delta) >> 11;
-            CONSTRAIN(stored_value_, 0, 65535);
+        int32_t skew_ratio = delta > 0
+            ? (65600 - stored_value_) / (65600 - previous_value_)
+            : (66 + stored_value_) / (66 + previous_value_);
+        CONSTRAIN(skew_ratio, 6553, 655350);
 
-            if (abs(stored_value_ - value_) < 327) {
-              state_ = POT_STATE_TRACKING;
-            }
-            previous_value_ = value_;
-            *main_parameter_ = stored_value_;
-          }
+        stored_value_ += (skew_ratio * delta) >> 11;
+        CONSTRAIN(stored_value_, 0, 65535);
+
+        if (abs(stored_value_ - value_) < 327) {
+          state_ = POT_STATE_TRACKING;
         }
-        break;
+        previous_value_ = value_;
+        *main_parameter_ = stored_value_;
+      }
+    } break;
     }
   }
 
- private:
+  private:
   PotState state_;
   bool was_catching_up_;
-
   uint16_t* main_parameter_;
-  uint16_t* hidden_parameter_;
+  uint16_t* hidden_parameters_[hidden_parameter_count];
+  uint8_t current_hidden_parameter_;
   int32_t value_;
   int32_t stored_value_;
   int32_t previous_value_;
 
   DISALLOW_COPY_AND_ASSIGN(PotController);
 };
-
-

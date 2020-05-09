@@ -22,8 +22,10 @@ class UI {
     queue.Init();
 
     for (size_t i = 0; i < kNumChannels; i++) {
-      potControllers[i].Init(&volume_pots[i], &volume_att_pots[i]);
-      potControllers[i + kNumChannels].Init(&pan_pots[i], &pan_att_pots[i]);
+      uint16_t* volume_hidden_params[kNumChannels] = {&volume_att_pots[i], &volume_att_pots[i], &volume_att_pots[i], &volume_att_pots[i]};
+      potControllers[i].Init(&volume_pots[i], volume_hidden_params);
+      uint16_t* pan_hidden_params[kNumChannels] = {&pan_att_pots[i], &pan_att_pots[i], &pan_att_pots[i], &pan_att_pots[i]};
+      potControllers[i + kNumChannels].Init(&pan_pots[i], pan_hidden_params);
 
       volume_att_pots[i] = pan_att_pots[i] = 65535;
     }
@@ -62,5 +64,5 @@ class UI {
   uint32_t last_pan_pot_touch[kNumChannels];
   uint32_t last_vol_pot_touch[kNumChannels];
 
-  PotController potControllers[kNumChannels * 2]; // todo: count
+  PotController<kNumChannels> potControllers[kNumChannels * 2]; // todo: count
 };
