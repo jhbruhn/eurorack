@@ -89,6 +89,9 @@ void UI::TaskProcessPotControllers()
   for (size_t i = 0; i < kNumChannels; i++) {
     potControllers[i].ProcessUIRate();
     potControllers[i + kNumChannels].ProcessUIRate();
+
+    processors[i].set_volume_attenuverter(this->volume_att_pots[i] - 32767);
+    processors[i].set_pan_attenuverter(this->pan_att_pots[i] - 32767);
   }
 }
 

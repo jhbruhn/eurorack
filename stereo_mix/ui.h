@@ -29,7 +29,7 @@ class UI {
       uint16_t* pan_hidden_params[kNumChannels] = {&pan_att_pots[i], &pan_att_pots[i], &pan_att_pots[i], &pan_att_pots[i]};
       potControllers[i + kNumChannels].Init(&pan_pots[i], pan_hidden_params);
 
-      volume_att_pots[i] = pan_att_pots[i] = 65535;
+      volume_att_pots[i] = pan_att_pots[i] = 32767 + (32767 / 2);
     }
 
   }
