@@ -99,23 +99,23 @@ void UI::TaskDrawLeds()
 {
   for (size_t i = 0; i < kNumChannels; i++) {
     if (potControllers[i].editing_hidden_parameter()) {
-      leds->set_intensity(i, abs(volume_att_pots[i] - 32767) >> 7);
+      leds->set_intensity(i, abs(volume_att_pots[i] - 32767) << 1);
       leds->set_blinking(i, volume_att_pots[i] - 32767 < 0);
     } else if (potControllers[i + kNumChannels].editing_hidden_parameter()) {
-      leds->set_intensity(i, abs(pan_att_pots[i] - 32767) >> 7);
+      leds->set_intensity(i, abs(pan_att_pots[i] - 32767) << 1);
       leds->set_blinking(i, pan_att_pots[i] - 32767 < 0);
     } else {
       if (system_clock.milliseconds() - last_vol_pot_touch[i] < kShowChangedValueMilliseconds) {
         // show volume
-        leds->set_intensity(i, volume_pots[i] >> 8);
+        leds->set_intensity(i, volume_pots[i]);
         leds->set_blinking(i, false);
       } else if (system_clock.milliseconds() - last_pan_pot_touch[i] < kShowChangedValueMilliseconds) {
         // show panning
-        leds->set_intensity(i, abs(pan_pots[i] - 32767) >> 7);
+        leds->set_intensity(i, abs(pan_pots[i] - 32767) << 1);
         leds->set_blinking(i, pan_pots[i] - 32767 < 0);
       } else {
         // show volume if not muted
-        leds->set_intensity(i, processors[i].linear_volume() >> (8));
+        leds->set_intensity(i, processors[i].linear_volume());
         leds->set_blinking(i, false);
       }
     }

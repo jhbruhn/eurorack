@@ -38,6 +38,9 @@ class Processor {
   uint16_t previous_vol;
   uint16_t linear_vol;
 
+  int16_t cv_input_pan = 0;
+  int16_t cv_input_vol = 0;
+
   uint16_t vol_offset = 0;
   int16_t pan_offset = 0;
   int16_t vol_att;

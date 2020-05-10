@@ -1,10 +1,12 @@
 #pragma once
 
 #include "../resources.h"
+#include "stmlib/utils/dsp.h"
 #include "stm32f0xx_hal_gpio.h"
 #include <stm32f0xx_hal.h>
 
 using namespace stereo_mix;
+using namespace stmlib;
 
 const uint8_t kNumChannels = 4;
 
@@ -31,10 +33,6 @@ class Leds {
   }
   void Write()
   {
-    pwm_counter++;
-    pwm_counter &= 0x1ff; // equals to if(pwm_counter > 512) pwm_counter = 0;
-    blink_counter++;
-    if(blink_counter > 0x2000) blink_counter = 0;
 #ifdef DEBUG_PIN
     for (size_t i = 0; i < kNumChannels - 1; i++) {
 #else
@@ -42,17 +40,23 @@ class Leds {
 
 #endif
       bool in_blink_phase = blink_counter > (0x2000 / 2) || !blinking[i];
-      if (intensities[0] && lut_led_gamma[intensities[i]] >= pwm_counter && in_blink_phase) {
+      if (intensities[i] && lut_led_gamma[intensities[i] >> 8] >= pwm_counter && in_blink_phase) {
         kGpioPorts[i]->BSRR |= kGpioPins[i];
       } else {
         kGpioPorts[i]->BRR |= kGpioPins[i];
       }
     }
+    pwm_counter++;
+    blink_counter++;
+    if(blink_counter > 0x2000) blink_counter = 0;
   }
-  void set_intensity(uint8_t channel, uint8_t intensity)
+
+
+  void set_intensity(uint8_t channel, uint16_t intensity)
   {
     if (channel >= kNumChannels)
       return;
+
     intensities[channel] = intensity;
   }
   void set_blinking(uint8_t channel, bool blink)
@@ -63,8 +67,8 @@ class Leds {
   }
 
   private:
-  uint16_t pwm_counter;
+  uint8_t pwm_counter;
   uint16_t blink_counter;
-  uint8_t intensities[kNumChannels];
+  uint16_t intensities[kNumChannels];
   bool blinking[kNumChannels];
 };

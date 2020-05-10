@@ -20,12 +20,11 @@ fig, ax = plt.subplots()
 ax.plot(space, values)
 other_values = OUTPUT_RESOLUTION - np.flip(values)
 ax.plot(space, OUTPUT_RESOLUTION - (np.flip(values)))
-ax.plot(space, values / 2 + other_values / 2)
 
 ax.set(xlabel='space', ylabel='values')
 ax.grid()
 
-# plt.show()
+#plt.show()
 
 
 # Left pan Lookup table
@@ -55,7 +54,7 @@ print(r_pan.size)
 # led gamma correction
 gamma = 2.4
 max_in = 255
-max_out = 511
+max_out = 255
 input_vals = np.linspace(0, max_in, num=max_in + 1)
 gamma_correction = ((input_vals / max_in) ** gamma) * max_out + 0.5
 lookup_tables_u16.append(('led_gamma', np.floor(gamma_correction)))
