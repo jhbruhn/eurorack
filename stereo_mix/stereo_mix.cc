@@ -110,11 +110,11 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 {
   if (htim == &htim3) {
-    leds.Write();
+    leds.Write(); // 53571 Hz
     return;
   }
   if (htim == &htim6) {
-    WriteOutputs();
+    WriteOutputs(); // 4076 Hz
   }
 }
 }
@@ -133,7 +133,7 @@ void Init(void)
 
   HAL_NVIC_SetPriority(TIM3_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(TIM3_IRQn);
-  htim3.Init.Prescaler = 10;
+  htim3.Init.Prescaler = 8;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim3.Init.Period = 128;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -143,9 +143,9 @@ void Init(void)
 
   HAL_NVIC_SetPriority(TIM6_IRQn, 1, 0);
   HAL_NVIC_EnableIRQ(TIM6_IRQn);
-  htim6.Init.Prescaler = 64;
+  htim6.Init.Prescaler = 47;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 96; // 512 without optimize
+  htim6.Init.Period = 256; // 96 without optimize
   htim6.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim6.Init.RepetitionCounter = 0;
   HAL_TIM_Base_Init(&htim6);
@@ -154,23 +154,20 @@ void Init(void)
   system_clock.Init();
 }
 
+uint16_t out[kNumChannels][2];
+
 void WriteOutputs(void)
 {
-  uint16_t out[kNumChannels][2];
-    DEBUG_ON
+  for (int i = 0; i < kNumChannels; i++) {
+    dacs.Write16(i, 0, out[i][0]);
+    dacs.Write16(i, 1, out[i][1]);
+  }
   for (int i = 0; i < kNumChannels; i++) {
     int16_t cvs[2];
     cvs[0] = 65535 - adc.cv_value(AdcChannel(ADC_CHANNEL_PAN_1 + i));
     cvs[1] = adc.cv_value(AdcChannel(ADC_CHANNEL_VOL_1 + i));
     processors[i].Process(cvs, out[i]);
   }
-  for (int i = 0; i < kNumChannels; i++) {
-    dacs.Write16(i, 0, out[i][0]);
-    //dacs.Write16(0, out[i][0]);
-    dacs.Write16(i, 1, out[i][1]);
-    //dacs[i + 4].Write16(1, out[i][1]);
-  }
-    DEBUG_OFF
 }
 
 int main(void)
@@ -179,6 +176,7 @@ int main(void)
   SystemClock_Config();
 
   Init();
+  ui.Init();
 
   while (true) {
     ui.DoEvents();

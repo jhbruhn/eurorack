@@ -13,8 +13,8 @@ void Processor::Process(int16_t cvs[], uint16_t* outs)
   uint32_t value_r;
 
   // dirty low pass
-  this->cv_input_pan = ((cvs[0] - this->cv_input_pan) >> 3);
-  this->cv_input_vol = ((cvs[1] - this->cv_input_vol) >> 3);
+  this->cv_input_pan += ((cvs[0] - this->cv_input_pan) >> 4);
+  this->cv_input_vol += ((cvs[1] - this->cv_input_vol) >> 5);
 
   uint16_t pan_pot = (pan_offset + 32767L);
   uint16_t vol_pot = (vol_offset);
@@ -35,7 +35,7 @@ void Processor::Process(int16_t cvs[], uint16_t* outs)
   uint16_t vol_cv_absu16 = abs(vol_cv) << 1;
   uint16_t vol_cv_exp = Interpolate124(lut_linear_to_exp, vol_cv_absu16);
   uint16_t vol_cv_log = 65535 - InverseInterpolate124(lut_linear_to_exp, vol_cv_absu16);
-  uint32_t vol_cv_pre = (Mix(static_cast<uint16_t>(vol_cv_exp >> 1), vol_cv_log >> 1, log_exp_mix_cv) << 3) * 3;
+  uint32_t vol_cv_pre = (Mix(static_cast<uint16_t>(vol_cv_exp >> 1), vol_cv_log >> 1, log_exp_mix_cv) << 1) * 2;
   vol += vol_cv > 0 ? vol_cv_pre : -vol_cv_pre;
   vol *= !mute;
 
@@ -43,9 +43,9 @@ void Processor::Process(int16_t cvs[], uint16_t* outs)
 
   this->previous_vol = vol;
 
-  int32_t pan_cv = (cv_input_pan * static_cast<int32_t>(pan_att)) >> 15; // full attenuate gives 3x amplification :)
+  int32_t pan_cv = (cv_input_pan * static_cast<int32_t>(pan_att)) >> 15; // full attenuate gives 2x amplification :)
   pan_cv = Clip16(pan_cv);
-  int32_t pan = pan_pot + ((pan_cv << 3) * 4);
+  int32_t pan = pan_pot + ((pan_cv) * 2);
   pan = ClipU16(pan);
 
   value_l = (lut_left_sin_pan[pan >> 4] * vol) >> 16;
