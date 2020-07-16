@@ -25,7 +25,6 @@ void Processor::Process(int16_t cvs[], uint16_t* outs)
   // calculate value for ui
   int32_t lin = vol_offset + (vol_cv << 3) * 3;
   lin = ClipU16(lin);
-  lin *= !mute;
   this->linear_vol = lin;
 
   uint16_t vol_pot_exp = Interpolate124(lut_linear_to_exp, vol_pot);
@@ -40,8 +39,6 @@ void Processor::Process(int16_t cvs[], uint16_t* outs)
   vol *= !mute;
 
   vol = ClipU16(vol);
-
-  this->previous_vol = vol;
 
   int32_t pan_cv = (cv_input_pan * static_cast<int32_t>(pan_att)) >> 15; // full attenuate gives 2x amplification :)
   pan_cv = Clip16(pan_cv);

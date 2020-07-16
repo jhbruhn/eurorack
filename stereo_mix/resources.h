@@ -49,15 +49,18 @@ extern const uint8_t* lookup_table_u8_table[];
 extern const uint16_t lut_linear_to_exp[];
 extern const uint16_t lut_left_sin_pan[];
 extern const uint16_t lut_right_cos_pan[];
-extern const uint16_t lut_led_gamma[];
+extern const uint16_t lut_led_red_gamma[];
+extern const uint16_t lut_led_green_gamma[];
 #define LUT_LINEAR_TO_EXP 0
 #define LUT_LINEAR_TO_EXP_SIZE 4096
 #define LUT_LEFT_SIN_PAN 1
 #define LUT_LEFT_SIN_PAN_SIZE 4096
 #define LUT_RIGHT_COS_PAN 2
 #define LUT_RIGHT_COS_PAN_SIZE 4096
-#define LUT_LED_GAMMA 3
-#define LUT_LED_GAMMA_SIZE 256
+#define LUT_LED_RED_GAMMA 3
+#define LUT_LED_RED_GAMMA_SIZE 4096
+#define LUT_LED_GREEN_GAMMA 4
+#define LUT_LED_GREEN_GAMMA_SIZE 4096
 
 }  // namespace stereo_mix
 

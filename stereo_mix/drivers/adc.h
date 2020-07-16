@@ -38,15 +38,7 @@ class Adc {
 
   inline int16_t cv_value(AdcChannel channel)
   {
-#ifdef NEW_HARDWARE
-    return this->values_[ADC_GROUP_CV + channel] - 32768;
-#else
-    if (channel >= ADC_CHANNEL_PAN_1) {
-      return this->values_[ADC_GROUP_CV + channel] - 32768;
-    } else {
-      return this->values_[ADC_GROUP_CV + channel] >> 1;
-    }
-#endif
+    return -(this->values_[ADC_GROUP_CV + channel] - 32768);
   }
 
   inline uint16_t value(int32_t channel) const

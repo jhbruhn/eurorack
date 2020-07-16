@@ -10,8 +10,8 @@ namespace stereo_mix {
 GPIO_TypeDef* kMDacPorts[] = { GPIOB, GPIOB, GPIOB, GPIOB };
 const uint16_t kMDacPins[] = { GPIO_PIN_8, GPIO_PIN_9, GPIO_PIN_10, GPIO_PIN_11 };
 
-GPIO_TypeDef* kOffsetDacPorts[] = { GPIOA, GPIOA, GPIOA, GPIOA };
-const uint16_t kOffsetDacPins[] = { GPIO_PIN_8, GPIO_PIN_9, GPIO_PIN_10, GPIO_PIN_11 };
+GPIO_TypeDef* kOffsetDacPorts[] = { GPIOA, GPIOB, GPIOB, GPIOC };
+const uint16_t kOffsetDacPins[] = { GPIO_PIN_15, GPIO_PIN_7, GPIO_PIN_15, GPIO_PIN_13 };
 
 class Dacs { // MCP4xx2 dac implementation
   public:
@@ -19,6 +19,7 @@ class Dacs { // MCP4xx2 dac implementation
   {
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
+    __HAL_RCC_GPIOC_CLK_ENABLE();
     __HAL_RCC_SPI1_CLK_ENABLE();
 
     HAL_NVIC_SetPriority(SPI1_IRQn, 0, 0);

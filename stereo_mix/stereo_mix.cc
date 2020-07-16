@@ -127,15 +127,16 @@ void Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
+  __HAL_RCC_TIM1_CLK_ENABLE();
   __HAL_RCC_TIM3_CLK_ENABLE();
   __HAL_RCC_TIM6_CLK_ENABLE();
   __HAL_RCC_SPI1_CLK_ENABLE();
 
   HAL_NVIC_SetPriority(TIM3_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(TIM3_IRQn);
-  htim3.Init.Prescaler = 8;
+  htim3.Init.Prescaler = 27;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 128;
+  htim3.Init.Period = 65535 >> 2;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.RepetitionCounter = 0;
   HAL_TIM_Base_Init(&htim3);
@@ -177,7 +178,6 @@ int main(void)
 
   Init();
   ui.Init();
-
   while (true) {
     ui.DoEvents();
   }

@@ -3,7 +3,7 @@
 #include <stm32f0xx_hal.h>
 
 const int kLongPressDuration = 2000;
-const int kShowChangedValueMilliseconds = 1000;
+const int kShowChangedValueMilliseconds = 600;
 
 void UI::Poll()
 {
@@ -99,24 +99,17 @@ void UI::TaskDrawLeds()
 {
   for (size_t i = 0; i < kNumChannels; i++) {
     if (potControllers[i].editing_hidden_parameter()) {
-      leds->set_intensity(i, abs(volume_att_pots[i] - 32767) << 1);
-      leds->set_blinking(i, volume_att_pots[i] - 32767 < 0);
+      leds->set_intensity_signed(i, volume_att_pots[i]);
     } else if (potControllers[i + kNumChannels].editing_hidden_parameter()) {
-      leds->set_intensity(i, abs(pan_att_pots[i] - 32767) << 1);
-      leds->set_blinking(i, pan_att_pots[i] - 32767 < 0);
+      leds->set_intensity_signed(i, pan_att_pots[i] - 32767);
     } else {
-      if (system_clock.milliseconds() - last_vol_pot_touch[i] < kShowChangedValueMilliseconds) {
-        // show volume
-        leds->set_intensity(i, volume_pots[i]);
-        leds->set_blinking(i, false);
-      } else if (system_clock.milliseconds() - last_pan_pot_touch[i] < kShowChangedValueMilliseconds) {
+      // TODO: refactor
+      if (system_clock.milliseconds() - last_pan_pot_touch[i] < kShowChangedValueMilliseconds) {
         // show panning
-        leds->set_intensity(i, abs(pan_pots[i] - 32767) << 1);
-        leds->set_blinking(i, pan_pots[i] - 32767 < 0);
+        leds->set_intensity_signed(i, pan_pots[i] - 32767);
       } else {
         // show volume if not muted
-        leds->set_intensity(i, processors[i].linear_volume());
-        leds->set_blinking(i, false);
+        leds->set_intensity_unsigned(i, processors[i].linear_volume(), processors[i].is_muted() ? LED_COLOR_RED : LED_COLOR_GREEN);
       }
     }
   }

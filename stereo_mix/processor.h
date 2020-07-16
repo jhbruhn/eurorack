@@ -30,12 +30,15 @@ class Processor {
     mute = m;
   }
 
+  inline bool is_muted() {
+    return mute;
+  }
+
   uint16_t linear_volume() {
     return linear_vol;
   }
 
   private:
-  uint16_t previous_vol;
   uint16_t linear_vol;
 
   int16_t cv_input_pan = 0;
@@ -45,7 +48,7 @@ class Processor {
   int16_t pan_offset = 0;
   int16_t vol_att;
   int16_t pan_att;
-  uint16_t log_exp_mix_cv  = 32767;//32767; // -> linear
+  uint16_t log_exp_mix_cv  = 32767; // -> linear
   uint16_t log_exp_mix_pot = 0; // -> exp
 
 
