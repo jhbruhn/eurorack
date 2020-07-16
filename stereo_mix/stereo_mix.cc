@@ -1,5 +1,5 @@
 
-#define ENABLE_DEBUG_PIN
+//#define ENABLE_DEBUG_PIN
 #include "drivers/debug_pin.h"
 
 #include "drivers/adc.h"

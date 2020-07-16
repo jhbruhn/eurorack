@@ -29,6 +29,8 @@ static const uint16_t kGpioPins[] = { GPIO_PIN_8, GPIO_PIN_9, GPIO_PIN_10, GPIO_
 static GPIO_TypeDef* kGpioColorPorts[] = {GPIOC, GPIOC, GPIOF, GPIOF};
 static const uint16_t kGpioColorPins[] = {GPIO_PIN_14, GPIO_PIN_15, GPIO_PIN_6, GPIO_PIN_7};
 
+static const uint32_t timer_channel[] = {TIM_CHANNEL_1, TIM_CHANNEL_2, TIM_CHANNEL_3, TIM_CHANNEL_4};
+
 class Leds {
   public:
   Leds()
@@ -68,24 +70,18 @@ class Leds {
     sConfigOC.Pulse = 100;
     sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
     sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-    HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1);
-    HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2);
-    HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_3);
-    HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_4);
 
     for(size_t i = 0; i < kNumChannels; i++) {
+      HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, timer_channel[i]);
       gpioInit.Mode = GPIO_MODE_AF_PP;
       gpioInit.Pin = kGpioPins[i];
       gpioInit.Pull = GPIO_NOPULL;
       gpioInit.Speed = GPIO_SPEED_FREQ_MEDIUM;
       gpioInit.Alternate = GPIO_AF2_TIM1;
       HAL_GPIO_Init(kGpioPorts[i], &gpioInit);
+      HAL_TIM_PWM_Start(&htim1, timer_channel[i]);
     }
 
-    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
-    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
   }
 
   void Write()
@@ -101,13 +97,13 @@ class Leds {
 
       if(targetColor == LED_COLOR_RED) {
         HAL_GPIO_WritePin(kGpioColorPorts[i], kGpioColorPins[i], GPIO_PIN_SET);
-        intensity = 65534 - lut_led_red_gamma[intensity >> 4];
+        intensity = 65535 - lut_led_red_gamma[intensity >> 4];
       } else if(targetColor == LED_COLOR_GREEN) {
         HAL_GPIO_WritePin(kGpioColorPorts[i], kGpioColorPins[i], GPIO_PIN_RESET);
         intensity = lut_led_green_gamma[intensity >> 4];
       }
 
-      __HAL_TIM_SET_COMPARE(&htim1, i, intensity >> 4);
+      __HAL_TIM_SET_COMPARE(&htim1, timer_channel[i], intensity >> 4);
     }
   }
 
