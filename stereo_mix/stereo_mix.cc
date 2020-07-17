@@ -1,7 +1,3 @@
-
-//#define ENABLE_DEBUG_PIN
-#include "drivers/debug_pin.h"
-
 #include "drivers/adc.h"
 #include "drivers/dacs.h"
 #include "drivers/leds.h"

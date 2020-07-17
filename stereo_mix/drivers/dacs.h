@@ -7,11 +7,11 @@
 
 namespace stereo_mix {
 
-GPIO_TypeDef* kMDacPorts[] = { GPIOB, GPIOB, GPIOB, GPIOB };
-const uint16_t kMDacPins[] = { GPIO_PIN_8, GPIO_PIN_9, GPIO_PIN_10, GPIO_PIN_11 };
+GPIO_TypeDef* kOffsetDacPorts[] = { GPIOB, GPIOB, GPIOB, GPIOB };
+const uint16_t kOffsetDacPins[] = { GPIO_PIN_8, GPIO_PIN_9, GPIO_PIN_10, GPIO_PIN_11 };
 
-GPIO_TypeDef* kOffsetDacPorts[] = { GPIOA, GPIOB, GPIOB, GPIOC };
-const uint16_t kOffsetDacPins[] = { GPIO_PIN_15, GPIO_PIN_7, GPIO_PIN_15, GPIO_PIN_13 };
+GPIO_TypeDef* kMDacPorts[] = { GPIOA, GPIOB, GPIOB, GPIOC };
+const uint16_t kMDacPins[] = { GPIO_PIN_15, GPIO_PIN_7, GPIO_PIN_15, GPIO_PIN_13 };
 
 class Dacs { // MCP4xx2 dac implementation
   public:
@@ -89,11 +89,14 @@ class Dacs { // MCP4xx2 dac implementation
     value |= 1 << 12;        // shutdown always set to 1
 
     kMDacPorts[device]->BRR |= kMDacPins[device];
-    kOffsetDacPorts[device]->BRR |= kOffsetDacPins[device];
     SPI1->DR = value;
     while ((SPI1->SR & (SPI_SR_TXE | SPI_SR_BSY)) != SPI_SR_TXE)
       ;
     kMDacPorts[device]->BSRR |= kMDacPins[device];
+    kOffsetDacPorts[device]->BRR |= kOffsetDacPins[device];
+    SPI1->DR = value;
+    while ((SPI1->SR & (SPI_SR_TXE | SPI_SR_BSY)) != SPI_SR_TXE)
+      ;
     kOffsetDacPorts[device]->BSRR |= kOffsetDacPins[device];
   };
 

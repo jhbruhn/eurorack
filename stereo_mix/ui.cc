@@ -99,7 +99,7 @@ void UI::TaskDrawLeds()
 {
   for (size_t i = 0; i < kNumChannels; i++) {
     if (potControllers[i].editing_hidden_parameter()) {
-      leds->set_intensity_signed(i, volume_att_pots[i]);
+      leds->set_intensity_signed(i, volume_att_pots[i] - 32767);
     } else if (potControllers[i + kNumChannels].editing_hidden_parameter()) {
       leds->set_intensity_signed(i, pan_att_pots[i] - 32767);
     } else {
