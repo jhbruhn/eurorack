@@ -56,7 +56,7 @@ class Leds {
 
     htim1.Init.Prescaler = 1;
     htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim1.Init.Period = 1024; // 12 bit
+    htim1.Init.Period = 1024; // 10 bit
     htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     HAL_TIM_PWM_Init(&htim1);
 
