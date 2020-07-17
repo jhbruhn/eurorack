@@ -58,9 +58,9 @@ extern const uint16_t lut_led_green_gamma[];
 #define LUT_RIGHT_COS_PAN 2
 #define LUT_RIGHT_COS_PAN_SIZE 4096
 #define LUT_LED_RED_GAMMA 3
-#define LUT_LED_RED_GAMMA_SIZE 2049
+#define LUT_LED_RED_GAMMA_SIZE 1024
 #define LUT_LED_GREEN_GAMMA 4
-#define LUT_LED_GREEN_GAMMA_SIZE 2049
+#define LUT_LED_GREEN_GAMMA_SIZE 1024
 
 }  // namespace stereo_mix
 

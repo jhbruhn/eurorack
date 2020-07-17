@@ -56,7 +56,7 @@ class Leds {
 
     htim1.Init.Prescaler = 1;
     htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim1.Init.Period = 4095; // 12 bit
+    htim1.Init.Period = 1024; // 12 bit
     htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     HAL_TIM_PWM_Init(&htim1);
 
@@ -97,13 +97,13 @@ class Leds {
 
       if(targetColor == LED_COLOR_RED) {
         HAL_GPIO_WritePin(kGpioColorPorts[i], kGpioColorPins[i], GPIO_PIN_SET);
-        intensity = 65535 - lut_led_red_gamma[intensity >> 5];
+        intensity = 65535 - lut_led_red_gamma[intensity >> 6];
       } else if(targetColor == LED_COLOR_GREEN) {
         HAL_GPIO_WritePin(kGpioColorPorts[i], kGpioColorPins[i], GPIO_PIN_RESET);
-        intensity = lut_led_green_gamma[intensity >> 5];
+        intensity = lut_led_green_gamma[intensity >> 6];
       }
 
-      __HAL_TIM_SET_COMPARE(&htim1, timer_channel[i], intensity >> 4);
+      __HAL_TIM_SET_COMPARE(&htim1, timer_channel[i], (intensity >> 6));
     }
   }
 

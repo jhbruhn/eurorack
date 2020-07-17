@@ -52,12 +52,13 @@ lookup_tables_u16.append(('right_cos_pan', r_pan))
 print(r_pan.size)
 
 # led gamma correction
-gamma_green = 2.4
+gamma_green = 2.7
 gamma_red = 2.8
-max_in = 2048
+max_in = 1024
 max_out = 65535
-input_vals = np.linspace(0, max_in, num=max_in + 1)
+input_vals = np.linspace(0, max_in, num=max_in)
 gamma_correction_red   = ((input_vals / max_in) ** gamma_red) * max_out + 0.5
 gamma_correction_green = ((input_vals / max_in) ** gamma_green) * max_out + 0.5
 lookup_tables_u16.append(('led_red_gamma', np.floor(gamma_correction_red)))
 lookup_tables_u16.append(('led_green_gamma', np.floor(gamma_correction_green)))
+
