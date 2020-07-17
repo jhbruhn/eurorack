@@ -97,10 +97,10 @@ class Leds {
 
       if(targetColor == LED_COLOR_RED) {
         HAL_GPIO_WritePin(kGpioColorPorts[i], kGpioColorPins[i], GPIO_PIN_SET);
-        intensity = 65535 - lut_led_red_gamma[intensity >> 4];
+        intensity = 65535 - lut_led_red_gamma[intensity >> 5];
       } else if(targetColor == LED_COLOR_GREEN) {
         HAL_GPIO_WritePin(kGpioColorPorts[i], kGpioColorPins[i], GPIO_PIN_RESET);
-        intensity = lut_led_green_gamma[intensity >> 4];
+        intensity = lut_led_green_gamma[intensity >> 5];
       }
 
       __HAL_TIM_SET_COMPARE(&htim1, timer_channel[i], intensity >> 4);

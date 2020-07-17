@@ -108,7 +108,7 @@ class PotController {
 
   inline void ProcessControlRate(uint16_t adc_value)
   {
-    value_ += (adc_value - value_) >> 6;
+    value_ += (adc_value - value_) >> 5;
     CONSTRAIN(value_, 0, 65535);
     // approximately this:
     // ONE_POLE(value_, adc_value, 0.01f);
@@ -150,14 +150,16 @@ class PotController {
             : (66 + stored_value_) / (66 + previous_value_);
         CONSTRAIN(skew_ratio, 6553, 655350);
 
-        stored_value_ += (skew_ratio * delta) >> 11;
+        stored_value_ += (skew_ratio * delta) >> 12;
         CONSTRAIN(stored_value_, 0, 65535);
 
         if (abs(stored_value_ - value_) < 327) {
           state_ = POT_STATE_TRACKING;
         }
-        previous_value_ = value_;
         *main_parameter_ = stored_value_;
+        previous_value_ = value_;/*
+        state_ = POT_STATE_TRACKING;
+        *main_parameter_ = value_;*/
       }
     } break;
     }

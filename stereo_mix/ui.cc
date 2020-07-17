@@ -15,6 +15,7 @@ void UI::Poll()
       for (size_t j = 0; j < kNumChannels * 2; j++)
         potControllers[j].Lock(i);
     }
+
     if (switches->pressed(Switch(i)) && !ignore_release[i]) {
       bool suppress_release_hidden_parameters = false;
       for (size_t j = 0; j < kNumChannels * 2; j++) {
@@ -26,6 +27,7 @@ void UI::Poll()
         ignore_release[i] = true;
       }
     }
+
     if (switches->released(Switch(i))) {
       bool suppress_release_hidden_parameters = false;
       for (size_t j = 0; j < kNumChannels * 2; j++) {
@@ -82,6 +84,8 @@ void UI::OnSwitchReleased(const Event& e)
   for (size_t i = 0; i < kNumChannels; i++) {
     last_pan_pot_touch[i] = last_vol_pot_touch[i] = 0;
   }
+
+  // todo: save state
 }
 
 void UI::TaskProcessPotControllers()
