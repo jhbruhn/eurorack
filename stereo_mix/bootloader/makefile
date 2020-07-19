@@ -1,4 +1,3 @@
-
 # Copyright 2013 Emilie Gillet.
 #
 # Author: Emilie Gillet (emilie.o.gillet@gmail.com)
@@ -24,25 +23,19 @@
 # See http://creativecommons.org/licenses/MIT/ for more information.
 
 # System specifications
-F_CRYSTAL           = 8000000L
-F_CPU               = 72000000L
-SYSCLOCK            = SYSCLK_FREQ_72MHz
-FAMILY              = f0xx
-APPLICATION_MEDIUM  = TRUE
-BOOTLOADER          = stereo_mix_bootloader
-OPTIMIZE            = TRUE
-OPTIMIZE_FLAG       = 2
+F_CRYSTAL      = 8000000L
+F_CPU          = 72000000L
+SYSCLOCK       = SYSCLK_FREQ_72MHz
+FAMILY         = f0xx
+OPTIMIZE       = TRUE
+OPTIMIZE_FLAG  = s
 
 # Preferred upload command
-UPLOAD_COMMAND  = upload_combo_jtag
+UPLOAD_COMMAND  = upload_jtag
 
 # Packages to build
-TARGET         = stereo_mix
-PACKAGES       = stereo_mix \
-                 stereo_mix/drivers \
-                 stmlib/utils \
-                 stmlib/system
+TARGET         = stereo_mix_bootloader
+PACKAGES       = stereo_mix/bootloader stmlib/utils stmlib/system
 RESOURCES      = stereo_mix/resources
 
 include stmlib/makefile.inc
-

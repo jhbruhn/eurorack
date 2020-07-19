@@ -8,6 +8,7 @@
 #include "stmlib/ui/event_queue.h"
 #include "ui.h"
 #include <stm32f0xx_hal.h>
+#include "stmlib/system/bootloader_utils.h"
 
 using namespace stereo_mix;
 using namespace stmlib;
@@ -166,6 +167,7 @@ void WriteOutputs(void)
     processors[i].Process(cvs, out[i]);
   }
 }
+
 
 int main(void)
 {
