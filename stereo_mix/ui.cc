@@ -1,9 +1,10 @@
 #include "ui.h"
 #include "pot_controller.h"
+#include "settings.h"
 #include <stm32f0xx_hal.h>
 
-const int kLongPressDuration = 2000;
-const int kShowChangedValueMilliseconds = 600;
+static const int kLongPressDuration = 2000;
+static const int kShowChangedValueMilliseconds = 600;
 
 void UI::Poll()
 {
@@ -40,8 +41,10 @@ void UI::Poll()
             system_clock.milliseconds() - press_time[i] + 1);
         ignore_release[i] = true;
       }
-      for (size_t j = 0; j < kNumChannels * 2; j++)
+      for (size_t j = 0; j < kNumChannels * 2; j++) {
         potControllers[j].Unlock();
+        SaveState();
+      }
     }
   }
 
@@ -53,12 +56,40 @@ void UI::Poll()
     if (i < kNumChannels) {
       processors[i].set_pan_offset(pan_pots[i] - 32767);
       processors[i].set_volume_offset(volume_pots[i]);
+      processors[i].set_muted(mute[i]);
     }
     if (abs(previous_pot_values[i] - adc->value(ADC_GROUP_POT + i)) > 1900) {
       previous_pot_values[i] = adc->value(ADC_GROUP_POT + i);
       queue.AddEvent(CONTROL_POT, i, previous_pot_values[i]);
     }
   }
+}
+
+void UI::LoadState() {
+  if(!settings->is_first_start()) {
+    for(size_t i = 0; i < kNumChannels; i++) {
+      ChannelData c = settings->channel(i);
+      mute[i] = c.mute;
+      this->pan_att_pots[i] = c.pan_att + 32767;
+      this->volume_att_pots[i] = c.vol_att + 32767;
+    }
+  } else {
+    for(size_t i = 0; i < kNumChannels; i++) {
+      mute[i] = false;
+      this->pan_att_pots[i] = this->volume_att_pots[i] = 32767 + (32767 / 2);
+    }
+  }
+}
+
+void UI::SaveState() {
+  for(size_t i = 0; i < kNumChannels; i++) {
+    ChannelData* c = settings->mutable_channel(i);
+    c->mute = this->mute[i];
+    c->pan_att = this->pan_att_pots[i] - 32767;
+    c->vol_att = this->volume_att_pots[i] - 32767;
+  }
+
+  settings->SaveState();
 }
 
 void UI::OnSwitchPressed(const Event& e)
@@ -79,13 +110,12 @@ void UI::OnPotChanged(const Event& e)
 void UI::OnSwitchReleased(const Event& e)
 {
   mute[e.control_id] = !mute[e.control_id];
-  processors[e.control_id].set_muted(mute[e.control_id]);
 
   for (size_t i = 0; i < kNumChannels; i++) {
     last_pan_pot_touch[i] = last_vol_pot_touch[i] = 0;
   }
 
-  // todo: save state
+  SaveState();
 }
 
 void UI::TaskProcessPotControllers()

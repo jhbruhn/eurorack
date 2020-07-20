@@ -19,7 +19,8 @@ Adc adc;
 Leds leds;
 Switches switches;
 Processor processors[kNumChannels];
-UI ui(&adc, &switches, &leds, processors);
+Settings settings;
+UI ui(&adc, &switches, &leds, processors, &settings);
 
 bool mute[4];
 

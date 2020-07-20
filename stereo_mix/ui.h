@@ -6,30 +6,33 @@
 #include "pot_controller.h"
 #include "processor.h"
 #include "stmlib/ui/event_queue.h"
+#include "config.h"
+#include "settings.h"
 
 using namespace stmlib;
 
-extern const uint8_t kNumChannels; // TODO
+const uint8_t kNumChannels = CHANNEL_COUNT;
 
 class UI {
   public:
-  UI(Adc* adc_, Switches* switches_, Leds* leds_, Processor* processors_)
+  UI(Adc* adc_, Switches* switches_, Leds* leds_, Processor* processors_, Settings* settings)
       : adc(adc_)
       , switches(switches_)
       , leds(leds_)
       , processors(processors_)
+      , settings(settings)
   {
     queue.Init();
-
   };
+
   void Init() {
+    LoadState();
+
     for (size_t i = 0; i < kNumChannels; i++) {
       uint16_t* volume_hidden_params[] = {&volume_att_pots[i], &volume_att_pots[i], &volume_att_pots[i], &volume_att_pots[i]};
       potControllers[i].Init(&volume_pots[i], volume_hidden_params);
       uint16_t* pan_hidden_params[] = {&pan_att_pots[i], &pan_att_pots[i], &pan_att_pots[i], &pan_att_pots[i]};
       potControllers[i + kNumChannels].Init(&pan_pots[i], pan_hidden_params);
-
-      volume_att_pots[i] = pan_att_pots[i] = 32767 + (32767 / 2);
     }
 
   }
@@ -45,6 +48,9 @@ class UI {
   void TaskDrawLeds(void);
   void TaskProcessPotControllers(void);
 
+  void LoadState();
+  void SaveState();
+
   uint8_t ui_task = 0;
 
   EventQueue<> queue;
@@ -55,6 +61,8 @@ class UI {
   Leds* leds;
 
   Processor* processors;
+
+  Settings* settings;
 
   uint16_t previous_pot_values[kNumChannels * 2];
 

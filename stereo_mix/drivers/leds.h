@@ -11,6 +11,7 @@
 #include "stm32f0xx_hal_gpio.h"
 #include <stm32f0xx_hal.h>
 #include <math.h>
+#include "../config.h"
 
 using namespace stereo_mix;
 using namespace stmlib;
@@ -20,8 +21,6 @@ enum LedColor {
   LED_COLOR_RED,
   LED_COLOR_ORANGE
 };
-
-const uint8_t kNumChannels = 4;
 
 static GPIO_TypeDef* kGpioPorts[] = { GPIOA, GPIOA, GPIOA, GPIOA };
 static const uint16_t kGpioPins[] = { GPIO_PIN_8, GPIO_PIN_9, GPIO_PIN_10, GPIO_PIN_11 };
@@ -41,7 +40,7 @@ class Leds {
     __HAL_RCC_GPIOF_CLK_ENABLE();
 
     GPIO_InitTypeDef gpioInit;
-    for (size_t i = 0; i < kNumChannels; i++) {
+    for (size_t i = 0; i < CHANNEL_COUNT; i++) {
       gpioInit.Mode = GPIO_MODE_OUTPUT_PP;
       gpioInit.Pin = kGpioColorPins[i];
       gpioInit.Pull = GPIO_NOPULL;
@@ -71,7 +70,7 @@ class Leds {
     sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
     sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
 
-    for(size_t i = 0; i < kNumChannels; i++) {
+    for(size_t i = 0; i < CHANNEL_COUNT; i++) {
       HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, timer_channel[i]);
       gpioInit.Mode = GPIO_MODE_AF_PP;
       gpioInit.Pin = kGpioPins[i];
@@ -86,7 +85,7 @@ class Leds {
 
   void Write()
   {
-    for(size_t i = 0; i < kNumChannels; i++) {
+    for(size_t i = 0; i < CHANNEL_COUNT; i++) {
       LedColor targetColor = colors[i];
       uint16_t intensity = intensities[i];
       if(colors[i] == LED_COLOR_ORANGE) {
@@ -108,7 +107,7 @@ class Leds {
   }
 
   void set_intensity_signed(uint8_t channel, int16_t intensity) {
-    if(channel >= kNumChannels) return;
+    if(channel >= CHANNEL_COUNT) return;
 
     if(intensity < 0) {
       colors[channel] = LED_COLOR_RED;
@@ -122,7 +121,7 @@ class Leds {
 
   void set_intensity_unsigned(uint8_t channel, uint16_t intensity, LedColor color)
   {
-    if (channel >= kNumChannels)
+    if (channel >= CHANNEL_COUNT)
       return;
 
     intensities[channel] = intensity;
@@ -130,7 +129,7 @@ class Leds {
   }
 
   private:
-  uint16_t intensities[kNumChannels];
-  bool toggle[kNumChannels];
-  LedColor colors[kNumChannels];
+  uint16_t intensities[CHANNEL_COUNT];
+  bool toggle[CHANNEL_COUNT];
+  LedColor colors[CHANNEL_COUNT];
 };
