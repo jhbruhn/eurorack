@@ -33,6 +33,8 @@ class UI {
       potControllers[i].Init(&volume_pots[i], volume_hidden_params);
       uint16_t* pan_hidden_params[] = {&pan_att_pots[i], &pan_att_pots[i], &pan_att_pots[i], &pan_att_pots[i]};
       potControllers[i + kNumChannels].Init(&pan_pots[i], pan_hidden_params);
+
+      last_pan_pot_touch[i] = last_vol_pot_touch[i] = -1;
     }
 
   }
@@ -72,8 +74,9 @@ class UI {
   uint16_t pan_att_pots[kNumChannels];
   bool mute[kNumChannels];
 
-  uint32_t last_pan_pot_touch[kNumChannels];
-  uint32_t last_vol_pot_touch[kNumChannels];
+  int64_t last_pan_pot_touch[kNumChannels];
+  int64_t last_vol_pot_touch[kNumChannels];
+  bool pots_touched;
 
   PotController<kNumChannels> potControllers[kNumChannels * 2]; // todo: count
 };

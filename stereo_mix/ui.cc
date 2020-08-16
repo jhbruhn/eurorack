@@ -60,9 +60,11 @@ void UI::Poll()
     }
     if (abs(previous_pot_values[i] - adc->value(ADC_GROUP_POT + i)) > 1900) {
       previous_pot_values[i] = adc->value(ADC_GROUP_POT + i);
-      queue.AddEvent(CONTROL_POT, i, previous_pot_values[i]);
+      if(pots_touched)
+        queue.AddEvent(CONTROL_POT, i, previous_pot_values[i]);
     }
   }
+  pots_touched = true;
 }
 
 void UI::LoadState() {
@@ -112,7 +114,7 @@ void UI::OnSwitchReleased(const Event& e)
   mute[e.control_id] = !mute[e.control_id];
 
   for (size_t i = 0; i < kNumChannels; i++) {
-    last_pan_pot_touch[i] = last_vol_pot_touch[i] = 0;
+    last_pan_pot_touch[i] = last_vol_pot_touch[i] = -1;
   }
 
   SaveState();
@@ -138,7 +140,7 @@ void UI::TaskDrawLeds()
       leds->set_intensity_signed(i, pan_att_pots[i] - 32767);
     } else {
       // TODO: refactor
-      if (system_clock.milliseconds() - last_pan_pot_touch[i] < kShowChangedValueMilliseconds) {
+      if (last_pan_pot_touch[i] > 0 && system_clock.milliseconds() - last_pan_pot_touch[i] < kShowChangedValueMilliseconds) {
         // show panning
         leds->set_intensity_signed(i, pan_pots[i] - 32767);
       } else {
