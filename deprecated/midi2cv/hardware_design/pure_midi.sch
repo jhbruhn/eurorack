@@ -10292,6 +10292,69 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="jhbruhn-physical">
+<packages>
+<package name="LED3MM">
+<description>&lt;B&gt;LED&lt;/B&gt;&lt;p&gt;
+3 mm, round</description>
+<wire x1="1.3" y1="-1.3" x2="1.3" y2="-2.6" width="0.127" layer="21"/>
+<wire x1="-1.3" y1="-1.3" x2="-1.3" y2="-1.95" width="0.127" layer="21"/>
+<circle x="0" y="0" radius="1.6" width="0.127" layer="21"/>
+<pad name="1" x="-1.27" y="0" drill="0.8128" shape="octagon"/>
+<pad name="2" x="1.27" y="0" drill="0.8128" shape="octagon"/>
+<text x="2.555" y="0.381" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="2.555" y="-1.651" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
+</package>
+</packages>
+<symbols>
+<symbol name="LED-BICOLOR-SHARED-THROUGHHOLE">
+<wire x1="7.62" y1="5.08" x2="7.62" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-5.08" x2="-7.62" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-5.08" x2="-7.62" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="5.08" x2="7.62" y2="5.08" width="0.254" layer="94"/>
+<wire x1="0" y1="3.81" x2="0" y2="2.54" width="0.254" layer="94"/>
+<wire x1="0" y1="2.54" x2="0" y2="1.27" width="0.254" layer="94"/>
+<wire x1="0" y1="1.27" x2="1.27" y2="2.54" width="0.254" layer="94"/>
+<wire x1="1.27" y1="2.54" x2="0" y2="3.81" width="0.254" layer="94"/>
+<wire x1="1.27" y1="3.81" x2="1.27" y2="2.54" width="0.254" layer="94"/>
+<wire x1="1.27" y1="2.54" x2="1.27" y2="1.27" width="0.254" layer="94"/>
+<wire x1="1.27" y1="2.54" x2="2.54" y2="2.54" width="0.254" layer="94"/>
+<wire x1="0" y1="2.54" x2="-1.27" y2="2.54" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-1.27" x2="1.27" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-2.54" x2="1.27" y2="-3.81" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-3.81" x2="0" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="0" y1="-2.54" x2="1.27" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="0" y1="-1.27" x2="0" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="0" y1="-2.54" x2="0" y2="-3.81" width="0.254" layer="94"/>
+<wire x1="0" y1="-2.54" x2="-1.27" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-2.54" x2="2.54" y2="-2.54" width="0.254" layer="94"/>
+<text x="-6.35" y="5.842" size="1.778" layer="95">&gt;NAME</text>
+<text x="-6.35" y="-7.62" size="1.778" layer="95">&gt;VALUE</text>
+<text x="-3.81" y="-2.54" size="1.27" layer="94" ratio="10">R</text>
+<text x="-3.81" y="2.54" size="1.27" layer="94" ratio="10">G</text>
+<pin name="2" x="10.16" y="0" visible="pin" length="short" rot="R180"/>
+<pin name="1" x="-10.16" y="0" visible="pin" length="short"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="LED-BICOLOR-SHARED-THROUGHHOLE">
+<gates>
+<gate name="G$1" symbol="LED-BICOLOR-SHARED-THROUGHHOLE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="LED3MM">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -10501,6 +10564,7 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <part name="C14" library="jhbruhn-cdr" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100n"/>
 <part name="C15" library="jhbruhn-cdr" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100n"/>
 <part name="X1" library="jhbruhn-cdr" deviceset="XTAL" device="NX5032" package3d_urn="urn:adsk.eagle:package:6240641/1" value="8MHz"/>
+<part name="U$1" library="jhbruhn-physical" deviceset="LED-BICOLOR-SHARED-THROUGHHOLE" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -10764,20 +10828,6 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <wire x1="213.36" y1="127" x2="236.22" y2="127" width="0.1524" layer="91"/>
 <pinref part="IC1" gate="G$$1" pin="PA3/SPI3_MOSI/I2S3_SD/USART2_RX/TIM2_CH4/TIM5_CH4/ADC_IN3"/>
 <label x="215.9" y="127" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="SS_USB" class="0">
-<segment>
-<wire x1="213.36" y1="68.58" x2="228.6" y2="68.58" width="0.1524" layer="91"/>
-<pinref part="IC1" gate="G$$1" pin="PB7/I2C1_SDA/USART1_RX/TIM4_CH2"/>
-<label x="215.9" y="68.58" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="RST_USB" class="0">
-<segment>
-<wire x1="213.36" y1="71.12" x2="228.6" y2="71.12" width="0.1524" layer="91"/>
-<pinref part="IC1" gate="G$$1" pin="PB6/I2C1_SCL/USART1_TX/TIM4_CH1"/>
-<label x="215.9" y="71.12" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="MIDI_DATA_OUT" class="0">
@@ -11622,6 +11672,10 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <instance part="C15" gate="G$1" x="195.58" y="-50.8" smashed="yes">
 <attribute name="NAME" x="197.104" y="-50.419" size="1.778" layer="95"/>
 <attribute name="VALUE" x="197.104" y="-55.499" size="1.778" layer="96"/>
+</instance>
+<instance part="U$1" gate="G$1" x="289.56" y="-38.1" smashed="yes">
+<attribute name="NAME" x="283.21" y="-32.258" size="1.778" layer="95"/>
+<attribute name="VALUE" x="283.21" y="-45.72" size="1.778" layer="95"/>
 </instance>
 </instances>
 <busses>
