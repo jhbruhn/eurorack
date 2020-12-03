@@ -1,7 +1,6 @@
 #include "stmlib/system/page_storage.h"
 
 #include "settings.h"
-#include "midi2cv/part.h"
 
 Settings::Settings() : first_start(false)
 {
