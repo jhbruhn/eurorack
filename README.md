@@ -11,3 +11,10 @@ Welcome to my Eurorack module stash. This is a collection of modules I (partiall
 * **vca**: A dual channel variable slope (exp/lin/log) VCA based on easily available components
 * **vcf-20**: MS20 style filter
 * **vcf-leiter**: Moog style filter
+
+## license
+
+Code: MIT license.
+
+Hardware: cc-by-sa-3.0
+
